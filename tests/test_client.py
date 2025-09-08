@@ -18,12 +18,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from limrun_v1 import Limrun, AsyncLimrun, APIResponseValidationError
-from limrun_v1._types import Omit
-from limrun_v1._utils import asyncify
-from limrun_v1._models import BaseModel, FinalRequestOptions
-from limrun_v1._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
-from limrun_v1._base_client import (
+from limrun import Limrun, AsyncLimrun, APIResponseValidationError
+from limrun._types import Omit
+from limrun._utils import asyncify
+from limrun._models import BaseModel, FinalRequestOptions
+from limrun._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from limrun._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -232,10 +232,10 @@ class TestLimrun:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "limrun_v1/_legacy_response.py",
-                        "limrun_v1/_response.py",
+                        "limrun/_legacy_response.py",
+                        "limrun/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "limrun_v1/_compat.py",
+                        "limrun/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -718,7 +718,7 @@ class TestLimrun:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Limrun) -> None:
         respx_mock.post("/v1/android_instances").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -728,7 +728,7 @@ class TestLimrun:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Limrun) -> None:
         respx_mock.post("/v1/android_instances").mock(return_value=httpx.Response(500))
@@ -738,7 +738,7 @@ class TestLimrun:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -769,7 +769,7 @@ class TestLimrun:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: Limrun, failures_before_success: int, respx_mock: MockRouter
@@ -792,7 +792,7 @@ class TestLimrun:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Limrun, failures_before_success: int, respx_mock: MockRouter
@@ -1040,10 +1040,10 @@ class TestAsyncLimrun:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "limrun_v1/_legacy_response.py",
-                        "limrun_v1/_response.py",
+                        "limrun/_legacy_response.py",
+                        "limrun/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "limrun_v1/_compat.py",
+                        "limrun/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1542,7 +1542,7 @@ class TestAsyncLimrun:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncLimrun) -> None:
         respx_mock.post("/v1/android_instances").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1552,7 +1552,7 @@ class TestAsyncLimrun:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncLimrun) -> None:
         respx_mock.post("/v1/android_instances").mock(return_value=httpx.Response(500))
@@ -1562,7 +1562,7 @@ class TestAsyncLimrun:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1594,7 +1594,7 @@ class TestAsyncLimrun:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1620,7 +1620,7 @@ class TestAsyncLimrun:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("limrun_v1._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("limrun._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(

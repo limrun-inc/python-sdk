@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from limrun_v1 import Limrun, AsyncLimrun
-from limrun_v1._streaming import Stream, AsyncStream, ServerSentEvent
+from limrun import Limrun, AsyncLimrun
+from limrun._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

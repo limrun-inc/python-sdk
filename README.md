@@ -1,7 +1,7 @@
 # Limrun Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/limrun_v1.svg?label=pypi%20(stable))](https://pypi.org/project/limrun_v1/)
+[![PyPI version](https://img.shields.io/pypi/v/limrun.svg?label=pypi%20(stable))](https://pypi.org/project/limrun/)
 
 The Limrun Python library provides convenient access to the Limrun REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -16,12 +16,12 @@ The REST API documentation can be found on [lim.run](https://lim.run). The full 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/limrun-v1-python.git
+# install from the production repo
+pip install git+ssh://git@github.com/limrun-inc/python-sdk.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install limrun_v1`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install limrun`
 
 ## Usage
 
@@ -29,7 +29,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 client = Limrun(
     api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
@@ -51,7 +51,7 @@ Simply import `AsyncLimrun` instead of `Limrun` and use `await` with each API ca
 ```python
 import os
 import asyncio
-from limrun_v1 import AsyncLimrun
+from limrun import AsyncLimrun
 
 client = AsyncLimrun(
     api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
@@ -75,16 +75,16 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from this staging repo
-pip install 'limrun_v1[aiohttp] @ git+ssh://git@github.com/stainless-sdks/limrun-v1-python.git'
+# install from the production repo
+pip install 'limrun[aiohttp] @ git+ssh://git@github.com/limrun-inc/python-sdk.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
 import asyncio
-from limrun_v1 import DefaultAioHttpClient
-from limrun_v1 import AsyncLimrun
+from limrun import DefaultAioHttpClient
+from limrun import AsyncLimrun
 
 
 async def main() -> None:
@@ -113,7 +113,7 @@ Typed requests and responses provide autocomplete and documentation within your 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 client = Limrun()
 
@@ -125,27 +125,27 @@ print(android_instance.metadata)
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `limrun_v1.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `limrun.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `limrun_v1.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `limrun.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `limrun_v1.APIError`.
+All errors inherit from `limrun.APIError`.
 
 ```python
-import limrun_v1
-from limrun_v1 import Limrun
+import limrun
+from limrun import Limrun
 
 client = Limrun()
 
 try:
     client.android_instances.create()
-except limrun_v1.APIConnectionError as e:
+except limrun.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except limrun_v1.RateLimitError as e:
+except limrun.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except limrun_v1.APIStatusError as e:
+except limrun.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -173,7 +173,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 # Configure the default for all requests:
 client = Limrun(
@@ -191,7 +191,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 # Configure the default for all requests:
 client = Limrun(
@@ -243,7 +243,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 client = Limrun()
 response = client.android_instances.with_raw_response.create()
@@ -253,9 +253,9 @@ android_instance = response.parse()  # get the object that `android_instances.cr
 print(android_instance.metadata)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/limrun-v1-python/tree/main/src/limrun_v1/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/limrun-inc/python-sdk/tree/main/src/limrun/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/limrun-v1-python/tree/main/src/limrun_v1/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/limrun-inc/python-sdk/tree/main/src/limrun/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -317,7 +317,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from limrun_v1 import Limrun, DefaultHttpxClient
+from limrun import Limrun, DefaultHttpxClient
 
 client = Limrun(
     # Or use the `LIMRUN_BASE_URL` env var
@@ -340,7 +340,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from limrun_v1 import Limrun
+from limrun import Limrun
 
 with Limrun() as client:
   # make requests here
@@ -359,7 +359,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/limrun-v1-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/limrun-inc/python-sdk/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
@@ -368,8 +368,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import limrun_v1
-print(limrun_v1.__version__)
+import limrun
+print(limrun.__version__)
 ```
 
 ## Requirements

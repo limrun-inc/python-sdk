@@ -92,7 +92,7 @@ HttpxRequestFiles = Union[Mapping[str, HttpxFileTypes], Sequence[Tuple[str, Http
 # This unfortunately means that you will either have
 # to import this type and pass it explicitly:
 #
-# from limrun_v1 import NoneType
+# from limrun import NoneType
 # client.get('/foo', cast_to=NoneType)
 #
 # or build it yourself:

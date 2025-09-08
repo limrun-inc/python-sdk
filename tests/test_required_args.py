@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from limrun_v1._utils import required_args
+from limrun._utils import required_args
 
 
 def test_too_many_positional_params() -> None:

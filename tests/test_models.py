@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from limrun_v1._utils import PropertyInfo
-from limrun_v1._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
-from limrun_v1._models import BaseModel, construct_type
+from limrun._utils import PropertyInfo
+from limrun._compat import PYDANTIC_V1, parse_obj, model_dump, model_json
+from limrun._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):
