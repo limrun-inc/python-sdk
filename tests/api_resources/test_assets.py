@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from limrun_v1 import Limrun, AsyncLimrun
+from limrun import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
-from limrun_v1.types import (
+from limrun.types import (
     Asset,
     AssetListResponse,
     AssetGetOrCreateResponse,

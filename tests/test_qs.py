@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from limrun_v1._qs import Querystring, stringify
+from limrun._qs import Querystring, stringify
 
 
 def test_empty() -> None:
