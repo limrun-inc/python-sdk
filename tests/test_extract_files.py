@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from limrun._types import FileTypes
-from limrun._utils import extract_files
+from limrun_api._types import FileTypes
+from limrun_api._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

@@ -8,8 +8,8 @@ from typing import Any, TypeVar, Iterator, Sequence, cast
 from datetime import date, datetime
 from typing_extensions import Literal, get_args, get_origin, assert_type
 
-from limrun._types import Omit, NoneType
-from limrun._utils import (
+from limrun_api._types import Omit, NoneType
+from limrun_api._utils import (
     is_dict,
     is_list,
     is_list_type,
@@ -19,8 +19,8 @@ from limrun._utils import (
     is_annotated_type,
     is_type_alias_type,
 )
-from limrun._compat import PYDANTIC_V1, field_outer_type, get_model_fields
-from limrun._models import BaseModel
+from limrun_api._compat import PYDANTIC_V1, field_outer_type, get_model_fields
+from limrun_api._models import BaseModel
 
 BaseModelT = TypeVar("BaseModelT", bound=BaseModel)
 
