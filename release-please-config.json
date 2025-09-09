@@ -61,6 +61,6 @@
   ],
   "release-type": "python",
   "extra-files": [
-    "src/limrun/_version.py"
+    "src/limrun_api/_version.py"
   ]
 }

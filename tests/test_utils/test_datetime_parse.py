@@ -8,7 +8,7 @@ from datetime import date, datetime, timezone, timedelta
 
 import pytest
 
-from limrun._utils import parse_date, parse_datetime
+from limrun_api._utils import parse_date, parse_datetime
 
 
 def create_tz(minutes: int) -> timezone:
