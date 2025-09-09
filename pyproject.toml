@@ -1,5 +1,5 @@
 [project]
-name = "limrun"
+name = "limrun_api"
 version = "0.1.1"
 description = "The official Python library for the limrun API"
 dynamic = ["readme"]
