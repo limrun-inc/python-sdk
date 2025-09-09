@@ -10,15 +10,15 @@ import httpx
 import pytest
 from pytest_asyncio import is_async_test
 
-from limrun import Limrun, AsyncLimrun, DefaultAioHttpClient
-from limrun._utils import is_dict
+from limrun_api import Limrun, AsyncLimrun, DefaultAioHttpClient
+from limrun_api._utils import is_dict
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("limrun").setLevel(logging.DEBUG)
+logging.getLogger("limrun_api").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
