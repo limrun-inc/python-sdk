@@ -1,7 +1,7 @@
 # Limrun Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/limrun.svg?label=pypi%20(stable))](https://pypi.org/project/limrun/)
+[![PyPI version](https://img.shields.io/pypi/v/limrun_api.svg?label=pypi%20(stable))](https://pypi.org/project/limrun_api/)
 
 The Limrun Python library provides convenient access to the Limrun REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -17,7 +17,7 @@ The REST API documentation can be found on [lim.run](https://lim.run). The full 
 
 ```sh
 # install from PyPI
-pip install limrun
+pip install limrun_api
 ```
 
 ## Usage
@@ -73,7 +73,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install limrun[aiohttp]
+pip install limrun_api[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
