@@ -48,7 +48,6 @@ class AssetsResource(SyncAPIResource):
         *,
         include_download_url: bool | NotGiven = NOT_GIVEN,
         include_upload_url: bool | NotGiven = NOT_GIVEN,
-        md5_filter: str | NotGiven = NOT_GIVEN,
         name_filter: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -66,8 +65,6 @@ class AssetsResource(SyncAPIResource):
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
-
-          md5_filter: Query by file md5
 
           name_filter: Query by file name
 
@@ -90,7 +87,6 @@ class AssetsResource(SyncAPIResource):
                     {
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
-                        "md5_filter": md5_filter,
                         "name_filter": name_filter,
                     },
                     asset_list_params.AssetListParams,
@@ -211,7 +207,6 @@ class AsyncAssetsResource(AsyncAPIResource):
         *,
         include_download_url: bool | NotGiven = NOT_GIVEN,
         include_upload_url: bool | NotGiven = NOT_GIVEN,
-        md5_filter: str | NotGiven = NOT_GIVEN,
         name_filter: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -229,8 +224,6 @@ class AsyncAssetsResource(AsyncAPIResource):
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
-
-          md5_filter: Query by file md5
 
           name_filter: Query by file name
 
@@ -253,7 +246,6 @@ class AsyncAssetsResource(AsyncAPIResource):
                     {
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
-                        "md5_filter": md5_filter,
                         "name_filter": name_filter,
                     },
                     asset_list_params.AssetListParams,
