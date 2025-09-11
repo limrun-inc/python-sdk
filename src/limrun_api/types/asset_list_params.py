@@ -16,8 +16,5 @@ class AssetListParams(TypedDict, total=False):
     include_upload_url: Annotated[bool, PropertyInfo(alias="includeUploadUrl")]
     """Toggles whether an upload URL should be included in the response"""
 
-    md5_filter: Annotated[str, PropertyInfo(alias="md5Filter")]
-    """Query by file md5"""
-
     name_filter: Annotated[str, PropertyInfo(alias="nameFilter")]
     """Query by file name"""
