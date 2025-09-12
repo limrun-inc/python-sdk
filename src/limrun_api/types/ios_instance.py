@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["IosInstanceCreateResponse", "Metadata", "Spec", "Status"]
+__all__ = ["IosInstance", "Metadata", "Spec", "Status"]
 
 
 class Metadata(BaseModel):
@@ -54,7 +54,7 @@ class Status(BaseModel):
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
 
-class IosInstanceCreateResponse(BaseModel):
+class IosInstance(BaseModel):
     metadata: Metadata
 
     spec: Spec
