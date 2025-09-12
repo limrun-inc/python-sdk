@@ -8,6 +8,14 @@ from .assets import (
     AssetsResourceWithStreamingResponse,
     AsyncAssetsResourceWithStreamingResponse,
 )
+from .ios_instances import (
+    IosInstancesResource,
+    AsyncIosInstancesResource,
+    IosInstancesResourceWithRawResponse,
+    AsyncIosInstancesResourceWithRawResponse,
+    IosInstancesResourceWithStreamingResponse,
+    AsyncIosInstancesResourceWithStreamingResponse,
+)
 from .android_instances import (
     AndroidInstancesResource,
     AsyncAndroidInstancesResource,
@@ -30,4 +38,10 @@ __all__ = [
     "AsyncAssetsResourceWithRawResponse",
     "AssetsResourceWithStreamingResponse",
     "AsyncAssetsResourceWithStreamingResponse",
+    "IosInstancesResource",
+    "AsyncIosInstancesResource",
+    "IosInstancesResourceWithRawResponse",
+    "AsyncIosInstancesResourceWithRawResponse",
+    "IosInstancesResourceWithStreamingResponse",
+    "AsyncIosInstancesResourceWithStreamingResponse",
 ]

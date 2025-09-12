@@ -22,7 +22,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import assets, android_instances
+from .resources import assets, ios_instances, android_instances
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -37,6 +37,7 @@ __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Limrun", "
 class Limrun(SyncAPIClient):
     android_instances: android_instances.AndroidInstancesResource
     assets: assets.AssetsResource
+    ios_instances: ios_instances.IosInstancesResource
     with_raw_response: LimrunWithRawResponse
     with_streaming_response: LimrunWithStreamedResponse
 
@@ -92,6 +93,7 @@ class Limrun(SyncAPIClient):
 
         self.android_instances = android_instances.AndroidInstancesResource(self)
         self.assets = assets.AssetsResource(self)
+        self.ios_instances = ios_instances.IosInstancesResource(self)
         self.with_raw_response = LimrunWithRawResponse(self)
         self.with_streaming_response = LimrunWithStreamedResponse(self)
 
@@ -216,6 +218,7 @@ class Limrun(SyncAPIClient):
 class AsyncLimrun(AsyncAPIClient):
     android_instances: android_instances.AsyncAndroidInstancesResource
     assets: assets.AsyncAssetsResource
+    ios_instances: ios_instances.AsyncIosInstancesResource
     with_raw_response: AsyncLimrunWithRawResponse
     with_streaming_response: AsyncLimrunWithStreamedResponse
 
@@ -271,6 +274,7 @@ class AsyncLimrun(AsyncAPIClient):
 
         self.android_instances = android_instances.AsyncAndroidInstancesResource(self)
         self.assets = assets.AsyncAssetsResource(self)
+        self.ios_instances = ios_instances.AsyncIosInstancesResource(self)
         self.with_raw_response = AsyncLimrunWithRawResponse(self)
         self.with_streaming_response = AsyncLimrunWithStreamedResponse(self)
 
@@ -396,6 +400,7 @@ class LimrunWithRawResponse:
     def __init__(self, client: Limrun) -> None:
         self.android_instances = android_instances.AndroidInstancesResourceWithRawResponse(client.android_instances)
         self.assets = assets.AssetsResourceWithRawResponse(client.assets)
+        self.ios_instances = ios_instances.IosInstancesResourceWithRawResponse(client.ios_instances)
 
 
 class AsyncLimrunWithRawResponse:
@@ -404,6 +409,7 @@ class AsyncLimrunWithRawResponse:
             client.android_instances
         )
         self.assets = assets.AsyncAssetsResourceWithRawResponse(client.assets)
+        self.ios_instances = ios_instances.AsyncIosInstancesResourceWithRawResponse(client.ios_instances)
 
 
 class LimrunWithStreamedResponse:
@@ -412,6 +418,7 @@ class LimrunWithStreamedResponse:
             client.android_instances
         )
         self.assets = assets.AssetsResourceWithStreamingResponse(client.assets)
+        self.ios_instances = ios_instances.IosInstancesResourceWithStreamingResponse(client.ios_instances)
 
 
 class AsyncLimrunWithStreamedResponse:
@@ -420,6 +427,7 @@ class AsyncLimrunWithStreamedResponse:
             client.android_instances
         )
         self.assets = assets.AsyncAssetsResourceWithStreamingResponse(client.assets)
+        self.ios_instances = ios_instances.AsyncIosInstancesResourceWithStreamingResponse(client.ios_instances)
 
 
 Client = Limrun
