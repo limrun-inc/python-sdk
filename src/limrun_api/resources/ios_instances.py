@@ -18,9 +18,8 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.ios_instance_get_response import IosInstanceGetResponse
+from ..types.ios_instance import IosInstance
 from ..types.ios_instance_list_response import IosInstanceListResponse
-from ..types.ios_instance_create_response import IosInstanceCreateResponse
 
 __all__ = ["IosInstancesResource", "AsyncIosInstancesResource"]
 
@@ -57,7 +56,7 @@ class IosInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> IosInstanceCreateResponse:
+    ) -> IosInstance:
         """
         Create an iOS instance
 
@@ -88,7 +87,7 @@ class IosInstancesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"wait": wait}, ios_instance_create_params.IosInstanceCreateParams),
             ),
-            cast_to=IosInstanceCreateResponse,
+            cast_to=IosInstance,
         )
 
     def list(
@@ -186,7 +185,7 @@ class IosInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> IosInstanceGetResponse:
+    ) -> IosInstance:
         """
         Get iOS instance with given ID
 
@@ -206,7 +205,7 @@ class IosInstancesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=IosInstanceGetResponse,
+            cast_to=IosInstance,
         )
 
 
@@ -242,7 +241,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> IosInstanceCreateResponse:
+    ) -> IosInstance:
         """
         Create an iOS instance
 
@@ -273,7 +272,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform({"wait": wait}, ios_instance_create_params.IosInstanceCreateParams),
             ),
-            cast_to=IosInstanceCreateResponse,
+            cast_to=IosInstance,
         )
 
     async def list(
@@ -371,7 +370,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> IosInstanceGetResponse:
+    ) -> IosInstance:
         """
         Get iOS instance with given ID
 
@@ -391,7 +390,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=IosInstanceGetResponse,
+            cast_to=IosInstance,
         )
 
 
