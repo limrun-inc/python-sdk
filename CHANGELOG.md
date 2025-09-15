@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 (2025-09-12)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/limrun-inc/python-sdk/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** manual updates ([7dbb780](https://github.com/limrun-inc/python-sdk/commit/7dbb780b65eae748a19c41154d41b4f24c153bd1))
+* **api:** manual updates ([3836853](https://github.com/limrun-inc/python-sdk/commit/38368531d480706c4528c6bd0b4b94a94e788592))
+
 ## 0.3.0 (2025-09-11)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/limrun-inc/python-sdk/compare/v0.2.0...v0.3.0)
