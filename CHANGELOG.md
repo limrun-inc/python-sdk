@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.1 (2025-09-20)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/limrun-inc/python-sdk/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([a810b55](https://github.com/limrun-inc/python-sdk/commit/a810b55f4f433cf81e91cc6384eb803d9178b75e))
+* **internal:** update pydantic dependency ([21a183f](https://github.com/limrun-inc/python-sdk/commit/21a183f72ff7e281b0db44cd1f598fd7f73bffa9))
+* **types:** change optional parameter type from NotGiven to Omit ([200fa8d](https://github.com/limrun-inc/python-sdk/commit/200fa8ddfca76d214e1b8c793ef5939a629d1b30))
+
 ## 0.4.0 (2025-09-12)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/limrun-inc/python-sdk/compare/v0.3.0...v0.4.0)
