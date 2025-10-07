@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0 (2025-10-07)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/limrun-inc/python-sdk/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** add the new multiple apk installation options ([58e81cc](https://github.com/limrun-inc/python-sdk/commit/58e81cc2074ef7a75dcc8ac25f50a0b2bf0f3c57))
+* **api:** mark public urls as required ([0af09f5](https://github.com/limrun-inc/python-sdk/commit/0af09f54ee37d7b4cfe3d4b02d69faf412cf2442))
+* **api:** revert api change ([5be7d22](https://github.com/limrun-inc/python-sdk/commit/5be7d225f832016734c449ba2fd6c906efd9646c))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([a810b55](https://github.com/limrun-inc/python-sdk/commit/a810b55f4f433cf81e91cc6384eb803d9178b75e))
+* **internal:** update pydantic dependency ([21a183f](https://github.com/limrun-inc/python-sdk/commit/21a183f72ff7e281b0db44cd1f598fd7f73bffa9))
+* **types:** change optional parameter type from NotGiven to Omit ([200fa8d](https://github.com/limrun-inc/python-sdk/commit/200fa8ddfca76d214e1b8c793ef5939a629d1b30))
+
 ## 0.4.0 (2025-09-12)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/limrun-inc/python-sdk/compare/v0.3.0...v0.4.0)

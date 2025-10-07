@@ -49,7 +49,9 @@ class TestAndroidInstances:
                         "kind": "App",
                         "source": "URL",
                         "asset_name": "assetName",
+                        "asset_names": ["string"],
                         "url": "url",
+                        "urls": ["string"],
                     }
                 ],
                 "region": "region",
@@ -236,7 +238,9 @@ class TestAsyncAndroidInstances:
                         "kind": "App",
                         "source": "URL",
                         "asset_name": "assetName",
+                        "asset_names": ["string"],
                         "url": "url",
+                        "urls": ["string"],
                     }
                 ],
                 "region": "region",

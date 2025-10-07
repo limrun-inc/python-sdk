@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict, Iterable
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["AndroidInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecInitialAsset"]
@@ -34,11 +35,15 @@ class SpecClue(TypedDict, total=False):
 class SpecInitialAsset(TypedDict, total=False):
     kind: Required[Literal["App"]]
 
-    source: Required[Literal["URL", "AssetName"]]
+    source: Required[Literal["URL", "URLs", "AssetName", "AssetNames"]]
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 
+    asset_names: Annotated[SequenceNotStr[str], PropertyInfo(alias="assetNames")]
+
     url: str
+
+    urls: SequenceNotStr[str]
 
 
 class Spec(TypedDict, total=False):
