@@ -49,11 +49,11 @@ class Spec(BaseModel):
 class Status(BaseModel):
     token: str
 
-    adb_web_socket_url: str = FieldInfo(alias="adbWebSocketUrl")
-
-    endpoint_web_socket_url: str = FieldInfo(alias="endpointWebSocketUrl")
-
     state: Literal["unknown", "creating", "ready", "terminated"]
+
+    adb_web_socket_url: Optional[str] = FieldInfo(alias="adbWebSocketUrl", default=None)
+
+    endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
 
 class AndroidInstance(BaseModel):
