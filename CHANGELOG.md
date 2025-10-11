@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 (2025-10-11)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/limrun-inc/python-sdk/compare/v0.5.0...v0.5.1)
+
+### Chores
+
+* **internal:** detect missing future annotations with ruff ([5ea3e8e](https://github.com/limrun-inc/python-sdk/commit/5ea3e8e2ce8f057a8e22854221db80b5f8aa229c))
+
 ## 0.5.0 (2025-10-07)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/limrun-inc/python-sdk/compare/v0.4.0...v0.5.0)
