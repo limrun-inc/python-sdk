@@ -93,8 +93,11 @@ class AndroidInstancesResource(SyncAPIResource):
     def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
+        limit: int | Omit = omit,
         region: str | Omit = omit,
+        starting_after: str | Omit = omit,
         state: Literal["unknown", "creating", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -107,10 +110,18 @@ class AndroidInstancesResource(SyncAPIResource):
         List Android instances belonging to given organization
 
         Args:
+          ending_before: Return records up until this instance ID. If not given, it will return up until
+              the 50th instance.
+
           label_selector: Labels filter to apply to Android instances to return. Expects a comma-separated
               list of key=value pairs (e.g., env=prod,region=us-west).
 
+          limit: Maximum number of instances to be returned. The default is 50.
+
           region: Region where the instance is scheduled on.
+
+          starting_after: Return records starting after this instance ID. If not given, it will start from
+              the most recent one.
 
           state: State filter to apply to Android instances to return.
 
@@ -131,8 +142,11 @@ class AndroidInstancesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
+                        "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     android_instance_list_params.AndroidInstanceListParams,
@@ -280,8 +294,11 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
     async def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
+        limit: int | Omit = omit,
         region: str | Omit = omit,
+        starting_after: str | Omit = omit,
         state: Literal["unknown", "creating", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -294,10 +311,18 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         List Android instances belonging to given organization
 
         Args:
+          ending_before: Return records up until this instance ID. If not given, it will return up until
+              the 50th instance.
+
           label_selector: Labels filter to apply to Android instances to return. Expects a comma-separated
               list of key=value pairs (e.g., env=prod,region=us-west).
 
+          limit: Maximum number of instances to be returned. The default is 50.
+
           region: Region where the instance is scheduled on.
+
+          starting_after: Return records starting after this instance ID. If not given, it will start from
+              the most recent one.
 
           state: State filter to apply to Android instances to return.
 
@@ -318,8 +343,11 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
+                        "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     android_instance_list_params.AndroidInstanceListParams,
