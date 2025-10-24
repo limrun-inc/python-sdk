@@ -91,8 +91,11 @@ class TestAndroidInstances:
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.list(
+            ending_before="android_someid",
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
+            starting_after="android_someid",
             state="unknown",
         )
         assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
@@ -280,8 +283,11 @@ class TestAsyncAndroidInstances:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list(
+            ending_before="android_someid",
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
+            starting_after="android_someid",
             state="unknown",
         )
         assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])

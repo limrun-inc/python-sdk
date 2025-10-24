@@ -10,14 +10,29 @@ __all__ = ["AndroidInstanceListParams"]
 
 
 class AndroidInstanceListParams(TypedDict, total=False):
+    ending_before: Annotated[str, PropertyInfo(alias="endingBefore")]
+    """Return records up until this instance ID.
+
+    If not given, it will return up until the 50th instance.
+    """
+
     label_selector: Annotated[str, PropertyInfo(alias="labelSelector")]
     """
     Labels filter to apply to Android instances to return. Expects a comma-separated
     list of key=value pairs (e.g., env=prod,region=us-west).
     """
 
+    limit: int
+    """Maximum number of instances to be returned. The default is 50."""
+
     region: str
     """Region where the instance is scheduled on."""
+
+    starting_after: Annotated[str, PropertyInfo(alias="startingAfter")]
+    """Return records starting after this instance ID.
+
+    If not given, it will start from the most recent one.
+    """
 
     state: Literal["unknown", "creating", "ready", "terminated"]
     """State filter to apply to Android instances to return."""
