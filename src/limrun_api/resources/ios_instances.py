@@ -17,7 +17,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncItems, AsyncItems
+from ..pagination import SyncList, AsyncList
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.ios_instance import IosInstance
 
@@ -105,7 +105,7 @@ class IosInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncItems[IosInstance]:
+    ) -> SyncList[IosInstance]:
         """List iOS instances
 
         Args:
@@ -136,7 +136,7 @@ class IosInstancesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/ios_instances",
-            page=SyncItems[IosInstance],
+            page=SyncList[IosInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -306,7 +306,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[IosInstance, AsyncItems[IosInstance]]:
+    ) -> AsyncPaginator[IosInstance, AsyncList[IosInstance]]:
         """List iOS instances
 
         Args:
@@ -337,7 +337,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/ios_instances",
-            page=AsyncItems[IosInstance],
+            page=AsyncList[IosInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
