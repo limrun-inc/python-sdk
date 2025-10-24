@@ -15,7 +15,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncItems, AsyncItems
+from ..pagination import SyncList, AsyncList
 from ..types.asset import Asset
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.asset_get_or_create_response import AssetGetOrCreateResponse
@@ -58,7 +58,7 @@ class AssetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncItems[Asset]:
+    ) -> SyncList[Asset]:
         """List organization's all assets with given filters.
 
         If none given, return all
@@ -89,7 +89,7 @@ class AssetsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/assets",
-            page=SyncItems[Asset],
+            page=SyncList[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -232,7 +232,7 @@ class AsyncAssetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[Asset, AsyncItems[Asset]]:
+    ) -> AsyncPaginator[Asset, AsyncList[Asset]]:
         """List organization's all assets with given filters.
 
         If none given, return all
@@ -263,7 +263,7 @@ class AsyncAssetsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/assets",
-            page=AsyncItems[Asset],
+            page=AsyncList[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

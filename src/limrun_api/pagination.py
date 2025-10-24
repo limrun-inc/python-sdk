@@ -5,17 +5,17 @@ from typing_extensions import Protocol, override, runtime_checkable
 
 from ._base_client import BasePage, PageInfo, BaseSyncPage, BaseAsyncPage
 
-__all__ = ["SyncItems", "AsyncItems"]
+__all__ = ["SyncList", "AsyncList"]
 
 _T = TypeVar("_T")
 
 
 @runtime_checkable
-class ItemsItem(Protocol):
+class ListItem(Protocol):
     id: str
 
 
-class SyncItems(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+class SyncList(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
 
     @override
@@ -35,21 +35,21 @@ class SyncItems(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
         if is_forwards:
             item = cast(Any, items[-1])
-            if not isinstance(item, ItemsItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+            if not isinstance(item, ListItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
             item = cast(Any, self.items[0])
-            if not isinstance(item, ItemsItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+            if not isinstance(item, ListItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"endingBefore": item.id})
 
 
-class AsyncItems(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+class AsyncList(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
 
     @override
@@ -69,14 +69,14 @@ class AsyncItems(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
         if is_forwards:
             item = cast(Any, items[-1])
-            if not isinstance(item, ItemsItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+            if not isinstance(item, ListItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
             item = cast(Any, self.items[0])
-            if not isinstance(item, ItemsItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
+            if not isinstance(item, ListItem) or item.id is None:  # pyright: ignore[reportUnnecessaryComparison]
                 # TODO emit warning log
                 return None
 
