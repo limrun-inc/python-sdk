@@ -15,9 +15,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..pagination import SyncItems, AsyncItems
 from ..types.asset import Asset
-from .._base_client import make_request_options
-from ..types.asset_list_response import AssetListResponse
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.asset_get_or_create_response import AssetGetOrCreateResponse
 
 __all__ = ["AssetsResource", "AsyncAssetsResource"]
@@ -46,27 +46,38 @@ class AssetsResource(SyncAPIResource):
     def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
+        limit: int | Omit = omit,
         name_filter: str | Omit = omit,
+        starting_after: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssetListResponse:
+    ) -> SyncItems[Asset]:
         """List organization's all assets with given filters.
 
         If none given, return all
         assets.
 
         Args:
+          ending_before: Return items up until this ID. If not given, it will return up until the 50th
+              item.
+
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
 
+          limit: Maximum number of items to be returned. The default is 50.
+
           name_filter: Query by file name
+
+          starting_after: Return items starting after this ID. If not given, it will start from the most
+              recent one.
 
           extra_headers: Send extra headers
 
@@ -76,8 +87,9 @@ class AssetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/assets",
+            page=SyncItems[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -85,14 +97,17 @@ class AssetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
+                        "limit": limit,
                         "name_filter": name_filter,
+                        "starting_after": starting_after,
                     },
                     asset_list_params.AssetListParams,
                 ),
             ),
-            cast_to=AssetListResponse,
+            model=Asset,
         )
 
     def get(
@@ -202,30 +217,41 @@ class AsyncAssetsResource(AsyncAPIResource):
         """
         return AsyncAssetsResourceWithStreamingResponse(self)
 
-    async def list(
+    def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
+        limit: int | Omit = omit,
         name_filter: str | Omit = omit,
+        starting_after: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AssetListResponse:
+    ) -> AsyncPaginator[Asset, AsyncItems[Asset]]:
         """List organization's all assets with given filters.
 
         If none given, return all
         assets.
 
         Args:
+          ending_before: Return items up until this ID. If not given, it will return up until the 50th
+              item.
+
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
 
+          limit: Maximum number of items to be returned. The default is 50.
+
           name_filter: Query by file name
+
+          starting_after: Return items starting after this ID. If not given, it will start from the most
+              recent one.
 
           extra_headers: Send extra headers
 
@@ -235,23 +261,27 @@ class AsyncAssetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/assets",
+            page=AsyncItems[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
+                        "limit": limit,
                         "name_filter": name_filter,
+                        "starting_after": starting_after,
                     },
                     asset_list_params.AssetListParams,
                 ),
             ),
-            cast_to=AssetListResponse,
+            model=Asset,
         )
 
     async def get(
