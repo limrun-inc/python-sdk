@@ -9,8 +9,10 @@ import pytest
 
 from limrun_api import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
-from limrun_api.types import AndroidInstance
-from limrun_api.pagination import SyncList, AsyncList
+from limrun_api.types import (
+    AndroidInstance,
+    AndroidInstanceListResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -83,20 +85,18 @@ class TestAndroidInstances:
     @parametrize
     def test_method_list(self, client: Limrun) -> None:
         android_instance = client.android_instances.list()
-        assert_matches_type(SyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.list(
-            ending_before="android_someid",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
-            starting_after="android_someid",
             state="unknown",
         )
-        assert_matches_type(SyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -106,7 +106,7 @@ class TestAndroidInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         android_instance = response.parse()
-        assert_matches_type(SyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -116,7 +116,7 @@ class TestAndroidInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             android_instance = response.parse()
-            assert_matches_type(SyncList[AndroidInstance], android_instance, path=["response"])
+            assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -275,20 +275,18 @@ class TestAsyncAndroidInstances:
     @parametrize
     async def test_method_list(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list()
-        assert_matches_type(AsyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list(
-            ending_before="android_someid",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
-            starting_after="android_someid",
             state="unknown",
         )
-        assert_matches_type(AsyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -298,7 +296,7 @@ class TestAsyncAndroidInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         android_instance = await response.parse()
-        assert_matches_type(AsyncList[AndroidInstance], android_instance, path=["response"])
+        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -308,7 +306,7 @@ class TestAsyncAndroidInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             android_instance = await response.parse()
-            assert_matches_type(AsyncList[AndroidInstance], android_instance, path=["response"])
+            assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

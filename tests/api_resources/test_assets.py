@@ -11,9 +11,9 @@ from limrun_api import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
 from limrun_api.types import (
     Asset,
+    AssetListResponse,
     AssetGetOrCreateResponse,
 )
-from limrun_api.pagination import SyncList, AsyncList
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -25,20 +25,18 @@ class TestAssets:
     @parametrize
     def test_method_list(self, client: Limrun) -> None:
         asset = client.assets.list()
-        assert_matches_type(SyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         asset = client.assets.list(
-            ending_before="asset_someid",
             include_download_url=True,
             include_upload_url=True,
             limit=50,
             name_filter="nameFilter",
-            starting_after="asset_someid",
         )
-        assert_matches_type(SyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -48,7 +46,7 @@ class TestAssets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         asset = response.parse()
-        assert_matches_type(SyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -58,7 +56,7 @@ class TestAssets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             asset = response.parse()
-            assert_matches_type(SyncList[Asset], asset, path=["response"])
+            assert_matches_type(AssetListResponse, asset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -158,20 +156,18 @@ class TestAsyncAssets:
     @parametrize
     async def test_method_list(self, async_client: AsyncLimrun) -> None:
         asset = await async_client.assets.list()
-        assert_matches_type(AsyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         asset = await async_client.assets.list(
-            ending_before="asset_someid",
             include_download_url=True,
             include_upload_url=True,
             limit=50,
             name_filter="nameFilter",
-            starting_after="asset_someid",
         )
-        assert_matches_type(AsyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -181,7 +177,7 @@ class TestAsyncAssets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         asset = await response.parse()
-        assert_matches_type(AsyncList[Asset], asset, path=["response"])
+        assert_matches_type(AssetListResponse, asset, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -191,7 +187,7 @@ class TestAsyncAssets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             asset = await response.parse()
-            assert_matches_type(AsyncList[Asset], asset, path=["response"])
+            assert_matches_type(AssetListResponse, asset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
