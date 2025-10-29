@@ -33,6 +33,7 @@ class TestAssets:
         asset = client.assets.list(
             include_download_url=True,
             include_upload_url=True,
+            limit=50,
             name_filter="nameFilter",
         )
         assert_matches_type(AssetListResponse, asset, path=["response"])
@@ -163,6 +164,7 @@ class TestAsyncAssets:
         asset = await async_client.assets.list(
             include_download_url=True,
             include_upload_url=True,
+            limit=50,
             name_filter="nameFilter",
         )
         assert_matches_type(AssetListResponse, asset, path=["response"])

@@ -87,6 +87,7 @@ class TestIosInstances:
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         ios_instance = client.ios_instances.list(
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
             state="unknown",
         )
@@ -274,6 +275,7 @@ class TestAsyncIosInstances:
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         ios_instance = await async_client.ios_instances.list(
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
             state="unknown",
         )

@@ -16,6 +16,9 @@ class AndroidInstanceListParams(TypedDict, total=False):
     list of key=value pairs (e.g., env=prod,region=us-west).
     """
 
+    limit: int
+    """Maximum number of instances to be returned. The default is 50."""
+
     region: str
     """Region where the instance is scheduled on."""
 

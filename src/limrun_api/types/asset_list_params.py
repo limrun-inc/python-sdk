@@ -16,5 +16,8 @@ class AssetListParams(TypedDict, total=False):
     include_upload_url: Annotated[bool, PropertyInfo(alias="includeUploadUrl")]
     """Toggles whether an upload URL should be included in the response"""
 
+    limit: int
+    """Maximum number of items to be returned. The default is 50."""
+
     name_filter: Annotated[str, PropertyInfo(alias="nameFilter")]
     """Query by file name"""

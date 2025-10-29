@@ -94,6 +94,7 @@ class IosInstancesResource(SyncAPIResource):
         self,
         *,
         label_selector: str | Omit = omit,
+        limit: int | Omit = omit,
         region: str | Omit = omit,
         state: Literal["unknown", "creating", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -109,6 +110,8 @@ class IosInstancesResource(SyncAPIResource):
         Args:
           label_selector: Labels filter to apply to instances to return. Expects a comma-separated list of
               key=value pairs (e.g., env=prod,region=us-west).
+
+          limit: Maximum number of items to be returned. The default is 50.
 
           region: Region where the instance is scheduled on.
 
@@ -132,6 +135,7 @@ class IosInstancesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "label_selector": label_selector,
+                        "limit": limit,
                         "region": region,
                         "state": state,
                     },
@@ -279,6 +283,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         self,
         *,
         label_selector: str | Omit = omit,
+        limit: int | Omit = omit,
         region: str | Omit = omit,
         state: Literal["unknown", "creating", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -294,6 +299,8 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         Args:
           label_selector: Labels filter to apply to instances to return. Expects a comma-separated list of
               key=value pairs (e.g., env=prod,region=us-west).
+
+          limit: Maximum number of items to be returned. The default is 50.
 
           region: Region where the instance is scheduled on.
 
@@ -317,6 +324,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "label_selector": label_selector,
+                        "limit": limit,
                         "region": region,
                         "state": state,
                     },

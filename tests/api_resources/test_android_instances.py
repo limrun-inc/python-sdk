@@ -40,6 +40,7 @@ class TestAndroidInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "os_version": "osVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",
@@ -92,6 +93,7 @@ class TestAndroidInstances:
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.list(
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
             state="unknown",
         )
@@ -229,6 +231,7 @@ class TestAsyncAndroidInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "os_version": "osVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",
@@ -281,6 +284,7 @@ class TestAsyncAndroidInstances:
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list(
             label_selector="env=prod,version=1.2",
+            limit=50,
             region="region",
             state="unknown",
         )

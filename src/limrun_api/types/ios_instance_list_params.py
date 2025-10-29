@@ -16,6 +16,9 @@ class IosInstanceListParams(TypedDict, total=False):
     key=value pairs (e.g., env=prod,region=us-west).
     """
 
+    limit: int
+    """Maximum number of items to be returned. The default is 50."""
+
     region: str
     """Region where the instance is scheduled on."""
 
