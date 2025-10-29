@@ -32,6 +32,7 @@ class SpecClue(TypedDict, total=False):
     client_ip: Annotated[str, PropertyInfo(alias="clientIp")]
 
     os_version: Annotated[str, PropertyInfo(alias="osVersion")]
+    """The major version of Android, e.g. "13", "14" or "15"."""
 
 
 class SpecInitialAsset(TypedDict, total=False):
