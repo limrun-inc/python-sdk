@@ -105,7 +105,7 @@ class AndroidInstancesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AndroidInstanceListResponse:
         """
-        List Android instances belonging to given organization
+        List Android instances
 
         Args:
           label_selector: Labels filter to apply to Android instances to return. Expects a comma-separated
@@ -296,7 +296,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AndroidInstanceListResponse:
         """
-        List Android instances belonging to given organization
+        List Android instances
 
         Args:
           label_selector: Labels filter to apply to Android instances to return. Expects a comma-separated

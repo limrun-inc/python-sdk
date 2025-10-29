@@ -1,12 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import List
+from typing_extensions import TypeAlias
 
 from .asset import Asset
-from .._models import BaseModel
 
 __all__ = ["AssetListResponse"]
 
-
-class AssetListResponse(BaseModel):
-    items: Optional[List[Asset]] = None
+AssetListResponse: TypeAlias = List[Asset]
