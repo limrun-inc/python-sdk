@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.6.0 (2025-10-29)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/limrun-inc/python-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** add explicit pagination fields ([c4756f3](https://github.com/limrun-inc/python-sdk/commit/c4756f391ef5094ffccd2988e49ae2fc2be3fe62))
+* **api:** add os version clue ([7d0bda5](https://github.com/limrun-inc/python-sdk/commit/7d0bda58126acff22bf569828ea1c38abf144e0c))
+* **api:** limit pagination only to limit parameter temporarily ([68a99e1](https://github.com/limrun-inc/python-sdk/commit/68a99e16648bd03a5edaebd4115b77fd5ab311f7))
+* **api:** manual updates ([6301238](https://github.com/limrun-inc/python-sdk/commit/6301238cfadf4c89827fee3e2ecca0194b3e5b50))
+* **api:** manual updates ([6dda9e7](https://github.com/limrun-inc/python-sdk/commit/6dda9e73f01b3cc6be13633b1a6f84bd4477ce18))
+* **api:** os version description to show possible values ([a4d9cd3](https://github.com/limrun-inc/python-sdk/commit/a4d9cd3c2b77d85c010e0a9884b7aac36136e354))
+* **api:** osVersion clue is available only in Android yet ([545f2db](https://github.com/limrun-inc/python-sdk/commit/545f2dbb4ce59f7288fa978df60b2b46a6ac8736))
+* **api:** remaining pieces of pagionation removed temporarily ([73713dd](https://github.com/limrun-inc/python-sdk/commit/73713dd432d23023862e4d15a609c8ea4fdd9819))
+* **api:** update assets and ios_instances endpoints with pagination ([95668d7](https://github.com/limrun-inc/python-sdk/commit/95668d74ca87e07403623c3a3ddcb93fa42820d6))
+* **api:** update stainless schema for pagination ([3767bd6](https://github.com/limrun-inc/python-sdk/commit/3767bd695bef605b8d2169d4bb783864df90401f))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([ce7151e](https://github.com/limrun-inc/python-sdk/commit/ce7151eb8db959e77260d8da78343c91b7a36853))
+* **internal:** detect missing future annotations with ruff ([5ea3e8e](https://github.com/limrun-inc/python-sdk/commit/5ea3e8e2ce8f057a8e22854221db80b5f8aa229c))
+
 ## 0.5.0 (2025-10-07)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/limrun-inc/python-sdk/compare/v0.4.0...v0.5.0)
