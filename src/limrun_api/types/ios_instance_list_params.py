@@ -10,12 +10,6 @@ __all__ = ["IosInstanceListParams"]
 
 
 class IosInstanceListParams(TypedDict, total=False):
-    ending_before: Annotated[str, PropertyInfo(alias="endingBefore")]
-    """Return items up until this ID.
-
-    If not given, it will return up until the 50th instance.
-    """
-
     label_selector: Annotated[str, PropertyInfo(alias="labelSelector")]
     """
     Labels filter to apply to instances to return. Expects a comma-separated list of
@@ -27,12 +21,6 @@ class IosInstanceListParams(TypedDict, total=False):
 
     region: str
     """Region where the instance is scheduled on."""
-
-    starting_after: Annotated[str, PropertyInfo(alias="startingAfter")]
-    """Return records starting after this ID.
-
-    If not given, it will start from the most recent one.
-    """
 
     state: Literal["unknown", "creating", "ready", "terminated"]
     """State filter to apply to instances to return."""
