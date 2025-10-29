@@ -38,6 +38,7 @@ class TestIosInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "s_version": "sVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",
@@ -228,6 +229,7 @@ class TestAsyncIosInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "s_version": "sVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",
