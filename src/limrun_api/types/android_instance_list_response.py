@@ -3,6 +3,8 @@
 from typing import List
 from typing_extensions import TypeAlias
 
+from .android_instance import AndroidInstance
+
 __all__ = ["AndroidInstanceListResponse"]
 
-AndroidInstanceListResponse: TypeAlias = List[object]
+AndroidInstanceListResponse: TypeAlias = List[AndroidInstance]
