@@ -40,6 +40,7 @@ class TestAndroidInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "os_version": "osVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",
@@ -230,6 +231,7 @@ class TestAsyncAndroidInstances:
                     {
                         "kind": "ClientIP",
                         "client_ip": "clientIp",
+                        "os_version": "osVersion",
                     }
                 ],
                 "hard_timeout": "hardTimeout",

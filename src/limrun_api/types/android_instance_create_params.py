@@ -27,9 +27,11 @@ class Metadata(TypedDict, total=False):
 
 
 class SpecClue(TypedDict, total=False):
-    kind: Required[Literal["ClientIP"]]
+    kind: Required[Literal["ClientIP", "OSVersion"]]
 
     client_ip: Annotated[str, PropertyInfo(alias="clientIp")]
+
+    os_version: Annotated[str, PropertyInfo(alias="osVersion")]
 
 
 class SpecInitialAsset(TypedDict, total=False):
