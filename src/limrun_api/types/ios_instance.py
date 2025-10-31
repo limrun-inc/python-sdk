@@ -53,6 +53,8 @@ class Status(BaseModel):
 
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
+    port_forward_web_socket_url: Optional[str] = FieldInfo(alias="portForwardWebSocketUrl", default=None)
+
 
 class IosInstance(BaseModel):
     metadata: Metadata
