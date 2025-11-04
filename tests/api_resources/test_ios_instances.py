@@ -46,6 +46,7 @@ class TestIosInstances:
                         "kind": "App",
                         "source": "URL",
                         "asset_name": "assetName",
+                        "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }
                 ],
@@ -234,6 +235,7 @@ class TestAsyncIosInstances:
                         "kind": "App",
                         "source": "URL",
                         "asset_name": "assetName",
+                        "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }
                 ],
