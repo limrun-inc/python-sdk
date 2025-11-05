@@ -62,6 +62,48 @@ class TestAssets:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_delete(self, client: Limrun) -> None:
+        asset = client.assets.delete(
+            "assetId",
+        )
+        assert asset is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_delete(self, client: Limrun) -> None:
+        response = client.assets.with_raw_response.delete(
+            "assetId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        asset = response.parse()
+        assert asset is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_delete(self, client: Limrun) -> None:
+        with client.assets.with_streaming_response.delete(
+            "assetId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            asset = response.parse()
+            assert asset is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_delete(self, client: Limrun) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `asset_id` but received ''"):
+            client.assets.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_get(self, client: Limrun) -> None:
         asset = client.assets.get(
             asset_id="assetId",
@@ -190,6 +232,48 @@ class TestAsyncAssets:
             assert_matches_type(AssetListResponse, asset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_delete(self, async_client: AsyncLimrun) -> None:
+        asset = await async_client.assets.delete(
+            "assetId",
+        )
+        assert asset is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncLimrun) -> None:
+        response = await async_client.assets.with_raw_response.delete(
+            "assetId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        asset = await response.parse()
+        assert asset is None
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncLimrun) -> None:
+        async with async_client.assets.with_streaming_response.delete(
+            "assetId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            asset = await response.parse()
+            assert asset is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncLimrun) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `asset_id` but received ''"):
+            await async_client.assets.with_raw_response.delete(
+                "",
+            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize

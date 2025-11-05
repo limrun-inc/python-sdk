@@ -38,6 +38,14 @@ class SpecInitialAsset(TypedDict, total=False):
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 
+    launch_mode: Annotated[
+        Literal["ForegroundIfRunning", "RelaunchIfRunning", "FailIfRunning"], PropertyInfo(alias="launchMode")
+    ]
+    """Launch mode specifies how to launch the app after installation.
+
+    If not given, the app won't be launched.
+    """
+
     url: str
 
 

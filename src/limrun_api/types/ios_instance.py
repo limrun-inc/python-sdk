@@ -49,9 +49,11 @@ class Spec(BaseModel):
 class Status(BaseModel):
     token: str
 
-    state: Literal["unknown", "creating", "ready", "terminated"]
+    state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
 
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
+
+    port_forward_web_socket_url: Optional[str] = FieldInfo(alias="portForwardWebSocketUrl", default=None)
 
 
 class IosInstance(BaseModel):
