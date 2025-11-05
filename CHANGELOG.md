@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.7.0 (2025-11-05)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/limrun-inc/python-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** add asset deletion endpoint ([e468855](https://github.com/limrun-inc/python-sdk/commit/e4688552f9edac991e15e0e3c9e052882b7c8e5f))
+* **api:** add ios port-forward endpoint url to return type ([a636183](https://github.com/limrun-inc/python-sdk/commit/a6361831f2965f40dca0304c2a6a9b774b54a938))
+* **api:** add launchMode to iOS asset object ([4e5bb3c](https://github.com/limrun-inc/python-sdk/commit/4e5bb3c6727312a6e2006d4a323685eeecd3344a))
+* **api:** add the assigned state to both android and ios instance states ([0aa0e44](https://github.com/limrun-inc/python-sdk/commit/0aa0e4428f16befa8058ddaa81c432336b9ab621))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([f2fe77c](https://github.com/limrun-inc/python-sdk/commit/f2fe77cfdb1027a3bde5fe2ddfa763598ead2194))
+
+
+### Chores
+
+* **internal/tests:** avoid race condition with implicit client cleanup ([73d9600](https://github.com/limrun-inc/python-sdk/commit/73d960047c072bc1139fdbb2fdc7d8c8b844cdb4))
+* **internal:** grammar fix (it's -&gt; its) ([7e8562b](https://github.com/limrun-inc/python-sdk/commit/7e8562bce0d40d2e239132d7fd9d0d5b1e8ee5a8))
+
 ## 0.6.0 (2025-10-29)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/limrun-inc/python-sdk/compare/v0.5.0...v0.6.0)
