@@ -24,6 +24,7 @@ from limrun_api.types import Asset, AssetListResponse, AssetGetOrCreateResponse
 Methods:
 
 - <code title="get /v1/assets">client.assets.<a href="./src/limrun_api/resources/assets.py">list</a>(\*\*<a href="src/limrun_api/types/asset_list_params.py">params</a>) -> <a href="./src/limrun_api/types/asset_list_response.py">AssetListResponse</a></code>
+- <code title="delete /v1/assets/{assetId}">client.assets.<a href="./src/limrun_api/resources/assets.py">delete</a>(asset_id) -> None</code>
 - <code title="get /v1/assets/{assetId}">client.assets.<a href="./src/limrun_api/resources/assets.py">get</a>(asset_id, \*\*<a href="src/limrun_api/types/asset_get_params.py">params</a>) -> <a href="./src/limrun_api/types/asset.py">Asset</a></code>
 - <code title="put /v1/assets">client.assets.<a href="./src/limrun_api/resources/assets.py">get_or_create</a>(\*\*<a href="src/limrun_api/types/asset_get_or_create_params.py">params</a>) -> <a href="./src/limrun_api/types/asset_get_or_create_response.py">AssetGetOrCreateResponse</a></code>
 
