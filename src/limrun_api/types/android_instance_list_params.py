@@ -22,5 +22,5 @@ class AndroidInstanceListParams(TypedDict, total=False):
     region: str
     """Region where the instance is scheduled on."""
 
-    state: Literal["unknown", "creating", "ready", "terminated"]
+    state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
     """State filter to apply to Android instances to return."""
