@@ -47,6 +47,7 @@ class TestAndroidInstances:
                     {
                         "kind": "App",
                         "source": "URL",
+                        "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
                         "url": "url",
@@ -240,6 +241,7 @@ class TestAsyncAndroidInstances:
                     {
                         "kind": "App",
                         "source": "URL",
+                        "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
                         "url": "url",

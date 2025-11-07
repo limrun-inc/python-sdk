@@ -34,7 +34,9 @@ class SpecClue(TypedDict, total=False):
 class SpecInitialAsset(TypedDict, total=False):
     kind: Required[Literal["App"]]
 
-    source: Required[Literal["URL", "AssetName"]]
+    source: Required[Literal["URL", "AssetName", "AssetID"]]
+
+    asset_id: Annotated[str, PropertyInfo(alias="assetId")]
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 
