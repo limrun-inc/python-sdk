@@ -7,6 +7,7 @@ from .ios_instance import IosInstance as IosInstance
 from .android_instance import AndroidInstance as AndroidInstance
 from .asset_get_params import AssetGetParams as AssetGetParams
 from .asset_list_params import AssetListParams as AssetListParams
+from .asset_list_response import AssetListResponse as AssetListResponse
 from .ios_instance_list_params import IosInstanceListParams as IosInstanceListParams
 from .asset_get_or_create_params import AssetGetOrCreateParams as AssetGetOrCreateParams
 from .ios_instance_create_params import IosInstanceCreateParams as IosInstanceCreateParams
