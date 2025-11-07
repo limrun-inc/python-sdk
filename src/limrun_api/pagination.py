@@ -9,7 +9,7 @@ from ._utils import is_mapping
 from ._models import BaseModel
 from ._base_client import BasePage, PageInfo, BaseSyncPage, BaseAsyncPage
 
-__all__ = ["SyncAndroidInstance", "AsyncAndroidInstance"]
+__all__ = ["SyncItems", "AsyncItems"]
 
 _BaseModelT = TypeVar("_BaseModelT", bound=BaseModel)
 
@@ -17,11 +17,11 @@ _T = TypeVar("_T")
 
 
 @runtime_checkable
-class AndroidInstanceItem(Protocol):
+class ItemsItem(Protocol):
     id: Optional[str]
 
 
-class SyncAndroidInstance(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+class SyncItems(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
 
     @override
@@ -41,14 +41,14 @@ class SyncAndroidInstance(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
 
         if is_forwards:
             item = cast(Any, items[-1])
-            if not isinstance(item, AndroidInstanceItem) or item.id is None:
+            if not isinstance(item, ItemsItem) or item.id is None:
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
             item = cast(Any, self.items[0])
-            if not isinstance(item, AndroidInstanceItem) or item.id is None:
+            if not isinstance(item, ItemsItem) or item.id is None:
                 # TODO emit warning log
                 return None
 
@@ -64,7 +64,7 @@ class SyncAndroidInstance(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         )
 
 
-class AsyncAndroidInstance(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+class AsyncItems(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     items: List[_T]
 
     @override
@@ -84,14 +84,14 @@ class AsyncAndroidInstance(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
 
         if is_forwards:
             item = cast(Any, items[-1])
-            if not isinstance(item, AndroidInstanceItem) or item.id is None:
+            if not isinstance(item, ItemsItem) or item.id is None:
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
             item = cast(Any, self.items[0])
-            if not isinstance(item, AndroidInstanceItem) or item.id is None:
+            if not isinstance(item, ItemsItem) or item.id is None:
                 # TODO emit warning log
                 return None
 

@@ -9,7 +9,8 @@ import pytest
 
 from limrun_api import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
-from limrun_api.types import IosInstance, IosInstanceListResponse
+from limrun_api.types import IosInstance
+from limrun_api.pagination import SyncItems, AsyncItems
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -81,18 +82,20 @@ class TestIosInstances:
     @parametrize
     def test_method_list(self, client: Limrun) -> None:
         ios_instance = client.ios_instances.list()
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(SyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         ios_instance = client.ios_instances.list(
+            ending_before="endingBefore",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
+            starting_after="startingAfter",
             state="unknown",
         )
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(SyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -102,7 +105,7 @@ class TestIosInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         ios_instance = response.parse()
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(SyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -112,7 +115,7 @@ class TestIosInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             ios_instance = response.parse()
-            assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+            assert_matches_type(SyncItems[IosInstance], ios_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -270,18 +273,20 @@ class TestAsyncIosInstances:
     @parametrize
     async def test_method_list(self, async_client: AsyncLimrun) -> None:
         ios_instance = await async_client.ios_instances.list()
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(AsyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         ios_instance = await async_client.ios_instances.list(
+            ending_before="endingBefore",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
+            starting_after="startingAfter",
             state="unknown",
         )
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(AsyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -291,7 +296,7 @@ class TestAsyncIosInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         ios_instance = await response.parse()
-        assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+        assert_matches_type(AsyncItems[IosInstance], ios_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -301,7 +306,7 @@ class TestAsyncIosInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             ios_instance = await response.parse()
-            assert_matches_type(IosInstanceListResponse, ios_instance, path=["response"])
+            assert_matches_type(AsyncItems[IosInstance], ios_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

@@ -17,7 +17,7 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncAndroidInstance, AsyncAndroidInstance
+from ..pagination import SyncItems, AsyncItems
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.android_instance import AndroidInstance
 
@@ -105,7 +105,7 @@ class AndroidInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncAndroidInstance[AndroidInstance]:
+    ) -> SyncItems[AndroidInstance]:
         """
         List Android instances
 
@@ -129,7 +129,7 @@ class AndroidInstancesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/android_instances",
-            page=SyncAndroidInstance[AndroidInstance],
+            page=SyncItems[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -301,7 +301,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[AndroidInstance, AsyncAndroidInstance[AndroidInstance]]:
+    ) -> AsyncPaginator[AndroidInstance, AsyncItems[AndroidInstance]]:
         """
         List Android instances
 
@@ -325,7 +325,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/android_instances",
-            page=AsyncAndroidInstance[AndroidInstance],
+            page=AsyncItems[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
