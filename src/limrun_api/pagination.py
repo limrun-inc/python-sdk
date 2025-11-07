@@ -22,32 +22,32 @@ class AndroidInstanceItem(Protocol):
 
 
 class SyncAndroidInstance(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
+    data: List[_T]
 
     @override
     def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
+        data = self.data
+        if not data:
             return []
-        return items
+        return data
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
         is_forwards = not self._options.params.get("endingBefore", False)
 
-        items = self.items
-        if not items:
+        data = self.data
+        if not data:
             return None
 
         if is_forwards:
-            item = cast(Any, items[-1])
+            item = cast(Any, data[-1])
             if not isinstance(item, AndroidInstanceItem) or item.id is None:
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
-            item = cast(Any, self.items[0])
+            item = cast(Any, self.data[0])
             if not isinstance(item, AndroidInstanceItem) or item.id is None:
                 # TODO emit warning log
                 return None
@@ -59,38 +59,38 @@ class SyncAndroidInstance(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
         return cls.construct(
             None,
             **{
-                **(cast(Mapping[str, Any], data) if is_mapping(data) else {"items": data}),
+                **(cast(Mapping[str, Any], data) if is_mapping(data) else {"data": data}),
             },
         )
 
 
 class AsyncAndroidInstance(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
-    items: List[_T]
+    data: List[_T]
 
     @override
     def _get_page_items(self) -> List[_T]:
-        items = self.items
-        if not items:
+        data = self.data
+        if not data:
             return []
-        return items
+        return data
 
     @override
     def next_page_info(self) -> Optional[PageInfo]:
         is_forwards = not self._options.params.get("endingBefore", False)
 
-        items = self.items
-        if not items:
+        data = self.data
+        if not data:
             return None
 
         if is_forwards:
-            item = cast(Any, items[-1])
+            item = cast(Any, data[-1])
             if not isinstance(item, AndroidInstanceItem) or item.id is None:
                 # TODO emit warning log
                 return None
 
             return PageInfo(params={"startingAfter": item.id})
         else:
-            item = cast(Any, self.items[0])
+            item = cast(Any, self.data[0])
             if not isinstance(item, AndroidInstanceItem) or item.id is None:
                 # TODO emit warning log
                 return None
@@ -102,6 +102,6 @@ class AsyncAndroidInstance(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
         return cls.construct(
             None,
             **{
-                **(cast(Mapping[str, Any], data) if is_mapping(data) else {"items": data}),
+                **(cast(Mapping[str, Any], data) if is_mapping(data) else {"data": data}),
             },
         )
