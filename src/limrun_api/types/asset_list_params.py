@@ -10,8 +10,6 @@ __all__ = ["AssetListParams"]
 
 
 class AssetListParams(TypedDict, total=False):
-    ending_before: Annotated[str, PropertyInfo(alias="endingBefore")]
-
     include_download_url: Annotated[bool, PropertyInfo(alias="includeDownloadUrl")]
     """Toggles whether a download URL should be included in the response"""
 
@@ -23,5 +21,3 @@ class AssetListParams(TypedDict, total=False):
 
     name_filter: Annotated[str, PropertyInfo(alias="nameFilter")]
     """Query by file name"""
-
-    starting_after: Annotated[str, PropertyInfo(alias="startingAfter")]
