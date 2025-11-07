@@ -9,7 +9,7 @@ from limrun_api.types import AndroidInstance
 Methods:
 
 - <code title="post /v1/android_instances">client.android_instances.<a href="./src/limrun_api/resources/android_instances.py">create</a>(\*\*<a href="src/limrun_api/types/android_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/android_instance.py">AndroidInstance</a></code>
-- <code title="get /v1/android_instances">client.android_instances.<a href="./src/limrun_api/resources/android_instances.py">list</a>(\*\*<a href="src/limrun_api/types/android_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/android_instance.py">SyncAndroidInstance[AndroidInstance]</a></code>
+- <code title="get /v1/android_instances">client.android_instances.<a href="./src/limrun_api/resources/android_instances.py">list</a>(\*\*<a href="src/limrun_api/types/android_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/android_instance.py">SyncItems[AndroidInstance]</a></code>
 - <code title="delete /v1/android_instances/{id}">client.android_instances.<a href="./src/limrun_api/resources/android_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/android_instances/{id}">client.android_instances.<a href="./src/limrun_api/resources/android_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/android_instance.py">AndroidInstance</a></code>
 
@@ -33,12 +33,12 @@ Methods:
 Types:
 
 ```python
-from limrun_api.types import IosInstance, IosInstanceListResponse
+from limrun_api.types import IosInstance
 ```
 
 Methods:
 
 - <code title="post /v1/ios_instances">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">create</a>(\*\*<a href="src/limrun_api/types/ios_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/ios_instance.py">IosInstance</a></code>
-- <code title="get /v1/ios_instances">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">list</a>(\*\*<a href="src/limrun_api/types/ios_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/ios_instance_list_response.py">IosInstanceListResponse</a></code>
+- <code title="get /v1/ios_instances">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">list</a>(\*\*<a href="src/limrun_api/types/ios_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/ios_instance.py">SyncItems[IosInstance]</a></code>
 - <code title="delete /v1/ios_instances/{id}">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/ios_instances/{id}">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/ios_instance.py">IosInstance</a></code>

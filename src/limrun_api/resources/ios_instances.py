@@ -17,9 +17,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncItems, AsyncItems
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.ios_instance import IosInstance
-from ..types.ios_instance_list_response import IosInstanceListResponse
 
 __all__ = ["IosInstancesResource", "AsyncIosInstancesResource"]
 
@@ -93,9 +93,11 @@ class IosInstancesResource(SyncAPIResource):
     def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
         limit: int | Omit = omit,
         region: str | Omit = omit,
+        starting_after: str | Omit = omit,
         state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -103,7 +105,7 @@ class IosInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> IosInstanceListResponse:
+    ) -> SyncItems[IosInstance]:
         """
         List iOS instances
 
@@ -125,8 +127,9 @@ class IosInstancesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/ios_instances",
+            page=SyncItems[IosInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -134,15 +137,17 @@ class IosInstancesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
                         "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     ios_instance_list_params.IosInstanceListParams,
                 ),
             ),
-            cast_to=IosInstanceListResponse,
+            model=IosInstance,
         )
 
     def delete(
@@ -279,12 +284,14 @@ class AsyncIosInstancesResource(AsyncAPIResource):
             cast_to=IosInstance,
         )
 
-    async def list(
+    def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
         limit: int | Omit = omit,
         region: str | Omit = omit,
+        starting_after: str | Omit = omit,
         state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -292,7 +299,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> IosInstanceListResponse:
+    ) -> AsyncPaginator[IosInstance, AsyncItems[IosInstance]]:
         """
         List iOS instances
 
@@ -314,24 +321,27 @@ class AsyncIosInstancesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/ios_instances",
+            page=AsyncItems[IosInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
                         "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     ios_instance_list_params.IosInstanceListParams,
                 ),
             ),
-            cast_to=IosInstanceListResponse,
+            model=IosInstance,
         )
 
     async def delete(

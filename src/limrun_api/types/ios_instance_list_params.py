@@ -10,6 +10,8 @@ __all__ = ["IosInstanceListParams"]
 
 
 class IosInstanceListParams(TypedDict, total=False):
+    ending_before: Annotated[str, PropertyInfo(alias="endingBefore")]
+
     label_selector: Annotated[str, PropertyInfo(alias="labelSelector")]
     """
     Labels filter to apply to instances to return. Expects a comma-separated list of
@@ -21,6 +23,8 @@ class IosInstanceListParams(TypedDict, total=False):
 
     region: str
     """Region where the instance is scheduled on."""
+
+    starting_after: Annotated[str, PropertyInfo(alias="startingAfter")]
 
     state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
     """State filter to apply to instances to return."""
