@@ -17,9 +17,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncAndroidInstance, AsyncAndroidInstance
-from .._base_client import AsyncPaginator, make_request_options
+from .._base_client import make_request_options
 from ..types.android_instance import AndroidInstance
+from ..types.android_instance_list_response import AndroidInstanceListResponse
 
 __all__ = ["AndroidInstancesResource", "AsyncAndroidInstancesResource"]
 
@@ -105,7 +105,7 @@ class AndroidInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncAndroidInstance[AndroidInstance]:
+    ) -> AndroidInstanceListResponse:
         """
         List Android instances
 
@@ -127,9 +127,8 @@ class AndroidInstancesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/android_instances",
-            page=SyncAndroidInstance[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -147,7 +146,7 @@ class AndroidInstancesResource(SyncAPIResource):
                     android_instance_list_params.AndroidInstanceListParams,
                 ),
             ),
-            model=AndroidInstance,
+            cast_to=AndroidInstanceListResponse,
         )
 
     def delete(
@@ -286,7 +285,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
             cast_to=AndroidInstance,
         )
 
-    def list(
+    async def list(
         self,
         *,
         ending_before: str | Omit = omit,
@@ -301,7 +300,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[AndroidInstance, AsyncAndroidInstance[AndroidInstance]]:
+    ) -> AndroidInstanceListResponse:
         """
         List Android instances
 
@@ -323,15 +322,14 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/android_instances",
-            page=AsyncAndroidInstance[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
                         "ending_before": ending_before,
                         "label_selector": label_selector,
@@ -343,7 +341,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
                     android_instance_list_params.AndroidInstanceListParams,
                 ),
             ),
-            model=AndroidInstance,
+            cast_to=AndroidInstanceListResponse,
         )
 
     async def delete(
