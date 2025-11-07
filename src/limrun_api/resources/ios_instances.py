@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal
-
 import httpx
 
 from ..types import ios_instance_list_params, ios_instance_create_params
@@ -98,7 +96,7 @@ class IosInstancesResource(SyncAPIResource):
         limit: int | Omit = omit,
         region: str | Omit = omit,
         starting_after: str | Omit = omit,
-        state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
+        state: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -117,7 +115,9 @@ class IosInstancesResource(SyncAPIResource):
 
           region: Region where the instance is scheduled on.
 
-          state: State filter to apply to instances to return.
+          state: State filter to apply to Android instances to return. Each comma-separated state
+              will be used as part of an OR clause, e.g. "assigned,ready" will return all
+              instances that are either assigned or ready.
 
           extra_headers: Send extra headers
 
@@ -292,7 +292,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         limit: int | Omit = omit,
         region: str | Omit = omit,
         starting_after: str | Omit = omit,
-        state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
+        state: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -311,7 +311,9 @@ class AsyncIosInstancesResource(AsyncAPIResource):
 
           region: Region where the instance is scheduled on.
 
-          state: State filter to apply to instances to return.
+          state: State filter to apply to Android instances to return. Each comma-separated state
+              will be used as part of an OR clause, e.g. "assigned,ready" will return all
+              instances that are either assigned or ready.
 
           extra_headers: Send extra headers
 

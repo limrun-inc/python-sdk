@@ -93,7 +93,7 @@ class TestIosInstances:
             limit=50,
             region="region",
             starting_after="startingAfter",
-            state="unknown",
+            state="assigned,ready",
         )
         assert_matches_type(SyncItems[IosInstance], ios_instance, path=["response"])
 
@@ -284,7 +284,7 @@ class TestAsyncIosInstances:
             limit=50,
             region="region",
             starting_after="startingAfter",
-            state="unknown",
+            state="assigned,ready",
         )
         assert_matches_type(AsyncItems[IosInstance], ios_instance, path=["response"])
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Annotated, TypedDict
+from typing_extensions import Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -26,5 +26,9 @@ class AndroidInstanceListParams(TypedDict, total=False):
 
     starting_after: Annotated[str, PropertyInfo(alias="startingAfter")]
 
-    state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
-    """State filter to apply to Android instances to return."""
+    state: str
+    """State filter to apply to Android instances to return.
+
+    Each comma-separated state will be used as part of an OR clause, e.g.
+    "assigned,ready" will return all instances that are either assigned or ready.
+    """
