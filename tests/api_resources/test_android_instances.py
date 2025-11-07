@@ -95,7 +95,7 @@ class TestAndroidInstances:
             limit=50,
             region="region",
             starting_after="startingAfter",
-            state="unknown",
+            state="assigned,ready",
         )
         assert_matches_type(SyncItems[AndroidInstance], android_instance, path=["response"])
 
@@ -288,7 +288,7 @@ class TestAsyncAndroidInstances:
             limit=50,
             region="region",
             starting_after="startingAfter",
-            state="unknown",
+            state="assigned,ready",
         )
         assert_matches_type(AsyncItems[AndroidInstance], android_instance, path=["response"])
 
