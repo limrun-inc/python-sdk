@@ -45,6 +45,7 @@ class AndroidInstancesResource(SyncAPIResource):
     def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: android_instance_create_params.Metadata | Omit = omit,
         spec: android_instance_create_params.Spec | Omit = omit,
@@ -59,6 +60,9 @@ class AndroidInstancesResource(SyncAPIResource):
         Create an Android instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -83,7 +87,13 @@ class AndroidInstancesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"wait": wait}, android_instance_create_params.AndroidInstanceCreateParams),
+                query=maybe_transform(
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    android_instance_create_params.AndroidInstanceCreateParams,
+                ),
             ),
             cast_to=AndroidInstance,
         )
@@ -243,6 +253,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: android_instance_create_params.Metadata | Omit = omit,
         spec: android_instance_create_params.Spec | Omit = omit,
@@ -257,6 +268,9 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         Create an Android instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -282,7 +296,11 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"wait": wait}, android_instance_create_params.AndroidInstanceCreateParams
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    android_instance_create_params.AndroidInstanceCreateParams,
                 ),
             ),
             cast_to=AndroidInstance,

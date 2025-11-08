@@ -28,6 +28,7 @@ class TestAndroidInstances:
     @parametrize
     def test_method_create_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",
@@ -222,6 +223,7 @@ class TestAsyncAndroidInstances:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",

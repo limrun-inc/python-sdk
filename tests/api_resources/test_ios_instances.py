@@ -28,6 +28,7 @@ class TestIosInstances:
     @parametrize
     def test_method_create_with_all_params(self, client: Limrun) -> None:
         ios_instance = client.ios_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",
@@ -220,6 +221,7 @@ class TestAsyncIosInstances:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLimrun) -> None:
         ios_instance = await async_client.ios_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",
