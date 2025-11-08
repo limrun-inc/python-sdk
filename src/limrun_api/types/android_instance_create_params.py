@@ -12,6 +12,12 @@ __all__ = ["AndroidInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecI
 
 
 class AndroidInstanceCreateParams(TypedDict, total=False):
+    reuse_if_exists: Annotated[bool, PropertyInfo(alias="reuseIfExists")]
+    """
+    If there is another instance with given labels and region, return that one
+    instead of creating a new instance.
+    """
+
     wait: bool
     """Return after the instance is ready to connect."""
 

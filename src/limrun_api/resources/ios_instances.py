@@ -45,6 +45,7 @@ class IosInstancesResource(SyncAPIResource):
     def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: ios_instance_create_params.Metadata | Omit = omit,
         spec: ios_instance_create_params.Spec | Omit = omit,
@@ -59,6 +60,9 @@ class IosInstancesResource(SyncAPIResource):
         Create an iOS instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -83,7 +87,13 @@ class IosInstancesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"wait": wait}, ios_instance_create_params.IosInstanceCreateParams),
+                query=maybe_transform(
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    ios_instance_create_params.IosInstanceCreateParams,
+                ),
             ),
             cast_to=IosInstance,
         )
@@ -243,6 +253,7 @@ class AsyncIosInstancesResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: ios_instance_create_params.Metadata | Omit = omit,
         spec: ios_instance_create_params.Spec | Omit = omit,
@@ -257,6 +268,9 @@ class AsyncIosInstancesResource(AsyncAPIResource):
         Create an iOS instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -281,7 +295,13 @@ class AsyncIosInstancesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"wait": wait}, ios_instance_create_params.IosInstanceCreateParams),
+                query=await async_maybe_transform(
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    ios_instance_create_params.IosInstanceCreateParams,
+                ),
             ),
             cast_to=IosInstance,
         )
