@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/limrun_api.svg?label=pypi%20(stable))](https://pypi.org/project/limrun_api/)
 
-The Limrun Python library provides convenient access to the Limrun REST API from any Python 3.8+
+The Limrun Python library provides convenient access to the Limrun REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -29,7 +29,7 @@ import os
 from limrun_api import Limrun
 
 client = Limrun(
-    api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("LIM_API_KEY"),  # This is the default and can be omitted
 )
 
 android_instance = client.android_instances.create()
@@ -38,7 +38,7 @@ print(android_instance.metadata)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `LIM_TOKEN="My API Key"` to your `.env` file
+to add `LIM_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -51,7 +51,7 @@ import asyncio
 from limrun_api import AsyncLimrun
 
 client = AsyncLimrun(
-    api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("LIM_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -371,7 +371,7 @@ print(limrun_api.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

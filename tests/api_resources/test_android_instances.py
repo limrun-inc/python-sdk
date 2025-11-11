@@ -9,10 +9,8 @@ import pytest
 
 from limrun_api import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
-from limrun_api.types import (
-    AndroidInstance,
-    AndroidInstanceListResponse,
-)
+from limrun_api.types import AndroidInstance
+from limrun_api.pagination import SyncItems, AsyncItems
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -30,6 +28,7 @@ class TestAndroidInstances:
     @parametrize
     def test_method_create_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",
@@ -49,6 +48,7 @@ class TestAndroidInstances:
                     {
                         "kind": "App",
                         "source": "URL",
+                        "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
                         "url": "url",
@@ -86,18 +86,20 @@ class TestAndroidInstances:
     @parametrize
     def test_method_list(self, client: Limrun) -> None:
         android_instance = client.android_instances.list()
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(SyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         android_instance = client.android_instances.list(
+            ending_before="endingBefore",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
-            state="unknown",
+            starting_after="startingAfter",
+            state="assigned,ready",
         )
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(SyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -107,7 +109,7 @@ class TestAndroidInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         android_instance = response.parse()
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(SyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -117,7 +119,7 @@ class TestAndroidInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             android_instance = response.parse()
-            assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+            assert_matches_type(SyncItems[AndroidInstance], android_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -221,6 +223,7 @@ class TestAsyncAndroidInstances:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.create(
+            reuse_if_exists=True,
             wait=True,
             metadata={
                 "display_name": "displayName",
@@ -240,6 +243,7 @@ class TestAsyncAndroidInstances:
                     {
                         "kind": "App",
                         "source": "URL",
+                        "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
                         "url": "url",
@@ -277,18 +281,20 @@ class TestAsyncAndroidInstances:
     @parametrize
     async def test_method_list(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list()
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(AsyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         android_instance = await async_client.android_instances.list(
+            ending_before="endingBefore",
             label_selector="env=prod,version=1.2",
             limit=50,
             region="region",
-            state="unknown",
+            starting_after="startingAfter",
+            state="assigned,ready",
         )
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(AsyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -298,7 +304,7 @@ class TestAsyncAndroidInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         android_instance = await response.parse()
-        assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+        assert_matches_type(AsyncItems[AndroidInstance], android_instance, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -308,7 +314,7 @@ class TestAsyncAndroidInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             android_instance = await response.parse()
-            assert_matches_type(AndroidInstanceListResponse, android_instance, path=["response"])
+            assert_matches_type(AsyncItems[AndroidInstance], android_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

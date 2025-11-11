@@ -11,6 +11,12 @@ __all__ = ["IosInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecIniti
 
 
 class IosInstanceCreateParams(TypedDict, total=False):
+    reuse_if_exists: Annotated[bool, PropertyInfo(alias="reuseIfExists")]
+    """
+    If there is another instance with given labels and region, return that one
+    instead of creating a new instance.
+    """
+
     wait: bool
     """Return after the instance is ready to connect."""
 
@@ -34,7 +40,9 @@ class SpecClue(TypedDict, total=False):
 class SpecInitialAsset(TypedDict, total=False):
     kind: Required[Literal["App"]]
 
-    source: Required[Literal["URL", "AssetName"]]
+    source: Required[Literal["URL", "AssetName", "AssetID"]]
+
+    asset_id: Annotated[str, PropertyInfo(alias="assetId")]
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 

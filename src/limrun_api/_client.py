@@ -69,10 +69,10 @@ class Limrun(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous Limrun client instance.
 
-        This automatically infers the `api_key` argument from the `LIM_TOKEN` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `LIM_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("LIM_TOKEN")
+            api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
 
         if base_url is None:
@@ -250,10 +250,10 @@ class AsyncLimrun(AsyncAPIClient):
     ) -> None:
         """Construct a new async AsyncLimrun client instance.
 
-        This automatically infers the `api_key` argument from the `LIM_TOKEN` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `LIM_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("LIM_TOKEN")
+            api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
 
         if base_url is None:

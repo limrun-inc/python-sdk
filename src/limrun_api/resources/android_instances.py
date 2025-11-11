@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal
-
 import httpx
 
 from ..types import android_instance_list_params, android_instance_create_params
@@ -17,9 +15,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncItems, AsyncItems
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.android_instance import AndroidInstance
-from ..types.android_instance_list_response import AndroidInstanceListResponse
 
 __all__ = ["AndroidInstancesResource", "AsyncAndroidInstancesResource"]
 
@@ -47,6 +45,7 @@ class AndroidInstancesResource(SyncAPIResource):
     def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: android_instance_create_params.Metadata | Omit = omit,
         spec: android_instance_create_params.Spec | Omit = omit,
@@ -61,6 +60,9 @@ class AndroidInstancesResource(SyncAPIResource):
         Create an Android instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -85,7 +87,13 @@ class AndroidInstancesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"wait": wait}, android_instance_create_params.AndroidInstanceCreateParams),
+                query=maybe_transform(
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    android_instance_create_params.AndroidInstanceCreateParams,
+                ),
             ),
             cast_to=AndroidInstance,
         )
@@ -93,17 +101,19 @@ class AndroidInstancesResource(SyncAPIResource):
     def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
         limit: int | Omit = omit,
         region: str | Omit = omit,
-        state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
+        starting_after: str | Omit = omit,
+        state: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AndroidInstanceListResponse:
+    ) -> SyncItems[AndroidInstance]:
         """
         List Android instances
 
@@ -115,7 +125,11 @@ class AndroidInstancesResource(SyncAPIResource):
 
           region: Region where the instance is scheduled on.
 
-          state: State filter to apply to Android instances to return.
+          state: State filter to apply to Android instances to return. Each comma-separated state
+              will be used as part of an OR clause, e.g. "assigned,ready" will return all
+              instances that are either assigned or ready.
+
+              Valid states: creating, assigned, ready, terminated, unknown
 
           extra_headers: Send extra headers
 
@@ -125,8 +139,9 @@ class AndroidInstancesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/android_instances",
+            page=SyncItems[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -134,15 +149,17 @@ class AndroidInstancesResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
                         "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     android_instance_list_params.AndroidInstanceListParams,
                 ),
             ),
-            cast_to=AndroidInstanceListResponse,
+            model=AndroidInstance,
         )
 
     def delete(
@@ -236,6 +253,7 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        reuse_if_exists: bool | Omit = omit,
         wait: bool | Omit = omit,
         metadata: android_instance_create_params.Metadata | Omit = omit,
         spec: android_instance_create_params.Spec | Omit = omit,
@@ -250,6 +268,9 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
         Create an Android instance
 
         Args:
+          reuse_if_exists: If there is another instance with given labels and region, return that one
+              instead of creating a new instance.
+
           wait: Return after the instance is ready to connect.
 
           extra_headers: Send extra headers
@@ -275,26 +296,32 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"wait": wait}, android_instance_create_params.AndroidInstanceCreateParams
+                    {
+                        "reuse_if_exists": reuse_if_exists,
+                        "wait": wait,
+                    },
+                    android_instance_create_params.AndroidInstanceCreateParams,
                 ),
             ),
             cast_to=AndroidInstance,
         )
 
-    async def list(
+    def list(
         self,
         *,
+        ending_before: str | Omit = omit,
         label_selector: str | Omit = omit,
         limit: int | Omit = omit,
         region: str | Omit = omit,
-        state: Literal["unknown", "creating", "assigned", "ready", "terminated"] | Omit = omit,
+        starting_after: str | Omit = omit,
+        state: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AndroidInstanceListResponse:
+    ) -> AsyncPaginator[AndroidInstance, AsyncItems[AndroidInstance]]:
         """
         List Android instances
 
@@ -306,7 +333,11 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
 
           region: Region where the instance is scheduled on.
 
-          state: State filter to apply to Android instances to return.
+          state: State filter to apply to Android instances to return. Each comma-separated state
+              will be used as part of an OR clause, e.g. "assigned,ready" will return all
+              instances that are either assigned or ready.
+
+              Valid states: creating, assigned, ready, terminated, unknown
 
           extra_headers: Send extra headers
 
@@ -316,24 +347,27 @@ class AsyncAndroidInstancesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/android_instances",
+            page=AsyncItems[AndroidInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "ending_before": ending_before,
                         "label_selector": label_selector,
                         "limit": limit,
                         "region": region,
+                        "starting_after": starting_after,
                         "state": state,
                     },
                     android_instance_list_params.AndroidInstanceListParams,
                 ),
             ),
-            cast_to=AndroidInstanceListResponse,
+            model=AndroidInstance,
         )
 
     async def delete(
