@@ -29,7 +29,7 @@ import os
 from limrun_api import Limrun
 
 client = Limrun(
-    api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("LIM_API_KEY"),  # This is the default and can be omitted
 )
 
 android_instance = client.android_instances.create()
@@ -38,7 +38,7 @@ print(android_instance.metadata)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `LIM_TOKEN="My API Key"` to your `.env` file
+to add `LIM_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
@@ -51,7 +51,7 @@ import asyncio
 from limrun_api import AsyncLimrun
 
 client = AsyncLimrun(
-    api_key=os.environ.get("LIM_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("LIM_API_KEY"),  # This is the default and can be omitted
 )
 
 
