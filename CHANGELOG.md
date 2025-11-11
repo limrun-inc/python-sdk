@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.8.0 (2025-11-11)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/limrun-inc/python-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** add assetId as asset source kind ([1aac770](https://github.com/limrun-inc/python-sdk/commit/1aac770249a41d2ceb6147cbe04cddf92ba23bbb))
+* **api:** add comma-separated state for multi-state listings ([58b65a2](https://github.com/limrun-inc/python-sdk/commit/58b65a2e1c2a4970f480ac65b54e6408ecb981ce))
+* **api:** add pagination for ios instances and assets as well ([123d228](https://github.com/limrun-inc/python-sdk/commit/123d2288130547b7e69f89cc9977e82baf813bee))
+* **api:** add pagination to asset spec ([8be229c](https://github.com/limrun-inc/python-sdk/commit/8be229c8d4514cd2c033fe9cbb78221f14c64206))
+* **api:** add reuseIfExists to creation endpoint ([4a0dd43](https://github.com/limrun-inc/python-sdk/commit/4a0dd43c17e8750e60f588e4fb2985d195daaa58))
+* **api:** disable pagination for assets ([4b449fa](https://github.com/limrun-inc/python-sdk/commit/4b449fabb5b50dc0b3aea34a30f0ca0c29e26bb7))
+* **api:** enable pagination for android_instances ([04130ef](https://github.com/limrun-inc/python-sdk/commit/04130ef1ab28bb6db9bef0727598c0c01950a3c3))
+* **api:** manual updates ([52753ed](https://github.com/limrun-inc/python-sdk/commit/52753ed8cd09c24370aa3665e8310fefe7376562))
+* **api:** manual updates ([e616c29](https://github.com/limrun-inc/python-sdk/commit/e616c29a6e3addbeab4788734dee903300a72b82))
+* **api:** move pagination prop to openapi ([2d59a37](https://github.com/limrun-inc/python-sdk/commit/2d59a37ab0f2663a389ce65a1fba113ef5700720))
+* **api:** regenerate new pagination fields ([83ff598](https://github.com/limrun-inc/python-sdk/commit/83ff598ecde93383f846fe55605633bfa744762a))
+* **api:** update comment ([e6e7657](https://github.com/limrun-inc/python-sdk/commit/e6e7657d1a32dbde27a9fcaa3408e9b327432fe2))
+* **api:** update to use LIM_API_KEY instead of LIM_TOKEN ([ba2e85e](https://github.com/limrun-inc/python-sdk/commit/ba2e85e00e7ee937ab8ceaf5f9119a7a4f74b49a))
+
+
+### Bug Fixes
+
+* compat with Python 3.14 ([c97037d](https://github.com/limrun-inc/python-sdk/commit/c97037dc5c683fcc72c5ce50b58ba1ee7951432a))
+
+
+### Chores
+
+* **package:** drop Python 3.8 support ([3be5696](https://github.com/limrun-inc/python-sdk/commit/3be5696b0cf40c1f02467d03e85c0181667fb9ea))
+
 ## 0.7.0 (2025-11-05)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/limrun-inc/python-sdk/compare/v0.6.0...v0.7.0)
