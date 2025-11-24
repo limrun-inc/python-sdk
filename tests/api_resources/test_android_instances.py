@@ -56,6 +56,7 @@ class TestAndroidInstances:
                     }
                 ],
                 "region": "region",
+                "sandbox": {"playwright_android": {"enabled": True}},
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])
@@ -251,6 +252,7 @@ class TestAsyncAndroidInstances:
                     }
                 ],
                 "region": "region",
+                "sandbox": {"playwright_android": {"enabled": True}},
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])

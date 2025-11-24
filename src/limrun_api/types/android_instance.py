@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["AndroidInstance", "Metadata", "Spec", "Status"]
+__all__ = ["AndroidInstance", "Metadata", "Spec", "Status", "StatusSandbox", "StatusSandboxPlaywrightAndroid"]
 
 
 class Metadata(BaseModel):
@@ -46,6 +46,14 @@ class Spec(BaseModel):
     """
 
 
+class StatusSandboxPlaywrightAndroid(BaseModel):
+    url: Optional[str] = None
+
+
+class StatusSandbox(BaseModel):
+    playwright_android: Optional[StatusSandboxPlaywrightAndroid] = FieldInfo(alias="playwrightAndroid", default=None)
+
+
 class Status(BaseModel):
     token: str
 
@@ -54,6 +62,8 @@ class Status(BaseModel):
     adb_web_socket_url: Optional[str] = FieldInfo(alias="adbWebSocketUrl", default=None)
 
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
+
+    sandbox: Optional[StatusSandbox] = None
 
 
 class AndroidInstance(BaseModel):
