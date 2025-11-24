@@ -8,7 +8,15 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["AndroidInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecInitialAsset"]
+__all__ = [
+    "AndroidInstanceCreateParams",
+    "Metadata",
+    "Spec",
+    "SpecClue",
+    "SpecInitialAsset",
+    "SpecSandbox",
+    "SpecSandboxPlaywrightAndroid",
+]
 
 
 class AndroidInstanceCreateParams(TypedDict, total=False):
@@ -57,6 +65,14 @@ class SpecInitialAsset(TypedDict, total=False):
     urls: SequenceNotStr[str]
 
 
+class SpecSandboxPlaywrightAndroid(TypedDict, total=False):
+    enabled: bool
+
+
+class SpecSandbox(TypedDict, total=False):
+    playwright_android: Annotated[SpecSandboxPlaywrightAndroid, PropertyInfo(alias="playwrightAndroid")]
+
+
 class Spec(TypedDict, total=False):
     clues: Iterable[SpecClue]
 
@@ -80,3 +96,5 @@ class Spec(TypedDict, total=False):
 
     If not given, will be decided based on scheduling clues and availability.
     """
+
+    sandbox: SpecSandbox
