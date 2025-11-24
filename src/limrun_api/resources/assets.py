@@ -15,9 +15,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncItems, AsyncItems
 from ..types.asset import Asset
-from .._base_client import AsyncPaginator, make_request_options
+from .._base_client import make_request_options
+from ..types.asset_list_response import AssetListResponse
 from ..types.asset_get_or_create_response import AssetGetOrCreateResponse
 
 __all__ = ["AssetsResource", "AsyncAssetsResource"]
@@ -46,19 +46,17 @@ class AssetsResource(SyncAPIResource):
     def list(
         self,
         *,
-        ending_before: str | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
-        starting_after: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncItems[Asset]:
+    ) -> AssetListResponse:
         """List organization's all assets with given filters.
 
         If none given, return all
@@ -81,9 +79,8 @@ class AssetsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return self._get(
             "/v1/assets",
-            page=SyncItems[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -91,17 +88,15 @@ class AssetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "ending_before": ending_before,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
                         "limit": limit,
                         "name_filter": name_filter,
-                        "starting_after": starting_after,
                     },
                     asset_list_params.AssetListParams,
                 ),
             ),
-            model=Asset,
+            cast_to=AssetListResponse,
         )
 
     def delete(
@@ -245,22 +240,20 @@ class AsyncAssetsResource(AsyncAPIResource):
         """
         return AsyncAssetsResourceWithStreamingResponse(self)
 
-    def list(
+    async def list(
         self,
         *,
-        ending_before: str | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
-        starting_after: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[Asset, AsyncItems[Asset]]:
+    ) -> AssetListResponse:
         """List organization's all assets with given filters.
 
         If none given, return all
@@ -283,27 +276,24 @@ class AsyncAssetsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get_api_list(
+        return await self._get(
             "/v1/assets",
-            page=AsyncItems[Asset],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
+                query=await async_maybe_transform(
                     {
-                        "ending_before": ending_before,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
                         "limit": limit,
                         "name_filter": name_filter,
-                        "starting_after": starting_after,
                     },
                     asset_list_params.AssetListParams,
                 ),
             ),
-            model=Asset,
+            cast_to=AssetListResponse,
         )
 
     async def delete(
