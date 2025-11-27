@@ -53,7 +53,7 @@ class SpecClue(TypedDict, total=False):
 class SpecInitialAssetConfiguration(TypedDict, total=False):
     kind: Required[Literal["ChromeFlag"]]
 
-    chrome_flag: Annotated[str, PropertyInfo(alias="chromeFlag")]
+    chrome_flag: Annotated[Literal["enable-command-line-on-non-rooted-devices@1"], PropertyInfo(alias="chromeFlag")]
 
 
 class SpecInitialAsset(TypedDict, total=False):
