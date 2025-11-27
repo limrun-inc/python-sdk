@@ -47,10 +47,14 @@ class TestAndroidInstances:
                 "initial_assets": [
                     {
                         "kind": "App",
-                        "source": "URL",
                         "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
+                        "configuration": {
+                            "kind": "ChromeFlag",
+                            "chrome_flag": "chromeFlag",
+                        },
+                        "source": "URL",
                         "url": "url",
                         "urls": ["string"],
                     }
@@ -243,10 +247,14 @@ class TestAsyncAndroidInstances:
                 "initial_assets": [
                     {
                         "kind": "App",
-                        "source": "URL",
                         "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
+                        "configuration": {
+                            "kind": "ChromeFlag",
+                            "chrome_flag": "chromeFlag",
+                        },
+                        "source": "URL",
                         "url": "url",
                         "urls": ["string"],
                     }
