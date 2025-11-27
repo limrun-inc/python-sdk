@@ -14,6 +14,7 @@ __all__ = [
     "Spec",
     "SpecClue",
     "SpecInitialAsset",
+    "SpecInitialAssetConfiguration",
     "SpecSandbox",
     "SpecSandboxPlaywrightAndroid",
 ]
@@ -49,16 +50,24 @@ class SpecClue(TypedDict, total=False):
     """The major version of Android, e.g. "13", "14" or "15"."""
 
 
-class SpecInitialAsset(TypedDict, total=False):
-    kind: Required[Literal["App"]]
+class SpecInitialAssetConfiguration(TypedDict, total=False):
+    kind: Required[Literal["ChromeFlag"]]
 
-    source: Required[Literal["URL", "URLs", "AssetName", "AssetNames", "AssetIDs"]]
+    chrome_flag: Annotated[str, PropertyInfo(alias="chromeFlag")]
+
+
+class SpecInitialAsset(TypedDict, total=False):
+    kind: Required[Literal["App", "Configuration"]]
 
     asset_ids: Annotated[SequenceNotStr[str], PropertyInfo(alias="assetIds")]
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 
     asset_names: Annotated[SequenceNotStr[str], PropertyInfo(alias="assetNames")]
+
+    configuration: SpecInitialAssetConfiguration
+
+    source: Literal["URL", "URLs", "AssetName", "AssetNames", "AssetIDs"]
 
     url: str
 
