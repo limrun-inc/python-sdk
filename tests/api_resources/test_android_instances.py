@@ -52,7 +52,7 @@ class TestAndroidInstances:
                         "asset_names": ["string"],
                         "configuration": {
                             "kind": "ChromeFlag",
-                            "chrome_flag": "chromeFlag",
+                            "chrome_flag": "enable-command-line-on-non-rooted-devices@1",
                         },
                         "source": "URL",
                         "url": "url",
@@ -252,7 +252,7 @@ class TestAsyncAndroidInstances:
                         "asset_names": ["string"],
                         "configuration": {
                             "kind": "ChromeFlag",
-                            "chrome_flag": "chromeFlag",
+                            "chrome_flag": "enable-command-line-on-non-rooted-devices@1",
                         },
                         "source": "URL",
                         "url": "url",
