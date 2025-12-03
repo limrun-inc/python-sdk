@@ -79,6 +79,7 @@ pip install limrun_api[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from limrun_api import DefaultAioHttpClient
 from limrun_api import AsyncLimrun
@@ -86,7 +87,7 @@ from limrun_api import AsyncLimrun
 
 async def main() -> None:
     async with AsyncLimrun(
-        api_key="My API Key",
+        api_key=os.environ.get("LIM_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         android_instance = await client.android_instances.create()
