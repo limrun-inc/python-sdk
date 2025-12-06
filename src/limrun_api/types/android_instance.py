@@ -65,6 +65,8 @@ class Status(BaseModel):
 
     sandbox: Optional[StatusSandbox] = None
 
+    target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
+
 
 class AndroidInstance(BaseModel):
     metadata: Metadata
