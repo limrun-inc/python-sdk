@@ -51,9 +51,11 @@ class Status(BaseModel):
 
     state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
 
+    api_url: Optional[str] = FieldInfo(alias="apiUrl", default=None)
+
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
-    port_forward_web_socket_url: Optional[str] = FieldInfo(alias="portForwardWebSocketUrl", default=None)
+    target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
 
 class IosInstance(BaseModel):
