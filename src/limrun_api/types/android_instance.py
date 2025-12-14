@@ -63,6 +63,8 @@ class Status(BaseModel):
 
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
+    error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
+
     sandbox: Optional[StatusSandbox] = None
 
     target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
