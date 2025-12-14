@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.9.0 (2025-12-14)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/limrun-inc/python-sdk/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** add android sandbox api ([b1ec65b](https://github.com/limrun-inc/python-sdk/commit/b1ec65b1d7e36768d2bf3c8627242cc889f143ec))
+* **api:** add asset type configuration with chrome flag ([0900df2](https://github.com/limrun-inc/python-sdk/commit/0900df2b560b981493c0c1572b5dcca043b7524a))
+* **api:** add the optional errorMessage field in status ([6d26c2b](https://github.com/limrun-inc/python-sdk/commit/6d26c2bdedd6f9e576fd9419022d150dbdb3194f))
+* **api:** make chromeFlag enum with supported value ([a937aac](https://github.com/limrun-inc/python-sdk/commit/a937aac4d9c69a21886f5c477e989edbbbaf9732))
+* **api:** manual updates ([57c22b4](https://github.com/limrun-inc/python-sdk/commit/57c22b43395e906b6a2a869e7355fe1938770796))
+* **api:** manual updates ([f88a368](https://github.com/limrun-inc/python-sdk/commit/f88a36818071f20c4a4b06df26a25ee6e0ab0b9d))
+
+
+### Bug Fixes
+
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([bd4bed9](https://github.com/limrun-inc/python-sdk/commit/bd4bed99a71cc69b225adc7c8bd0439a288e0b34))
+* ensure streams are always closed ([63f1ee4](https://github.com/limrun-inc/python-sdk/commit/63f1ee4d81c796f3d0aa061726b8a542b6862a0c))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([08396f0](https://github.com/limrun-inc/python-sdk/commit/08396f04ff54737c4d9f9b7da4c37aa1f8620537))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([e635bb6](https://github.com/limrun-inc/python-sdk/commit/e635bb6f3c9930eb22551f692062bd9e45837c36))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([5469100](https://github.com/limrun-inc/python-sdk/commit/54691000d4ca3460ead03628d6d2d3a4a4ffea17))
+* **docs:** use environment variables for authentication in code snippets ([af6c346](https://github.com/limrun-inc/python-sdk/commit/af6c346ea2fdbce9e207e59d829253a0617fced6))
+* update lockfile ([bd03e1b](https://github.com/limrun-inc/python-sdk/commit/bd03e1ba15189503e3617b052701e7ed69b9e7a2))
+
 ## 0.8.0 (2025-11-11)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/limrun-inc/python-sdk/compare/v0.7.0...v0.8.0)
