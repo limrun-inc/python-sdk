@@ -47,15 +47,20 @@ class TestAndroidInstances:
                 "initial_assets": [
                     {
                         "kind": "App",
-                        "source": "URL",
                         "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
+                        "configuration": {
+                            "kind": "ChromeFlag",
+                            "chrome_flag": "enable-command-line-on-non-rooted-devices@1",
+                        },
+                        "source": "URL",
                         "url": "url",
                         "urls": ["string"],
                     }
                 ],
                 "region": "region",
+                "sandbox": {"playwright_android": {"enabled": True}},
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])
@@ -242,15 +247,20 @@ class TestAsyncAndroidInstances:
                 "initial_assets": [
                     {
                         "kind": "App",
-                        "source": "URL",
                         "asset_ids": ["string"],
                         "asset_name": "assetName",
                         "asset_names": ["string"],
+                        "configuration": {
+                            "kind": "ChromeFlag",
+                            "chrome_flag": "enable-command-line-on-non-rooted-devices@1",
+                        },
+                        "source": "URL",
                         "url": "url",
                         "urls": ["string"],
                     }
                 ],
                 "region": "region",
+                "sandbox": {"playwright_android": {"enabled": True}},
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])

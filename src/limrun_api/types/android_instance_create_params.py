@@ -8,7 +8,16 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["AndroidInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecInitialAsset"]
+__all__ = [
+    "AndroidInstanceCreateParams",
+    "Metadata",
+    "Spec",
+    "SpecClue",
+    "SpecInitialAsset",
+    "SpecInitialAssetConfiguration",
+    "SpecSandbox",
+    "SpecSandboxPlaywrightAndroid",
+]
 
 
 class AndroidInstanceCreateParams(TypedDict, total=False):
@@ -41,10 +50,14 @@ class SpecClue(TypedDict, total=False):
     """The major version of Android, e.g. "13", "14" or "15"."""
 
 
-class SpecInitialAsset(TypedDict, total=False):
-    kind: Required[Literal["App"]]
+class SpecInitialAssetConfiguration(TypedDict, total=False):
+    kind: Required[Literal["ChromeFlag"]]
 
-    source: Required[Literal["URL", "URLs", "AssetName", "AssetNames", "AssetIDs"]]
+    chrome_flag: Annotated[Literal["enable-command-line-on-non-rooted-devices@1"], PropertyInfo(alias="chromeFlag")]
+
+
+class SpecInitialAsset(TypedDict, total=False):
+    kind: Required[Literal["App", "Configuration"]]
 
     asset_ids: Annotated[SequenceNotStr[str], PropertyInfo(alias="assetIds")]
 
@@ -52,9 +65,21 @@ class SpecInitialAsset(TypedDict, total=False):
 
     asset_names: Annotated[SequenceNotStr[str], PropertyInfo(alias="assetNames")]
 
+    configuration: SpecInitialAssetConfiguration
+
+    source: Literal["URL", "URLs", "AssetName", "AssetNames", "AssetIDs"]
+
     url: str
 
     urls: SequenceNotStr[str]
+
+
+class SpecSandboxPlaywrightAndroid(TypedDict, total=False):
+    enabled: bool
+
+
+class SpecSandbox(TypedDict, total=False):
+    playwright_android: Annotated[SpecSandboxPlaywrightAndroid, PropertyInfo(alias="playwrightAndroid")]
 
 
 class Spec(TypedDict, total=False):
@@ -80,3 +105,5 @@ class Spec(TypedDict, total=False):
 
     If not given, will be decided based on scheduling clues and availability.
     """
+
+    sandbox: SpecSandbox
