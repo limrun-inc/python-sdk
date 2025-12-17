@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -21,8 +21,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import assets, ios_instances, android_instances
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -31,16 +31,16 @@ from ._base_client import (
     AsyncAPIClient,
 )
 
+if TYPE_CHECKING:
+    from .resources import assets, ios_instances, android_instances
+    from .resources.assets import AssetsResource, AsyncAssetsResource
+    from .resources.ios_instances import IosInstancesResource, AsyncIosInstancesResource
+    from .resources.android_instances import AndroidInstancesResource, AsyncAndroidInstancesResource
+
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Limrun", "AsyncLimrun", "Client", "AsyncClient"]
 
 
 class Limrun(SyncAPIClient):
-    android_instances: android_instances.AndroidInstancesResource
-    assets: assets.AssetsResource
-    ios_instances: ios_instances.IosInstancesResource
-    with_raw_response: LimrunWithRawResponse
-    with_streaming_response: LimrunWithStreamedResponse
-
     # client options
     api_key: str | None
 
@@ -91,11 +91,31 @@ class Limrun(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.android_instances = android_instances.AndroidInstancesResource(self)
-        self.assets = assets.AssetsResource(self)
-        self.ios_instances = ios_instances.IosInstancesResource(self)
-        self.with_raw_response = LimrunWithRawResponse(self)
-        self.with_streaming_response = LimrunWithStreamedResponse(self)
+    @cached_property
+    def android_instances(self) -> AndroidInstancesResource:
+        from .resources.android_instances import AndroidInstancesResource
+
+        return AndroidInstancesResource(self)
+
+    @cached_property
+    def assets(self) -> AssetsResource:
+        from .resources.assets import AssetsResource
+
+        return AssetsResource(self)
+
+    @cached_property
+    def ios_instances(self) -> IosInstancesResource:
+        from .resources.ios_instances import IosInstancesResource
+
+        return IosInstancesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> LimrunWithRawResponse:
+        return LimrunWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> LimrunWithStreamedResponse:
+        return LimrunWithStreamedResponse(self)
 
     @property
     @override
@@ -216,12 +236,6 @@ class Limrun(SyncAPIClient):
 
 
 class AsyncLimrun(AsyncAPIClient):
-    android_instances: android_instances.AsyncAndroidInstancesResource
-    assets: assets.AsyncAssetsResource
-    ios_instances: ios_instances.AsyncIosInstancesResource
-    with_raw_response: AsyncLimrunWithRawResponse
-    with_streaming_response: AsyncLimrunWithStreamedResponse
-
     # client options
     api_key: str | None
 
@@ -272,11 +286,31 @@ class AsyncLimrun(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.android_instances = android_instances.AsyncAndroidInstancesResource(self)
-        self.assets = assets.AsyncAssetsResource(self)
-        self.ios_instances = ios_instances.AsyncIosInstancesResource(self)
-        self.with_raw_response = AsyncLimrunWithRawResponse(self)
-        self.with_streaming_response = AsyncLimrunWithStreamedResponse(self)
+    @cached_property
+    def android_instances(self) -> AsyncAndroidInstancesResource:
+        from .resources.android_instances import AsyncAndroidInstancesResource
+
+        return AsyncAndroidInstancesResource(self)
+
+    @cached_property
+    def assets(self) -> AsyncAssetsResource:
+        from .resources.assets import AsyncAssetsResource
+
+        return AsyncAssetsResource(self)
+
+    @cached_property
+    def ios_instances(self) -> AsyncIosInstancesResource:
+        from .resources.ios_instances import AsyncIosInstancesResource
+
+        return AsyncIosInstancesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncLimrunWithRawResponse:
+        return AsyncLimrunWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncLimrunWithStreamedResponse:
+        return AsyncLimrunWithStreamedResponse(self)
 
     @property
     @override
@@ -397,37 +431,103 @@ class AsyncLimrun(AsyncAPIClient):
 
 
 class LimrunWithRawResponse:
+    _client: Limrun
+
     def __init__(self, client: Limrun) -> None:
-        self.android_instances = android_instances.AndroidInstancesResourceWithRawResponse(client.android_instances)
-        self.assets = assets.AssetsResourceWithRawResponse(client.assets)
-        self.ios_instances = ios_instances.IosInstancesResourceWithRawResponse(client.ios_instances)
+        self._client = client
+
+    @cached_property
+    def android_instances(self) -> android_instances.AndroidInstancesResourceWithRawResponse:
+        from .resources.android_instances import AndroidInstancesResourceWithRawResponse
+
+        return AndroidInstancesResourceWithRawResponse(self._client.android_instances)
+
+    @cached_property
+    def assets(self) -> assets.AssetsResourceWithRawResponse:
+        from .resources.assets import AssetsResourceWithRawResponse
+
+        return AssetsResourceWithRawResponse(self._client.assets)
+
+    @cached_property
+    def ios_instances(self) -> ios_instances.IosInstancesResourceWithRawResponse:
+        from .resources.ios_instances import IosInstancesResourceWithRawResponse
+
+        return IosInstancesResourceWithRawResponse(self._client.ios_instances)
 
 
 class AsyncLimrunWithRawResponse:
+    _client: AsyncLimrun
+
     def __init__(self, client: AsyncLimrun) -> None:
-        self.android_instances = android_instances.AsyncAndroidInstancesResourceWithRawResponse(
-            client.android_instances
-        )
-        self.assets = assets.AsyncAssetsResourceWithRawResponse(client.assets)
-        self.ios_instances = ios_instances.AsyncIosInstancesResourceWithRawResponse(client.ios_instances)
+        self._client = client
+
+    @cached_property
+    def android_instances(self) -> android_instances.AsyncAndroidInstancesResourceWithRawResponse:
+        from .resources.android_instances import AsyncAndroidInstancesResourceWithRawResponse
+
+        return AsyncAndroidInstancesResourceWithRawResponse(self._client.android_instances)
+
+    @cached_property
+    def assets(self) -> assets.AsyncAssetsResourceWithRawResponse:
+        from .resources.assets import AsyncAssetsResourceWithRawResponse
+
+        return AsyncAssetsResourceWithRawResponse(self._client.assets)
+
+    @cached_property
+    def ios_instances(self) -> ios_instances.AsyncIosInstancesResourceWithRawResponse:
+        from .resources.ios_instances import AsyncIosInstancesResourceWithRawResponse
+
+        return AsyncIosInstancesResourceWithRawResponse(self._client.ios_instances)
 
 
 class LimrunWithStreamedResponse:
+    _client: Limrun
+
     def __init__(self, client: Limrun) -> None:
-        self.android_instances = android_instances.AndroidInstancesResourceWithStreamingResponse(
-            client.android_instances
-        )
-        self.assets = assets.AssetsResourceWithStreamingResponse(client.assets)
-        self.ios_instances = ios_instances.IosInstancesResourceWithStreamingResponse(client.ios_instances)
+        self._client = client
+
+    @cached_property
+    def android_instances(self) -> android_instances.AndroidInstancesResourceWithStreamingResponse:
+        from .resources.android_instances import AndroidInstancesResourceWithStreamingResponse
+
+        return AndroidInstancesResourceWithStreamingResponse(self._client.android_instances)
+
+    @cached_property
+    def assets(self) -> assets.AssetsResourceWithStreamingResponse:
+        from .resources.assets import AssetsResourceWithStreamingResponse
+
+        return AssetsResourceWithStreamingResponse(self._client.assets)
+
+    @cached_property
+    def ios_instances(self) -> ios_instances.IosInstancesResourceWithStreamingResponse:
+        from .resources.ios_instances import IosInstancesResourceWithStreamingResponse
+
+        return IosInstancesResourceWithStreamingResponse(self._client.ios_instances)
 
 
 class AsyncLimrunWithStreamedResponse:
+    _client: AsyncLimrun
+
     def __init__(self, client: AsyncLimrun) -> None:
-        self.android_instances = android_instances.AsyncAndroidInstancesResourceWithStreamingResponse(
-            client.android_instances
-        )
-        self.assets = assets.AsyncAssetsResourceWithStreamingResponse(client.assets)
-        self.ios_instances = ios_instances.AsyncIosInstancesResourceWithStreamingResponse(client.ios_instances)
+        self._client = client
+
+    @cached_property
+    def android_instances(self) -> android_instances.AsyncAndroidInstancesResourceWithStreamingResponse:
+        from .resources.android_instances import AsyncAndroidInstancesResourceWithStreamingResponse
+
+        return AsyncAndroidInstancesResourceWithStreamingResponse(self._client.android_instances)
+
+    @cached_property
+    def assets(self) -> assets.AsyncAssetsResourceWithStreamingResponse:
+        from .resources.assets import AsyncAssetsResourceWithStreamingResponse
+
+        return AsyncAssetsResourceWithStreamingResponse(self._client.assets)
+
+    @cached_property
+    def ios_instances(self) -> ios_instances.AsyncIosInstancesResourceWithStreamingResponse:
+        from .resources.ios_instances import AsyncIosInstancesResourceWithStreamingResponse
+
+        return AsyncIosInstancesResourceWithStreamingResponse(self._client.ios_instances)
 
 
 Client = Limrun
