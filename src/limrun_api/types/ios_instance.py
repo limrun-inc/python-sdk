@@ -57,6 +57,8 @@ class Status(BaseModel):
 
     error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
 
+    mcp_url: Optional[str] = FieldInfo(alias="mcpUrl", default=None)
+
     target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
 
