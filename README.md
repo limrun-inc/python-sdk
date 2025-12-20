@@ -106,6 +106,69 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Pagination
+
+List methods in the Limrun API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from limrun_api import Limrun
+
+client = Limrun()
+
+all_android_instances = []
+# Automatically fetches more pages as needed.
+for android_instance in client.android_instances.list():
+    # Do something with android_instance here
+    all_android_instances.append(android_instance)
+print(all_android_instances)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from limrun_api import AsyncLimrun
+
+client = AsyncLimrun()
+
+
+async def main() -> None:
+    all_android_instances = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for android_instance in client.android_instances.list():
+        all_android_instances.append(android_instance)
+    print(all_android_instances)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.android_instances.list()
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.items)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.android_instances.list()
+
+print(f"next page cursor: {first_page.starting_after}")  # => "next page cursor: ..."
+for android_instance in first_page.items:
+    print(android_instance.metadata)
+
+# Remove `await` for non-async usage.
+```
+
 ## Nested params
 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
