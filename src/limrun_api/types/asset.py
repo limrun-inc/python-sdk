@@ -14,6 +14,9 @@ class Asset(BaseModel):
 
     name: str
 
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+    """Human-readable display name for the asset. If not set, the name should be used."""
+
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""
 
