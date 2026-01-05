@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -19,6 +20,12 @@ class Asset(BaseModel):
 
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""
+
+    os: Optional[Literal["ios", "android"]] = None
+    """The operating system this asset is for.
+
+    If not set, the asset is available for all platforms.
+    """
 
     signed_download_url: Optional[str] = FieldInfo(alias="signedDownloadUrl", default=None)
 
