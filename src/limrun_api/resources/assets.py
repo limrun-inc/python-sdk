@@ -46,6 +46,7 @@ class AssetsResource(SyncAPIResource):
     def list(
         self,
         *,
+        include_app_store: bool | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
@@ -63,6 +64,9 @@ class AssetsResource(SyncAPIResource):
         assets.
 
         Args:
+          include_app_store: If true, also includes assets from Limrun App Store where you have access to.
+              App Store assets will be returned with a "appstore/" prefix in their names.
+
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
@@ -88,6 +92,7 @@ class AssetsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "include_app_store": include_app_store,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
                         "limit": limit,
@@ -243,6 +248,7 @@ class AsyncAssetsResource(AsyncAPIResource):
     async def list(
         self,
         *,
+        include_app_store: bool | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
@@ -260,6 +266,9 @@ class AsyncAssetsResource(AsyncAPIResource):
         assets.
 
         Args:
+          include_app_store: If true, also includes assets from Limrun App Store where you have access to.
+              App Store assets will be returned with a "appstore/" prefix in their names.
+
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
@@ -285,6 +294,7 @@ class AsyncAssetsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "include_app_store": include_app_store,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
                         "limit": limit,

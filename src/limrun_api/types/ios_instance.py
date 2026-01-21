@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["IosInstance", "Metadata", "Spec", "Status"]
+__all__ = ["IosInstance", "Metadata", "Spec", "Status", "StatusSandbox", "StatusSandboxXcode"]
 
 
 class Metadata(BaseModel):
@@ -46,6 +46,14 @@ class Spec(BaseModel):
     """
 
 
+class StatusSandboxXcode(BaseModel):
+    url: Optional[str] = None
+
+
+class StatusSandbox(BaseModel):
+    xcode: Optional[StatusSandboxXcode] = None
+
+
 class Status(BaseModel):
     token: str
 
@@ -58,6 +66,8 @@ class Status(BaseModel):
     error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
 
     mcp_url: Optional[str] = FieldInfo(alias="mcpUrl", default=None)
+
+    sandbox: Optional[StatusSandbox] = None
 
     target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
