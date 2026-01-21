@@ -7,7 +7,15 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["IosInstanceCreateParams", "Metadata", "Spec", "SpecClue", "SpecInitialAsset"]
+__all__ = [
+    "IosInstanceCreateParams",
+    "Metadata",
+    "Spec",
+    "SpecClue",
+    "SpecInitialAsset",
+    "SpecSandbox",
+    "SpecSandboxXcode",
+]
 
 
 class IosInstanceCreateParams(TypedDict, total=False):
@@ -57,6 +65,14 @@ class SpecInitialAsset(TypedDict, total=False):
     url: str
 
 
+class SpecSandboxXcode(TypedDict, total=False):
+    enabled: bool
+
+
+class SpecSandbox(TypedDict, total=False):
+    xcode: SpecSandboxXcode
+
+
 class Spec(TypedDict, total=False):
     clues: Iterable[SpecClue]
 
@@ -80,3 +96,5 @@ class Spec(TypedDict, total=False):
 
     If not given, will be decided based on scheduling clues and availability.
     """
+
+    sandbox: SpecSandbox

@@ -10,6 +10,12 @@ __all__ = ["AssetListParams"]
 
 
 class AssetListParams(TypedDict, total=False):
+    include_app_store: Annotated[bool, PropertyInfo(alias="includeAppStore")]
+    """
+    If true, also includes assets from Limrun App Store where you have access to.
+    App Store assets will be returned with a "appstore/" prefix in their names.
+    """
+
     include_download_url: Annotated[bool, PropertyInfo(alias="includeDownloadUrl")]
     """Toggles whether a download URL should be included in the response"""
 
