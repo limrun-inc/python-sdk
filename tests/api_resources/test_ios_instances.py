@@ -54,6 +54,7 @@ class TestIosInstances:
                     }
                 ],
                 "region": "region",
+                "sandbox": {"xcode": {"enabled": True}},
             },
         )
         assert_matches_type(IosInstance, ios_instance, path=["response"])
@@ -247,6 +248,7 @@ class TestAsyncIosInstances:
                     }
                 ],
                 "region": "region",
+                "sandbox": {"xcode": {"enabled": True}},
             },
         )
         assert_matches_type(IosInstance, ios_instance, path=["response"])

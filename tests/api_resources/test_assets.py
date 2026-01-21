@@ -31,6 +31,7 @@ class TestAssets:
     @parametrize
     def test_method_list_with_all_params(self, client: Limrun) -> None:
         asset = client.assets.list(
+            include_app_store=True,
             include_download_url=True,
             include_upload_url=True,
             limit=50,
@@ -204,6 +205,7 @@ class TestAsyncAssets:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncLimrun) -> None:
         asset = await async_client.assets.list(
+            include_app_store=True,
             include_download_url=True,
             include_upload_url=True,
             limit=50,
