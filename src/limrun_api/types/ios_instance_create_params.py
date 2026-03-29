@@ -91,6 +91,9 @@ class Spec(TypedDict, total=False):
 
     initial_assets: Annotated[Iterable[SpecInitialAsset], PropertyInfo(alias="initialAssets")]
 
+    model: Literal["iphone", "ipad", "watch"]
+    """The model for the Apple Simulator. Default is iphone."""
+
     region: str
     """The region where the instance will be created.
 
