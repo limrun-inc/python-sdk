@@ -53,6 +53,7 @@ class TestIosInstances:
                         "url": "url",
                     }
                 ],
+                "model": "iphone",
                 "region": "region",
                 "sandbox": {"xcode": {"enabled": True}},
             },
@@ -247,6 +248,7 @@ class TestAsyncIosInstances:
                         "url": "url",
                     }
                 ],
+                "model": "iphone",
                 "region": "region",
                 "sandbox": {"xcode": {"enabled": True}},
             },
