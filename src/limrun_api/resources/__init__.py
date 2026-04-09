@@ -16,6 +16,14 @@ from .ios_instances import (
     IosInstancesResourceWithStreamingResponse,
     AsyncIosInstancesResourceWithStreamingResponse,
 )
+from .xcode_instances import (
+    XcodeInstancesResource,
+    AsyncXcodeInstancesResource,
+    XcodeInstancesResourceWithRawResponse,
+    AsyncXcodeInstancesResourceWithRawResponse,
+    XcodeInstancesResourceWithStreamingResponse,
+    AsyncXcodeInstancesResourceWithStreamingResponse,
+)
 from .android_instances import (
     AndroidInstancesResource,
     AsyncAndroidInstancesResource,
@@ -44,4 +52,10 @@ __all__ = [
     "AsyncIosInstancesResourceWithRawResponse",
     "IosInstancesResourceWithStreamingResponse",
     "AsyncIosInstancesResourceWithStreamingResponse",
+    "XcodeInstancesResource",
+    "AsyncXcodeInstancesResource",
+    "XcodeInstancesResourceWithRawResponse",
+    "AsyncXcodeInstancesResourceWithRawResponse",
+    "XcodeInstancesResourceWithStreamingResponse",
+    "AsyncXcodeInstancesResourceWithStreamingResponse",
 ]

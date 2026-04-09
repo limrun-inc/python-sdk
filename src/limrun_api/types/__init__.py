@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .asset import Asset as Asset
 from .ios_instance import IosInstance as IosInstance
+from .xcode_instances import XcodeInstances as XcodeInstances
 from .android_instance import AndroidInstance as AndroidInstance
 from .asset_get_params import AssetGetParams as AssetGetParams
 from .asset_list_params import AssetListParams as AssetListParams
@@ -11,6 +12,8 @@ from .asset_list_response import AssetListResponse as AssetListResponse
 from .ios_instance_list_params import IosInstanceListParams as IosInstanceListParams
 from .asset_get_or_create_params import AssetGetOrCreateParams as AssetGetOrCreateParams
 from .ios_instance_create_params import IosInstanceCreateParams as IosInstanceCreateParams
+from .xcode_instance_list_params import XcodeInstanceListParams as XcodeInstanceListParams
 from .android_instance_list_params import AndroidInstanceListParams as AndroidInstanceListParams
 from .asset_get_or_create_response import AssetGetOrCreateResponse as AssetGetOrCreateResponse
+from .xcode_instance_create_params import XcodeInstanceCreateParams as XcodeInstanceCreateParams
 from .android_instance_create_params import AndroidInstanceCreateParams as AndroidInstanceCreateParams

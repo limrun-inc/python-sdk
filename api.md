@@ -42,3 +42,18 @@ Methods:
 - <code title="get /v1/ios_instances">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">list</a>(\*\*<a href="src/limrun_api/types/ios_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/ios_instance.py">SyncItems[IosInstance]</a></code>
 - <code title="delete /v1/ios_instances/{id}">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/ios_instances/{id}">client.ios_instances.<a href="./src/limrun_api/resources/ios_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/ios_instance.py">IosInstance</a></code>
+
+# XcodeInstances
+
+Types:
+
+```python
+from limrun_api.types import XcodeInstances
+```
+
+Methods:
+
+- <code title="post /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">create</a>(\*\*<a href="src/limrun_api/types/xcode_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instances.py">XcodeInstances</a></code>
+- <code title="get /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">list</a>(\*\*<a href="src/limrun_api/types/xcode_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instances.py">SyncItems[XcodeInstances]</a></code>
+- <code title="delete /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">delete</a>(id) -> None</code>
+- <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instances.py">XcodeInstances</a></code>
