@@ -9,7 +9,7 @@ import pytest
 
 from limrun_api import Limrun, AsyncLimrun
 from tests.utils import assert_matches_type
-from limrun_api.types import XcodeInstances
+from limrun_api.types import XcodeInstance
 from limrun_api.pagination import SyncItems, AsyncItems
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -22,7 +22,7 @@ class TestXcodeInstances:
     @parametrize
     def test_method_create(self, client: Limrun) -> None:
         xcode_instance = client.xcode_instances.create()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -46,7 +46,7 @@ class TestXcodeInstances:
                 "region": "region",
             },
         )
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -56,7 +56,7 @@ class TestXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = response.parse()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -66,7 +66,7 @@ class TestXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = response.parse()
-            assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+            assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -74,7 +74,7 @@ class TestXcodeInstances:
     @parametrize
     def test_method_list(self, client: Limrun) -> None:
         xcode_instance = client.xcode_instances.list()
-        assert_matches_type(SyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(SyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -86,7 +86,7 @@ class TestXcodeInstances:
             starting_after="startingAfter",
             state="assigned,ready",
         )
-        assert_matches_type(SyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(SyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -96,7 +96,7 @@ class TestXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = response.parse()
-        assert_matches_type(SyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(SyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -106,7 +106,7 @@ class TestXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = response.parse()
-            assert_matches_type(SyncItems[XcodeInstances], xcode_instance, path=["response"])
+            assert_matches_type(SyncItems[XcodeInstance], xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -158,7 +158,7 @@ class TestXcodeInstances:
         xcode_instance = client.xcode_instances.get(
             "id",
         )
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -170,7 +170,7 @@ class TestXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = response.parse()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -182,7 +182,7 @@ class TestXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = response.parse()
-            assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+            assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -204,7 +204,7 @@ class TestAsyncXcodeInstances:
     @parametrize
     async def test_method_create(self, async_client: AsyncLimrun) -> None:
         xcode_instance = await async_client.xcode_instances.create()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -228,7 +228,7 @@ class TestAsyncXcodeInstances:
                 "region": "region",
             },
         )
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -238,7 +238,7 @@ class TestAsyncXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = await response.parse()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -248,7 +248,7 @@ class TestAsyncXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = await response.parse()
-            assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+            assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -256,7 +256,7 @@ class TestAsyncXcodeInstances:
     @parametrize
     async def test_method_list(self, async_client: AsyncLimrun) -> None:
         xcode_instance = await async_client.xcode_instances.list()
-        assert_matches_type(AsyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(AsyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -268,7 +268,7 @@ class TestAsyncXcodeInstances:
             starting_after="startingAfter",
             state="assigned,ready",
         )
-        assert_matches_type(AsyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(AsyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -278,7 +278,7 @@ class TestAsyncXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = await response.parse()
-        assert_matches_type(AsyncItems[XcodeInstances], xcode_instance, path=["response"])
+        assert_matches_type(AsyncItems[XcodeInstance], xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -288,7 +288,7 @@ class TestAsyncXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = await response.parse()
-            assert_matches_type(AsyncItems[XcodeInstances], xcode_instance, path=["response"])
+            assert_matches_type(AsyncItems[XcodeInstance], xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -340,7 +340,7 @@ class TestAsyncXcodeInstances:
         xcode_instance = await async_client.xcode_instances.get(
             "id",
         )
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -352,7 +352,7 @@ class TestAsyncXcodeInstances:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         xcode_instance = await response.parse()
-        assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+        assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -364,7 +364,7 @@ class TestAsyncXcodeInstances:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             xcode_instance = await response.parse()
-            assert_matches_type(XcodeInstances, xcode_instance, path=["response"])
+            assert_matches_type(XcodeInstance, xcode_instance, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
