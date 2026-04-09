@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from .asset import Asset as Asset
 from .ios_instance import IosInstance as IosInstance
-from .xcode_instances import XcodeInstances as XcodeInstances
+from .xcode_instance import XcodeInstance as XcodeInstance
 from .android_instance import AndroidInstance as AndroidInstance
 from .asset_get_params import AssetGetParams as AssetGetParams
 from .asset_list_params import AssetListParams as AssetListParams
