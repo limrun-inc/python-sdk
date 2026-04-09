@@ -48,12 +48,12 @@ Methods:
 Types:
 
 ```python
-from limrun_api.types import XcodeInstances
+from limrun_api.types import XcodeInstance
 ```
 
 Methods:
 
-- <code title="post /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">create</a>(\*\*<a href="src/limrun_api/types/xcode_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instances.py">XcodeInstances</a></code>
-- <code title="get /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">list</a>(\*\*<a href="src/limrun_api/types/xcode_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instances.py">SyncItems[XcodeInstances]</a></code>
+- <code title="post /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">create</a>(\*\*<a href="src/limrun_api/types/xcode_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instance.py">XcodeInstance</a></code>
+- <code title="get /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">list</a>(\*\*<a href="src/limrun_api/types/xcode_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instance.py">SyncItems[XcodeInstance]</a></code>
 - <code title="delete /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">delete</a>(id) -> None</code>
-- <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instances.py">XcodeInstances</a></code>
+- <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instance.py">XcodeInstance</a></code>

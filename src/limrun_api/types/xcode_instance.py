@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["XcodeInstances", "Metadata", "Spec", "Status"]
+__all__ = ["XcodeInstance", "Metadata", "Spec", "Status"]
 
 
 class Metadata(BaseModel):
@@ -43,7 +43,7 @@ class Status(BaseModel):
     error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
 
 
-class XcodeInstances(BaseModel):
+class XcodeInstance(BaseModel):
     metadata: Metadata
 
     spec: Spec

@@ -17,7 +17,7 @@ from .._response import (
 )
 from ..pagination import SyncItems, AsyncItems
 from .._base_client import AsyncPaginator, make_request_options
-from ..types.xcode_instances import XcodeInstances
+from ..types.xcode_instance import XcodeInstance
 
 __all__ = ["XcodeInstancesResource", "AsyncXcodeInstancesResource"]
 
@@ -55,7 +55,7 @@ class XcodeInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> XcodeInstances:
+    ) -> XcodeInstance:
         """
         Create an Xcode instance
 
@@ -95,7 +95,7 @@ class XcodeInstancesResource(SyncAPIResource):
                     xcode_instance_create_params.XcodeInstanceCreateParams,
                 ),
             ),
-            cast_to=XcodeInstances,
+            cast_to=XcodeInstance,
         )
 
     def list(
@@ -112,7 +112,7 @@ class XcodeInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncItems[XcodeInstances]:
+    ) -> SyncItems[XcodeInstance]:
         """
         List Xcode instances
 
@@ -138,7 +138,7 @@ class XcodeInstancesResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/xcode_instances",
-            page=SyncItems[XcodeInstances],
+            page=SyncItems[XcodeInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -155,7 +155,7 @@ class XcodeInstancesResource(SyncAPIResource):
                     xcode_instance_list_params.XcodeInstanceListParams,
                 ),
             ),
-            model=XcodeInstances,
+            model=XcodeInstance,
         )
 
     def delete(
@@ -202,7 +202,7 @@ class XcodeInstancesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> XcodeInstances:
+    ) -> XcodeInstance:
         """
         Get Xcode instance with given ID
 
@@ -222,7 +222,7 @@ class XcodeInstancesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=XcodeInstances,
+            cast_to=XcodeInstance,
         )
 
 
@@ -259,7 +259,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> XcodeInstances:
+    ) -> XcodeInstance:
         """
         Create an Xcode instance
 
@@ -299,7 +299,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
                     xcode_instance_create_params.XcodeInstanceCreateParams,
                 ),
             ),
-            cast_to=XcodeInstances,
+            cast_to=XcodeInstance,
         )
 
     def list(
@@ -316,7 +316,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[XcodeInstances, AsyncItems[XcodeInstances]]:
+    ) -> AsyncPaginator[XcodeInstance, AsyncItems[XcodeInstance]]:
         """
         List Xcode instances
 
@@ -342,7 +342,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/xcode_instances",
-            page=AsyncItems[XcodeInstances],
+            page=AsyncItems[XcodeInstance],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -359,7 +359,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
                     xcode_instance_list_params.XcodeInstanceListParams,
                 ),
             ),
-            model=XcodeInstances,
+            model=XcodeInstance,
         )
 
     async def delete(
@@ -406,7 +406,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> XcodeInstances:
+    ) -> XcodeInstance:
         """
         Get Xcode instance with given ID
 
@@ -426,7 +426,7 @@ class AsyncXcodeInstancesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=XcodeInstances,
+            cast_to=XcodeInstance,
         )
 
 
