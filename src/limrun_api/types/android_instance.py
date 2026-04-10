@@ -61,6 +61,8 @@ class Status(BaseModel):
 
     adb_web_socket_url: Optional[str] = FieldInfo(alias="adbWebSocketUrl", default=None)
 
+    api_url: Optional[str] = FieldInfo(alias="apiUrl", default=None)
+
     endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
 
     error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
