@@ -1,5 +1,60 @@
 # Changelog
 
+## 0.10.0 (2026-04-11)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/limrun-inc/python-sdk/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** add apiUrl to android ([f4b20d1](https://github.com/limrun-inc/python-sdk/commit/f4b20d10ff3146a7f69fba5592c4e6a2a99b8686))
+* **api:** add displayName to asset ([d4fe4c1](https://github.com/limrun-inc/python-sdk/commit/d4fe4c16bf47c880f3a36772df6b51fa202dfc22))
+* **api:** add ios sandbox properties and app store for assets ([79b878d](https://github.com/limrun-inc/python-sdk/commit/79b878dd9ce6a49a811bdef875da931c97ae0f35))
+* **api:** add optional os field to assets ([95d3948](https://github.com/limrun-inc/python-sdk/commit/95d39487044edc9f135b7b0f74afcf30e09b7d96))
+* **api:** add spec.model to ios creation api ([b7e6770](https://github.com/limrun-inc/python-sdk/commit/b7e67702e48bab7c14314b907016e2d65b2d5815))
+* **api:** add status.mcpUrl for ios ([b6b64d3](https://github.com/limrun-inc/python-sdk/commit/b6b64d310d619e86e24f3ba0acf4596d788d36ad))
+* **api:** add status.mcpUrl to android ([b837288](https://github.com/limrun-inc/python-sdk/commit/b837288b3b60d618463c9481cf896d8fc627b0f1))
+* **api:** add xcode instances endpoints ([5041989](https://github.com/limrun-inc/python-sdk/commit/50419899965c9346919a1cc3e6cccc39b81d291a))
+* **api:** fix model name for xcode_instance in stainless config ([6524d3f](https://github.com/limrun-inc/python-sdk/commit/6524d3ff19c19675ad87b2e72fda31a30ca04c1a))
+* **api:** increase timeout to 5 minutes since big app installations may take longer than a minute ([0d9a065](https://github.com/limrun-inc/python-sdk/commit/0d9a0656b4de373bc2feedfedeb177fc8ecec502))
+* **api:** update stainless config for xcode_instances resource ([40668f3](https://github.com/limrun-inc/python-sdk/commit/40668f35e880c6beb2b319ae85c95a5eedb16545))
+* **client:** add custom JSON encoder for extended type support ([0403818](https://github.com/limrun-inc/python-sdk/commit/0403818157b7f32718d50f421a7038941c92ac38))
+* **client:** add support for binary request streaming ([8918b83](https://github.com/limrun-inc/python-sdk/commit/8918b8372a5c18a2163972fd798e0810ce2ed686))
+
+
+### Bug Fixes
+
+* **client:** loosen auth header validation ([3c8c6e2](https://github.com/limrun-inc/python-sdk/commit/3c8c6e2a2e452b742ba890e0b3fb6d6d76434783))
+* use async_to_httpx_files in patch method ([8207c94](https://github.com/limrun-inc/python-sdk/commit/8207c946cc0cb3d9b5a97a60331aae610b304ece))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([ce1aac8](https://github.com/limrun-inc/python-sdk/commit/ce1aac814b24e47c04f837946eb77ae716727586))
+* format all `api.md` files ([9be9c3f](https://github.com/limrun-inc/python-sdk/commit/9be9c3f027208e348d11e4148814871ea5f53cfa))
+* **internal:** add `--fix` argument to lint script ([c6513ca](https://github.com/limrun-inc/python-sdk/commit/c6513cac50526f80bd8100a0b22541918dc0d07f))
+* **internal:** add missing files argument to base client ([3b4eb61](https://github.com/limrun-inc/python-sdk/commit/3b4eb61934e77432e15228e080adf5ea57010419))
+* **internal:** bump dependencies ([51e3172](https://github.com/limrun-inc/python-sdk/commit/51e317263c35e3145d826f5be4b5060000cd2f9c))
+* **internal:** codegen related update ([b3e791f](https://github.com/limrun-inc/python-sdk/commit/b3e791f51bb2213fb10123d2dc57611380c37958))
+* **internal:** codegen related update ([c627787](https://github.com/limrun-inc/python-sdk/commit/c627787552abc38f5a4035ddbfac925b07457416))
+* **internal:** codegen related update ([502959d](https://github.com/limrun-inc/python-sdk/commit/502959de7c4daa021b8d842d2aa16f85640d4096))
+* **internal:** codegen related update ([e2a0ba3](https://github.com/limrun-inc/python-sdk/commit/e2a0ba32faa10f7795a236c66cf0f131026e45d5))
+* **internal:** codegen related update ([cf97aec](https://github.com/limrun-inc/python-sdk/commit/cf97aec9039fd06bbc1f6dcc088247de592e17a4))
+* **internal:** codegen related update ([adb7df2](https://github.com/limrun-inc/python-sdk/commit/adb7df2b6635dc5b7517b68900880bb66f342364))
+* **internal:** codegen related update ([d6320fe](https://github.com/limrun-inc/python-sdk/commit/d6320fece3c04ca4974719cb8a44ceb08e8ef4b3))
+* **internal:** codegen related update ([7f99be1](https://github.com/limrun-inc/python-sdk/commit/7f99be1af61e1fe2579ffe978d3e4950975dabb5))
+* **internal:** codegen related update ([ac36b22](https://github.com/limrun-inc/python-sdk/commit/ac36b229930b1f2b0745d8c914749e21df5d403f))
+* **internal:** codegen related update ([93c6957](https://github.com/limrun-inc/python-sdk/commit/93c695795df12fdbc3f101b462508bf180a0000f))
+* **internal:** fix lint error on Python 3.14 ([d11f360](https://github.com/limrun-inc/python-sdk/commit/d11f36003e8e13287d2acfb228dd47357358761a))
+* **internal:** remove mock server code ([6bc0de4](https://github.com/limrun-inc/python-sdk/commit/6bc0de40a2048d0a6162aa7a3eb2e3cf7d5ca2ef))
+* **internal:** update `actions/checkout` version ([b6db8d6](https://github.com/limrun-inc/python-sdk/commit/b6db8d64544d9da9d3e1948f73272f5a1018756f))
+* speedup initial import ([7cafc23](https://github.com/limrun-inc/python-sdk/commit/7cafc23a5d774732001b90025cc1ba62ead284a6))
+* update mock server docs ([5ebe065](https://github.com/limrun-inc/python-sdk/commit/5ebe0654d5a13a65158418acefb9dd48903636f8))
+
+
+### Documentation
+
+* add more examples ([5ec7ea7](https://github.com/limrun-inc/python-sdk/commit/5ec7ea7fd56fc35e7d9a06201615c04d96d4d926))
+
 ## 0.9.0 (2025-12-14)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/limrun-inc/python-sdk/compare/v0.8.0...v0.9.0)
