@@ -71,6 +71,8 @@ class Status(BaseModel):
 
     sandbox: Optional[StatusSandbox] = None
 
+    signed_stream_url: Optional[str] = FieldInfo(alias="signedStreamUrl", default=None)
+
     target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
 
