@@ -36,6 +36,7 @@ class TestAssets:
             include_upload_url=True,
             limit=50,
             name_filter="nameFilter",
+            name_prefix_filter="namePrefixFilter",
         )
         assert_matches_type(AssetListResponse, asset, path=["response"])
 
@@ -210,6 +211,7 @@ class TestAsyncAssets:
             include_upload_url=True,
             limit=50,
             name_filter="nameFilter",
+            name_prefix_filter="namePrefixFilter",
         )
         assert_matches_type(AssetListResponse, asset, path=["response"])
 
