@@ -51,6 +51,7 @@ class AssetsResource(SyncAPIResource):
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
+        name_prefix_filter: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -73,7 +74,17 @@ class AssetsResource(SyncAPIResource):
 
           limit: Maximum number of items to be returned. The default is 50.
 
-          name_filter: Query by file name
+          name_filter: Case-sensitive exact match on the asset name. Cannot be combined with
+              namePrefixFilter. When combined with includeAppStore=true, a leading "appstore/"
+              is stripped before querying App Store assets (whose stored names never carry the
+              prefix).
+
+          name_prefix_filter: Case-sensitive prefix match on the asset name. LIKE wildcards ("%", "\\__") in the
+              value are treated as literal characters, not wildcards. Empty string is rejected
+              with 400; omit the parameter if no filtering is desired. Cannot be combined with
+              nameFilter. When combined with includeAppStore=true, a leading "appstore/" is
+              stripped before querying App Store assets (whose stored names never carry the
+              prefix); a partial prefix like "appstor" will not match any App Store assets.
 
           extra_headers: Send extra headers
 
@@ -97,6 +108,7 @@ class AssetsResource(SyncAPIResource):
                         "include_upload_url": include_upload_url,
                         "limit": limit,
                         "name_filter": name_filter,
+                        "name_prefix_filter": name_prefix_filter,
                     },
                     asset_list_params.AssetListParams,
                 ),
@@ -253,6 +265,7 @@ class AsyncAssetsResource(AsyncAPIResource):
         include_upload_url: bool | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
+        name_prefix_filter: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -275,7 +288,17 @@ class AsyncAssetsResource(AsyncAPIResource):
 
           limit: Maximum number of items to be returned. The default is 50.
 
-          name_filter: Query by file name
+          name_filter: Case-sensitive exact match on the asset name. Cannot be combined with
+              namePrefixFilter. When combined with includeAppStore=true, a leading "appstore/"
+              is stripped before querying App Store assets (whose stored names never carry the
+              prefix).
+
+          name_prefix_filter: Case-sensitive prefix match on the asset name. LIKE wildcards ("%", "\\__") in the
+              value are treated as literal characters, not wildcards. Empty string is rejected
+              with 400; omit the parameter if no filtering is desired. Cannot be combined with
+              nameFilter. When combined with includeAppStore=true, a leading "appstore/" is
+              stripped before querying App Store assets (whose stored names never carry the
+              prefix); a partial prefix like "appstor" will not match any App Store assets.
 
           extra_headers: Send extra headers
 
@@ -299,6 +322,7 @@ class AsyncAssetsResource(AsyncAPIResource):
                         "include_upload_url": include_upload_url,
                         "limit": limit,
                         "name_filter": name_filter,
+                        "name_prefix_filter": name_prefix_filter,
                     },
                     asset_list_params.AssetListParams,
                 ),
