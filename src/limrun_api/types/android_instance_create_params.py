@@ -77,6 +77,8 @@ class SpecInitialAsset(TypedDict, total=False):
 class SpecSandboxPlaywrightAndroid(TypedDict, total=False):
     enabled: bool
 
+    version: Literal["1.56.1-lim.1", "1.60.0-lim.1"]
+
 
 class SpecSandbox(TypedDict, total=False):
     playwright_android: Annotated[SpecSandboxPlaywrightAndroid, PropertyInfo(alias="playwrightAndroid")]
