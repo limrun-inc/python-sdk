@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
+from datetime import datetime
 
 from pydantic import Field as FieldInfo
 
@@ -17,6 +18,9 @@ class AssetGetOrCreateResponse(BaseModel):
     signed_download_url: str = FieldInfo(alias="signedDownloadUrl")
 
     signed_upload_url: str = FieldInfo(alias="signedUploadUrl")
+
+    expires_at: Optional[datetime] = FieldInfo(alias="expiresAt", default=None)
+    """When set, the time after which the asset is automatically deleted."""
 
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""

@@ -203,6 +203,7 @@ class AssetsResource(SyncAPIResource):
         self,
         *,
         name: str,
+        ttl: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -219,6 +220,11 @@ class AssetsResource(SyncAPIResource):
         in instances will fail until you use the returned upload URL to submit the file.
 
         Args:
+          ttl: Optional time-to-live as a Go duration string (e.g. "24h"). When set, the asset
+              is deleted this long after now; minimum is 1m. Omit for no expiry. On re-upload
+              of an existing asset, a value updates the expiry while omitting it leaves the
+              current expiry unchanged.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -229,7 +235,13 @@ class AssetsResource(SyncAPIResource):
         """
         return self._put(
             "/v1/assets",
-            body=maybe_transform({"name": name}, asset_get_or_create_params.AssetGetOrCreateParams),
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "ttl": ttl,
+                },
+                asset_get_or_create_params.AssetGetOrCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -417,6 +429,7 @@ class AsyncAssetsResource(AsyncAPIResource):
         self,
         *,
         name: str,
+        ttl: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -433,6 +446,11 @@ class AsyncAssetsResource(AsyncAPIResource):
         in instances will fail until you use the returned upload URL to submit the file.
 
         Args:
+          ttl: Optional time-to-live as a Go duration string (e.g. "24h"). When set, the asset
+              is deleted this long after now; minimum is 1m. Omit for no expiry. On re-upload
+              of an existing asset, a value updates the expiry while omitting it leaves the
+              current expiry unchanged.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -443,7 +461,13 @@ class AsyncAssetsResource(AsyncAPIResource):
         """
         return await self._put(
             "/v1/assets",
-            body=await async_maybe_transform({"name": name}, asset_get_or_create_params.AssetGetOrCreateParams),
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "ttl": ttl,
+                },
+                asset_get_or_create_params.AssetGetOrCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

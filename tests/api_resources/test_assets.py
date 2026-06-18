@@ -166,6 +166,15 @@ class TestAssets:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_get_or_create_with_all_params(self, client: Limrun) -> None:
+        asset = client.assets.get_or_create(
+            name="name",
+            ttl="ttl",
+        )
+        assert_matches_type(AssetGetOrCreateResponse, asset, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_get_or_create(self, client: Limrun) -> None:
         response = client.assets.with_raw_response.get_or_create(
             name="name",
@@ -336,6 +345,15 @@ class TestAsyncAssets:
     async def test_method_get_or_create(self, async_client: AsyncLimrun) -> None:
         asset = await async_client.assets.get_or_create(
             name="name",
+        )
+        assert_matches_type(AssetGetOrCreateResponse, asset, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_get_or_create_with_all_params(self, async_client: AsyncLimrun) -> None:
+        asset = await async_client.assets.get_or_create(
+            name="name",
+            ttl="ttl",
         )
         assert_matches_type(AssetGetOrCreateResponse, asset, path=["response"])
 

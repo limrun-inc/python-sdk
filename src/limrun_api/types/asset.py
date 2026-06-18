@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Optional
+from datetime import datetime
 from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
@@ -17,6 +18,9 @@ class Asset(BaseModel):
 
     display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
     """Human-readable display name for the asset. If not set, the name should be used."""
+
+    expires_at: Optional[datetime] = FieldInfo(alias="expiresAt", default=None)
+    """When set, the time after which the asset is automatically deleted."""
 
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""
