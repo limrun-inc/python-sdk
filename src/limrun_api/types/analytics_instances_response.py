@@ -2,6 +2,7 @@
 
 from typing import Dict, List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -56,8 +57,8 @@ class SeriesInstance(BaseModel):
     instance_tid: str = FieldInfo(alias="instanceTid")
     """Instance type ID (e.g., ios_xxx, android_xxx)"""
 
-    platform: str
-    """Platform name, such as android, ios, or xcode"""
+    platform: Literal["android", "ios", "xcode"]
+    """Platform name."""
 
     runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
     """Actual runtime minutes before platform multiplier"""
