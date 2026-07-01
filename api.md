@@ -63,17 +63,7 @@ Methods:
 Types:
 
 ```python
-from limrun_api.types import (
-    AnalyticsEntry,
-    AnalyticsInstance,
-    AnalyticsInstanceEntry,
-    AnalyticsInstancesResponse,
-    AnalyticsRegionStats,
-    AnalyticsResponse,
-    AnalyticsSummary,
-    BilledBreakdown,
-    CostBreakdown,
-)
+from limrun_api.types import AnalyticsInstancesResponse, AnalyticsResponse
 ```
 
 Methods:
