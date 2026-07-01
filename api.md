@@ -57,3 +57,26 @@ Methods:
 - <code title="get /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">list</a>(\*\*<a href="src/limrun_api/types/xcode_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instance.py">SyncItems[XcodeInstance]</a></code>
 - <code title="delete /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instance.py">XcodeInstance</a></code>
+
+# Analytics
+
+Types:
+
+```python
+from limrun_api.types import (
+    AnalyticsEntry,
+    AnalyticsInstance,
+    AnalyticsInstanceEntry,
+    AnalyticsInstancesResponse,
+    AnalyticsRegionStats,
+    AnalyticsResponse,
+    AnalyticsSummary,
+    BilledBreakdown,
+    CostBreakdown,
+)
+```
+
+Methods:
+
+- <code title="get /v1/analytics">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get</a>(\*\*<a href="src/limrun_api/types/analytics_get_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_response.py">AnalyticsResponse</a></code>
+- <code title="get /v1/analytics/instances">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get_instances</a>(\*\*<a href="src/limrun_api/types/analytics_get_instances_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_instances_response.py">AnalyticsInstancesResponse</a></code>

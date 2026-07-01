@@ -36,8 +36,9 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import assets, ios_instances, xcode_instances, android_instances
+    from .resources import assets, analytics, ios_instances, xcode_instances, android_instances
     from .resources.assets import AssetsResource, AsyncAssetsResource
+    from .resources.analytics import AnalyticsResource, AsyncAnalyticsResource
     from .resources.ios_instances import IosInstancesResource, AsyncIosInstancesResource
     from .resources.xcode_instances import XcodeInstancesResource, AsyncXcodeInstancesResource
     from .resources.android_instances import AndroidInstancesResource, AsyncAndroidInstancesResource
@@ -128,6 +129,12 @@ class Limrun(SyncAPIClient):
         from .resources.xcode_instances import XcodeInstancesResource
 
         return XcodeInstancesResource(self)
+
+    @cached_property
+    def analytics(self) -> AnalyticsResource:
+        from .resources.analytics import AnalyticsResource
+
+        return AnalyticsResource(self)
 
     @cached_property
     def with_raw_response(self) -> LimrunWithRawResponse:
@@ -338,6 +345,12 @@ class AsyncLimrun(AsyncAPIClient):
         return AsyncXcodeInstancesResource(self)
 
     @cached_property
+    def analytics(self) -> AsyncAnalyticsResource:
+        from .resources.analytics import AsyncAnalyticsResource
+
+        return AsyncAnalyticsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncLimrunWithRawResponse:
         return AsyncLimrunWithRawResponse(self)
 
@@ -491,6 +504,12 @@ class LimrunWithRawResponse:
 
         return XcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
 
+    @cached_property
+    def analytics(self) -> analytics.AnalyticsResourceWithRawResponse:
+        from .resources.analytics import AnalyticsResourceWithRawResponse
+
+        return AnalyticsResourceWithRawResponse(self._client.analytics)
+
 
 class AsyncLimrunWithRawResponse:
     _client: AsyncLimrun
@@ -521,6 +540,12 @@ class AsyncLimrunWithRawResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithRawResponse
 
         return AsyncXcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AsyncAnalyticsResourceWithRawResponse:
+        from .resources.analytics import AsyncAnalyticsResourceWithRawResponse
+
+        return AsyncAnalyticsResourceWithRawResponse(self._client.analytics)
 
 
 class LimrunWithStreamedResponse:
@@ -553,6 +578,12 @@ class LimrunWithStreamedResponse:
 
         return XcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
 
+    @cached_property
+    def analytics(self) -> analytics.AnalyticsResourceWithStreamingResponse:
+        from .resources.analytics import AnalyticsResourceWithStreamingResponse
+
+        return AnalyticsResourceWithStreamingResponse(self._client.analytics)
+
 
 class AsyncLimrunWithStreamedResponse:
     _client: AsyncLimrun
@@ -583,6 +614,12 @@ class AsyncLimrunWithStreamedResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithStreamingResponse
 
         return AsyncXcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AsyncAnalyticsResourceWithStreamingResponse:
+        from .resources.analytics import AsyncAnalyticsResourceWithStreamingResponse
+
+        return AsyncAnalyticsResourceWithStreamingResponse(self._client.analytics)
 
 
 Client = Limrun
