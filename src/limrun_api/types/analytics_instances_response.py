@@ -57,7 +57,7 @@ class SeriesInstance(BaseModel):
     """Instance type ID (e.g., ios_xxx, android_xxx)"""
 
     platform: str
-    """Platform name, such as android, ios, or sandbox"""
+    """Platform name, such as android, ios, or xcode"""
 
     runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
     """Actual runtime minutes before platform multiplier"""

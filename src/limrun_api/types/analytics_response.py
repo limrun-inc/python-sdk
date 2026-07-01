@@ -13,14 +13,14 @@ __all__ = [
     "Series",
     "SeriesAndroid",
     "SeriesIos",
-    "SeriesSandbox",
+    "SeriesXcode",
     "SeriesInstance",
     "SeriesInstanceBilledBreakdown",
     "SeriesInstanceCostBreakdown",
     "Summary",
     "SummaryAndroid",
     "SummaryIos",
-    "SummarySandbox",
+    "SummaryXcode",
 ]
 
 
@@ -98,7 +98,7 @@ class SeriesIos(BaseModel):
     """Map of subscription ID to cost in dollars"""
 
 
-class SeriesSandbox(BaseModel):
+class SeriesXcode(BaseModel):
     """Complete analytics for a specific region including billing breakdown"""
 
     avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
@@ -176,7 +176,7 @@ class SeriesInstance(BaseModel):
     """Instance type ID (e.g., ios_xxx, android_xxx)"""
 
     platform: str
-    """Platform name, such as android, ios, or sandbox"""
+    """Platform name, such as android, ios, or xcode"""
 
     runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
     """Actual runtime minutes before platform multiplier"""
@@ -202,14 +202,14 @@ class Series(BaseModel):
     ios: Dict[str, SeriesIos]
     """Map of region to analytics stats for iOS"""
 
-    sandbox: Dict[str, SeriesSandbox]
-    """Map of region to analytics stats for Sandbox"""
-
     timestamp: str
     """
     RFC3339 timestamp for the start of the bucket in the requested timezone,
     including the local offset
     """
+
+    xcode: Dict[str, SeriesXcode]
+    """Map of region to analytics stats for Xcode"""
 
     instances: Optional[List[SeriesInstance]] = None
     """Individual instance details for this time bucket"""
@@ -289,7 +289,7 @@ class SummaryIos(BaseModel):
     """Map of subscription ID to cost in dollars"""
 
 
-class SummarySandbox(BaseModel):
+class SummaryXcode(BaseModel):
     """Complete analytics for a specific region including billing breakdown"""
 
     avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
@@ -337,8 +337,8 @@ class Summary(BaseModel):
     ios: Dict[str, SummaryIos]
     """Map of region to analytics stats for iOS"""
 
-    sandbox: Dict[str, SummarySandbox]
-    """Map of region to analytics stats for Sandbox"""
+    xcode: Dict[str, SummaryXcode]
+    """Map of region to analytics stats for Xcode"""
 
 
 class AnalyticsResponse(BaseModel):
