@@ -8,6 +8,14 @@ from .assets import (
     AssetsResourceWithStreamingResponse,
     AsyncAssetsResourceWithStreamingResponse,
 )
+from .analytics import (
+    AnalyticsResource,
+    AsyncAnalyticsResource,
+    AnalyticsResourceWithRawResponse,
+    AsyncAnalyticsResourceWithRawResponse,
+    AnalyticsResourceWithStreamingResponse,
+    AsyncAnalyticsResourceWithStreamingResponse,
+)
 from .ios_instances import (
     IosInstancesResource,
     AsyncIosInstancesResource,
@@ -58,4 +66,10 @@ __all__ = [
     "AsyncXcodeInstancesResourceWithRawResponse",
     "XcodeInstancesResourceWithStreamingResponse",
     "AsyncXcodeInstancesResourceWithStreamingResponse",
+    "AnalyticsResource",
+    "AsyncAnalyticsResource",
+    "AnalyticsResourceWithRawResponse",
+    "AsyncAnalyticsResourceWithRawResponse",
+    "AnalyticsResourceWithStreamingResponse",
+    "AsyncAnalyticsResourceWithStreamingResponse",
 ]
