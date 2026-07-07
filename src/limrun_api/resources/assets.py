@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
 from ..types import asset_get_params, asset_list_params, asset_get_or_create_params
@@ -49,6 +51,7 @@ class AssetsResource(SyncAPIResource):
         include_app_store: bool | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
+        kind_filter: Literal["App", "Keychain"] | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
         name_prefix_filter: str | Omit = omit,
@@ -71,6 +74,8 @@ class AssetsResource(SyncAPIResource):
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
+
+          kind_filter: Filters assets by kind.
 
           limit: Maximum number of items to be returned. The default is 50.
 
@@ -106,6 +111,7 @@ class AssetsResource(SyncAPIResource):
                         "include_app_store": include_app_store,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
+                        "kind_filter": kind_filter,
                         "limit": limit,
                         "name_filter": name_filter,
                         "name_prefix_filter": name_prefix_filter,
@@ -203,6 +209,8 @@ class AssetsResource(SyncAPIResource):
         self,
         *,
         name: str,
+        kind: Literal["App", "Keychain"] | Omit = omit,
+        platform: Literal["ios", "android", "xcode"] | Omit = omit,
         ttl: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -238,6 +246,8 @@ class AssetsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "name": name,
+                    "kind": kind,
+                    "platform": platform,
                     "ttl": ttl,
                 },
                 asset_get_or_create_params.AssetGetOrCreateParams,
@@ -275,6 +285,7 @@ class AsyncAssetsResource(AsyncAPIResource):
         include_app_store: bool | Omit = omit,
         include_download_url: bool | Omit = omit,
         include_upload_url: bool | Omit = omit,
+        kind_filter: Literal["App", "Keychain"] | Omit = omit,
         limit: int | Omit = omit,
         name_filter: str | Omit = omit,
         name_prefix_filter: str | Omit = omit,
@@ -297,6 +308,8 @@ class AsyncAssetsResource(AsyncAPIResource):
           include_download_url: Toggles whether a download URL should be included in the response
 
           include_upload_url: Toggles whether an upload URL should be included in the response
+
+          kind_filter: Filters assets by kind.
 
           limit: Maximum number of items to be returned. The default is 50.
 
@@ -332,6 +345,7 @@ class AsyncAssetsResource(AsyncAPIResource):
                         "include_app_store": include_app_store,
                         "include_download_url": include_download_url,
                         "include_upload_url": include_upload_url,
+                        "kind_filter": kind_filter,
                         "limit": limit,
                         "name_filter": name_filter,
                         "name_prefix_filter": name_prefix_filter,
@@ -429,6 +443,8 @@ class AsyncAssetsResource(AsyncAPIResource):
         self,
         *,
         name: str,
+        kind: Literal["App", "Keychain"] | Omit = omit,
+        platform: Literal["ios", "android", "xcode"] | Omit = omit,
         ttl: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -464,6 +480,8 @@ class AsyncAssetsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "name": name,
+                    "kind": kind,
+                    "platform": platform,
                     "ttl": ttl,
                 },
                 asset_get_or_create_params.AssetGetOrCreateParams,

@@ -34,6 +34,7 @@ class TestAssets:
             include_app_store=True,
             include_download_url=True,
             include_upload_url=True,
+            kind_filter="App",
             limit=50,
             name_filter="nameFilter",
             name_prefix_filter="namePrefixFilter",
@@ -169,6 +170,8 @@ class TestAssets:
     def test_method_get_or_create_with_all_params(self, client: Limrun) -> None:
         asset = client.assets.get_or_create(
             name="name",
+            kind="App",
+            platform="ios",
             ttl="ttl",
         )
         assert_matches_type(AssetGetOrCreateResponse, asset, path=["response"])
@@ -218,6 +221,7 @@ class TestAsyncAssets:
             include_app_store=True,
             include_download_url=True,
             include_upload_url=True,
+            kind_filter="App",
             limit=50,
             name_filter="nameFilter",
             name_prefix_filter="namePrefixFilter",
@@ -353,6 +357,8 @@ class TestAsyncAssets:
     async def test_method_get_or_create_with_all_params(self, async_client: AsyncLimrun) -> None:
         asset = await async_client.assets.get_or_create(
             name="name",
+            kind="App",
+            platform="ios",
             ttl="ttl",
         )
         assert_matches_type(AssetGetOrCreateResponse, asset, path=["response"])

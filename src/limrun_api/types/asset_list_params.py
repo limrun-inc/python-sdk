@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -21,6 +21,9 @@ class AssetListParams(TypedDict, total=False):
 
     include_upload_url: Annotated[bool, PropertyInfo(alias="includeUploadUrl")]
     """Toggles whether an upload URL should be included in the response"""
+
+    kind_filter: Annotated[Literal["App", "Keychain"], PropertyInfo(alias="kindFilter")]
+    """Filters assets by kind."""
 
     limit: int
     """Maximum number of items to be returned. The default is 50."""
