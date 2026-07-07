@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["AssetGetOrCreateParams"]
 
 
 class AssetGetOrCreateParams(TypedDict, total=False):
     name: Required[str]
+
+    kind: Literal["App", "Keychain"]
+
+    platform: Literal["ios", "android", "xcode"]
 
     ttl: str
     """Optional time-to-live as a Go duration string (e.g.

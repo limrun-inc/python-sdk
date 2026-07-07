@@ -14,6 +14,8 @@ __all__ = ["Asset"]
 class Asset(BaseModel):
     id: str
 
+    kind: Literal["App", "Keychain"]
+
     name: str
 
     display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
@@ -25,8 +27,11 @@ class Asset(BaseModel):
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""
 
-    os: Optional[Literal["ios", "android"]] = None
-    """The operating system this asset is for.
+    os: Optional[Literal["ios", "android", "xcode"]] = None
+    """Deprecated: alias of platform, always mirrors it. Use platform instead."""
+
+    platform: Optional[Literal["ios", "android", "xcode"]] = None
+    """The platform this asset is for.
 
     If not set, the asset is available for all platforms.
     """

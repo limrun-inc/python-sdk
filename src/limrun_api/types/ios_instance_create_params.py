@@ -46,13 +46,19 @@ class SpecClue(TypedDict, total=False):
 
 
 class SpecInitialAsset(TypedDict, total=False):
-    kind: Required[Literal["App"]]
+    kind: Required[Literal["App", "Keychain"]]
 
     source: Required[Literal["URL", "AssetName", "AssetID"]]
 
     asset_id: Annotated[str, PropertyInfo(alias="assetId")]
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
+
+    encryption_key: Annotated[str, PropertyInfo(alias="encryptionKey")]
+    """
+    Base64/base64url-encoded 32-byte key used to decrypt Keychain assets. Required
+    when kind is Keychain.
+    """
 
     launch_mode: Annotated[
         Literal["ForegroundIfRunning", "RelaunchIfRunning", "FailIfRunning"], PropertyInfo(alias="launchMode")

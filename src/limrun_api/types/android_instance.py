@@ -75,6 +75,21 @@ class Status(BaseModel):
 
     target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
+    termination_reason: Optional[str] = FieldInfo(alias="terminationReason", default=None)
+    """Machine-readable reason the instance was terminated.
+
+    Always present once state is "terminated", never present before that. New values
+    may be added over time, so treat any unrecognized value as "Unknown". Known
+    values:
+
+    - "UserRequested": terminated by a delete request to the API.
+    - "InactivityTimeout": the timeout given in spec.inactivityTimeout elapsed.
+    - "HardTimeout": the timeout given in spec.hardTimeout elapsed.
+    - "Unknown": terminated for a cause the platform did not attribute, including
+      instances that failed to get ready during creation. See errorMessage for
+      details when available.
+    """
+
 
 class AndroidInstance(BaseModel):
     metadata: Metadata

@@ -49,6 +49,7 @@ class TestIosInstances:
                         "source": "URL",
                         "asset_id": "assetId",
                         "asset_name": "assetName",
+                        "encryption_key": "encryptionKey",
                         "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }
@@ -244,6 +245,7 @@ class TestAsyncIosInstances:
                         "source": "URL",
                         "asset_id": "assetId",
                         "asset_name": "assetName",
+                        "encryption_key": "encryptionKey",
                         "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }

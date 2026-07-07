@@ -2,6 +2,7 @@
 
 from typing import Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -12,6 +13,8 @@ __all__ = ["AssetGetOrCreateResponse"]
 
 class AssetGetOrCreateResponse(BaseModel):
     id: str
+
+    kind: Literal["App", "Keychain"]
 
     name: str
 
@@ -24,3 +27,5 @@ class AssetGetOrCreateResponse(BaseModel):
 
     md5: Optional[str] = None
     """Returned only if there is a corresponding file uploaded already."""
+
+    platform: Optional[Literal["ios", "android", "xcode"]] = None
