@@ -41,6 +41,7 @@ class TestIosInstances:
                         "client_ip": "clientIp",
                     }
                 ],
+                "force_bundle_id": "x",
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
                 "initial_assets": [
@@ -237,6 +238,7 @@ class TestAsyncIosInstances:
                         "client_ip": "clientIp",
                     }
                 ],
+                "force_bundle_id": "x",
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
                 "initial_assets": [
