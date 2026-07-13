@@ -82,6 +82,13 @@ class SpecSandbox(TypedDict, total=False):
 class Spec(TypedDict, total=False):
     clues: Iterable[SpecClue]
 
+    force_bundle_id: Annotated[str, PropertyInfo(alias="forceBundleId")]
+    """
+    Keeps this app in the foreground after it is first observed there. This does not
+    launch the app when the simulator starts. Once armed, closing or backgrounding
+    the app causes it to be brought back to the foreground.
+    """
+
     hard_timeout: Annotated[str, PropertyInfo(alias="hardTimeout")]
     """
     After how many minutes should the instance be terminated. Example values 1m,
