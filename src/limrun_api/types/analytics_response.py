@@ -12,6 +12,7 @@ __all__ = [
     "AnalyticsResponse",
     "Series",
     "SeriesAndroid",
+    "SeriesGradle",
     "SeriesIos",
     "SeriesXcode",
     "SeriesInstance",
@@ -19,12 +20,50 @@ __all__ = [
     "SeriesInstanceCostBreakdown",
     "Summary",
     "SummaryAndroid",
+    "SummaryGradle",
     "SummaryIos",
     "SummaryXcode",
 ]
 
 
 class SeriesAndroid(BaseModel):
+    """Complete analytics for a specific region including billing breakdown"""
+
+    avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
+    """Average instance duration in minutes"""
+
+    billed_minutes: int = FieldInfo(alias="billedMinutes")
+    """Billed minutes with platform multiplier applied"""
+
+    cost: float
+    """Total cost in dollars"""
+
+    count: int
+    """Number of unique instances"""
+
+    credits_billed_minutes: int = FieldInfo(alias="creditsBilledMinutes")
+    """Minutes billed to credits"""
+
+    credits_cost: float = FieldInfo(alias="creditsCost")
+    """Cost from credits (always 0)"""
+
+    on_demand_billed_minutes: int = FieldInfo(alias="onDemandBilledMinutes")
+    """Minutes billed on-demand"""
+
+    on_demand_cost: float = FieldInfo(alias="onDemandCost")
+    """Cost from on-demand billing in dollars"""
+
+    runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
+    """Actual runtime minutes before platform multiplier"""
+
+    subscription_billed_minutes: Optional[Dict[str, int]] = FieldInfo(alias="subscriptionBilledMinutes", default=None)
+    """Map of subscription ID to billed minutes"""
+
+    subscription_cost: Optional[Dict[str, float]] = FieldInfo(alias="subscriptionCost", default=None)
+    """Map of subscription ID to cost in dollars"""
+
+
+class SeriesGradle(BaseModel):
     """Complete analytics for a specific region including billing breakdown"""
 
     avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
@@ -175,7 +214,7 @@ class SeriesInstance(BaseModel):
     instance_tid: str = FieldInfo(alias="instanceTid")
     """Instance type ID (e.g., ios_xxx, android_xxx)"""
 
-    platform: Literal["android", "ios", "xcode"]
+    platform: Literal["android", "ios", "xcode", "gradle"]
     """Platform name."""
 
     runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
@@ -199,6 +238,9 @@ class Series(BaseModel):
     android: Dict[str, SeriesAndroid]
     """Map of region to analytics stats for Android"""
 
+    gradle: Dict[str, SeriesGradle]
+    """Map of region to analytics stats for Gradle"""
+
     ios: Dict[str, SeriesIos]
     """Map of region to analytics stats for iOS"""
 
@@ -216,6 +258,43 @@ class Series(BaseModel):
 
 
 class SummaryAndroid(BaseModel):
+    """Complete analytics for a specific region including billing breakdown"""
+
+    avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
+    """Average instance duration in minutes"""
+
+    billed_minutes: int = FieldInfo(alias="billedMinutes")
+    """Billed minutes with platform multiplier applied"""
+
+    cost: float
+    """Total cost in dollars"""
+
+    count: int
+    """Number of unique instances"""
+
+    credits_billed_minutes: int = FieldInfo(alias="creditsBilledMinutes")
+    """Minutes billed to credits"""
+
+    credits_cost: float = FieldInfo(alias="creditsCost")
+    """Cost from credits (always 0)"""
+
+    on_demand_billed_minutes: int = FieldInfo(alias="onDemandBilledMinutes")
+    """Minutes billed on-demand"""
+
+    on_demand_cost: float = FieldInfo(alias="onDemandCost")
+    """Cost from on-demand billing in dollars"""
+
+    runtime_minutes: int = FieldInfo(alias="runtimeMinutes")
+    """Actual runtime minutes before platform multiplier"""
+
+    subscription_billed_minutes: Optional[Dict[str, int]] = FieldInfo(alias="subscriptionBilledMinutes", default=None)
+    """Map of subscription ID to billed minutes"""
+
+    subscription_cost: Optional[Dict[str, float]] = FieldInfo(alias="subscriptionCost", default=None)
+    """Map of subscription ID to cost in dollars"""
+
+
+class SummaryGradle(BaseModel):
     """Complete analytics for a specific region including billing breakdown"""
 
     avg_duration_minutes: float = FieldInfo(alias="avgDurationMinutes")
@@ -333,6 +412,9 @@ class Summary(BaseModel):
 
     android: Dict[str, SummaryAndroid]
     """Map of region to analytics stats for Android"""
+
+    gradle: Dict[str, SummaryGradle]
+    """Map of region to analytics stats for Gradle"""
 
     ios: Dict[str, SummaryIos]
     """Map of region to analytics stats for iOS"""

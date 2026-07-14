@@ -57,7 +57,7 @@ class SeriesInstance(BaseModel):
     instance_tid: str = FieldInfo(alias="instanceTid")
     """Instance type ID (e.g., ios_xxx, android_xxx)"""
 
-    platform: Literal["android", "ios", "xcode"]
+    platform: Literal["android", "ios", "xcode", "gradle"]
     """Platform name."""
 
     runtime_minutes: int = FieldInfo(alias="runtimeMinutes")

@@ -63,10 +63,7 @@ class SpecInitialAsset(TypedDict, total=False):
     launch_mode: Annotated[
         Literal["ForegroundIfRunning", "RelaunchIfRunning", "FailIfRunning"], PropertyInfo(alias="launchMode")
     ]
-    """Launch mode specifies how to launch the app after installation.
-
-    If not given, the app won't be launched.
-    """
+    """Launch mode specifies how to launch the app after installation."""
 
     url: str
 
@@ -97,9 +94,9 @@ class Spec(TypedDict, total=False):
 
     inactivity_timeout: Annotated[str, PropertyInfo(alias="inactivityTimeout")]
     """
-    After how many minutes of inactivity should the instance be terminated. Example
-    values 1m, 10m, 3h. Default is 3m. Providing "0" uses the organization's default
-    inactivity timeout.
+    After how many minutes of inactivity should the instance be terminated. The
+    timer starts once the instance becomes ready. Example values 1m, 10m, 3h.
+    Default is 3m. Providing "0" uses the organization's default inactivity timeout.
     """
 
     initial_assets: Annotated[Iterable[SpecInitialAsset], PropertyInfo(alias="initialAssets")]
