@@ -95,9 +95,9 @@ class Spec(TypedDict, total=False):
 
     inactivity_timeout: Annotated[str, PropertyInfo(alias="inactivityTimeout")]
     """
-    After how many minutes of inactivity should the instance be terminated. Example
-    values 1m, 10m, 3h. Default is 3m. Providing "0" uses the organization's default
-    inactivity timeout.
+    After how many minutes of inactivity should the instance be terminated. The
+    timer starts once the instance becomes ready. Example values 1m, 10m, 3h.
+    Default is 3m. Providing "0" uses the organization's default inactivity timeout.
     """
 
     initial_assets: Annotated[Iterable[SpecInitialAsset], PropertyInfo(alias="initialAssets")]
