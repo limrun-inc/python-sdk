@@ -70,3 +70,15 @@ Methods:
 
 - <code title="get /v1/analytics">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get</a>(\*\*<a href="src/limrun_api/types/analytics_get_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_response.py">AnalyticsResponse</a></code>
 - <code title="get /v1/analytics/instances">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get_instances</a>(\*\*<a href="src/limrun_api/types/analytics_get_instances_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_instances_response.py">AnalyticsInstancesResponse</a></code>
+
+# ScopedTokens
+
+Types:
+
+```python
+from limrun_api.types import ScopedToken, ScopedTokenCreate
+```
+
+Methods:
+
+- <code title="post /v1/scoped_tokens">client.scoped_tokens.<a href="./src/limrun_api/resources/scoped_tokens.py">create</a>(\*\*<a href="src/limrun_api/types/scoped_token_create_params.py">params</a>) -> <a href="./src/limrun_api/types/scoped_token.py">ScopedToken</a></code>

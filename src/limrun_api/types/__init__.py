@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .asset import Asset as Asset
 from .ios_instance import IosInstance as IosInstance
+from .scoped_token import ScopedToken as ScopedToken
 from .xcode_instance import XcodeInstance as XcodeInstance
 from .android_instance import AndroidInstance as AndroidInstance
 from .asset_get_params import AssetGetParams as AssetGetParams
@@ -14,6 +15,7 @@ from .analytics_get_params import AnalyticsGetParams as AnalyticsGetParams
 from .ios_instance_list_params import IosInstanceListParams as IosInstanceListParams
 from .asset_get_or_create_params import AssetGetOrCreateParams as AssetGetOrCreateParams
 from .ios_instance_create_params import IosInstanceCreateParams as IosInstanceCreateParams
+from .scoped_token_create_params import ScopedTokenCreateParams as ScopedTokenCreateParams
 from .xcode_instance_list_params import XcodeInstanceListParams as XcodeInstanceListParams
 from .analytics_instances_response import AnalyticsInstancesResponse as AnalyticsInstancesResponse
 from .android_instance_list_params import AndroidInstanceListParams as AndroidInstanceListParams

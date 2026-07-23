@@ -36,10 +36,11 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import assets, analytics, ios_instances, xcode_instances, android_instances
+    from .resources import assets, analytics, ios_instances, scoped_tokens, xcode_instances, android_instances
     from .resources.assets import AssetsResource, AsyncAssetsResource
     from .resources.analytics import AnalyticsResource, AsyncAnalyticsResource
     from .resources.ios_instances import IosInstancesResource, AsyncIosInstancesResource
+    from .resources.scoped_tokens import ScopedTokensResource, AsyncScopedTokensResource
     from .resources.xcode_instances import XcodeInstancesResource, AsyncXcodeInstancesResource
     from .resources.android_instances import AndroidInstancesResource, AsyncAndroidInstancesResource
 
@@ -135,6 +136,12 @@ class Limrun(SyncAPIClient):
         from .resources.analytics import AnalyticsResource
 
         return AnalyticsResource(self)
+
+    @cached_property
+    def scoped_tokens(self) -> ScopedTokensResource:
+        from .resources.scoped_tokens import ScopedTokensResource
+
+        return ScopedTokensResource(self)
 
     @cached_property
     def with_raw_response(self) -> LimrunWithRawResponse:
@@ -351,6 +358,12 @@ class AsyncLimrun(AsyncAPIClient):
         return AsyncAnalyticsResource(self)
 
     @cached_property
+    def scoped_tokens(self) -> AsyncScopedTokensResource:
+        from .resources.scoped_tokens import AsyncScopedTokensResource
+
+        return AsyncScopedTokensResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncLimrunWithRawResponse:
         return AsyncLimrunWithRawResponse(self)
 
@@ -510,6 +523,12 @@ class LimrunWithRawResponse:
 
         return AnalyticsResourceWithRawResponse(self._client.analytics)
 
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.ScopedTokensResourceWithRawResponse:
+        from .resources.scoped_tokens import ScopedTokensResourceWithRawResponse
+
+        return ScopedTokensResourceWithRawResponse(self._client.scoped_tokens)
+
 
 class AsyncLimrunWithRawResponse:
     _client: AsyncLimrun
@@ -546,6 +565,12 @@ class AsyncLimrunWithRawResponse:
         from .resources.analytics import AsyncAnalyticsResourceWithRawResponse
 
         return AsyncAnalyticsResourceWithRawResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.AsyncScopedTokensResourceWithRawResponse:
+        from .resources.scoped_tokens import AsyncScopedTokensResourceWithRawResponse
+
+        return AsyncScopedTokensResourceWithRawResponse(self._client.scoped_tokens)
 
 
 class LimrunWithStreamedResponse:
@@ -584,6 +609,12 @@ class LimrunWithStreamedResponse:
 
         return AnalyticsResourceWithStreamingResponse(self._client.analytics)
 
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.ScopedTokensResourceWithStreamingResponse:
+        from .resources.scoped_tokens import ScopedTokensResourceWithStreamingResponse
+
+        return ScopedTokensResourceWithStreamingResponse(self._client.scoped_tokens)
+
 
 class AsyncLimrunWithStreamedResponse:
     _client: AsyncLimrun
@@ -620,6 +651,12 @@ class AsyncLimrunWithStreamedResponse:
         from .resources.analytics import AsyncAnalyticsResourceWithStreamingResponse
 
         return AsyncAnalyticsResourceWithStreamingResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.AsyncScopedTokensResourceWithStreamingResponse:
+        from .resources.scoped_tokens import AsyncScopedTokensResourceWithStreamingResponse
+
+        return AsyncScopedTokensResourceWithStreamingResponse(self._client.scoped_tokens)
 
 
 Client = Limrun
