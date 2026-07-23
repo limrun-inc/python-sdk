@@ -60,8 +60,8 @@ class ScopedTokensResource(SyncAPIResource):
         so keep TTLs short. It is bound to the authenticated caller's organization.
 
         Args:
-          scopes: Scopes in the form <resource>:<id|_>:<action>, e.g. "device:_:install",
-              "asset:asset_01h455vb4pex5vsknk084sn02q:read" or "applerelay:\\**:connect".
+          scopes: Scopes in the form `<resource>:<id|*>:<action>`, e.g. `device:*:install`,
+              `asset:asset_01h455vb4pex5vsknk084sn02q:read` or `applerelay:*:connect`.
               Resource IDs are the customer-visible IDs returned by the API.
 
           ttl_seconds: How long the token stays valid. Defaults to 3600 (1 hour), maximum is 14400 (4
@@ -130,8 +130,8 @@ class AsyncScopedTokensResource(AsyncAPIResource):
         so keep TTLs short. It is bound to the authenticated caller's organization.
 
         Args:
-          scopes: Scopes in the form <resource>:<id|_>:<action>, e.g. "device:_:install",
-              "asset:asset_01h455vb4pex5vsknk084sn02q:read" or "applerelay:\\**:connect".
+          scopes: Scopes in the form `<resource>:<id|*>:<action>`, e.g. `device:*:install`,
+              `asset:asset_01h455vb4pex5vsknk084sn02q:read` or `applerelay:*:connect`.
               Resource IDs are the customer-visible IDs returned by the API.
 
           ttl_seconds: How long the token stays valid. Defaults to 3600 (1 hour), maximum is 14400 (4
