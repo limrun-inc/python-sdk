@@ -24,6 +24,14 @@ from .ios_instances import (
     IosInstancesResourceWithStreamingResponse,
     AsyncIosInstancesResourceWithStreamingResponse,
 )
+from .scoped_tokens import (
+    ScopedTokensResource,
+    AsyncScopedTokensResource,
+    ScopedTokensResourceWithRawResponse,
+    AsyncScopedTokensResourceWithRawResponse,
+    ScopedTokensResourceWithStreamingResponse,
+    AsyncScopedTokensResourceWithStreamingResponse,
+)
 from .xcode_instances import (
     XcodeInstancesResource,
     AsyncXcodeInstancesResource,
@@ -72,4 +80,10 @@ __all__ = [
     "AsyncAnalyticsResourceWithRawResponse",
     "AnalyticsResourceWithStreamingResponse",
     "AsyncAnalyticsResourceWithStreamingResponse",
+    "ScopedTokensResource",
+    "AsyncScopedTokensResource",
+    "ScopedTokensResourceWithRawResponse",
+    "AsyncScopedTokensResourceWithRawResponse",
+    "ScopedTokensResourceWithStreamingResponse",
+    "AsyncScopedTokensResourceWithStreamingResponse",
 ]
