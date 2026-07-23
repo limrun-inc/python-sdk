@@ -76,7 +76,7 @@ Methods:
 Types:
 
 ```python
-from limrun_api.types import ScopedToken, ScopedTokenCreate
+from limrun_api.types import ScopedToken
 ```
 
 Methods:
