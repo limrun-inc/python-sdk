@@ -13,8 +13,8 @@ __all__ = ["ScopedTokenCreateParams"]
 class ScopedTokenCreateParams(TypedDict, total=False):
     scopes: Required[SequenceNotStr[str]]
     """
-    Scopes in the form <resource>:<id|_>:<action>, e.g. "device:_:install",
-    "asset:asset_01h455vb4pex5vsknk084sn02q:read" or "applerelay:\\**:connect".
+    Scopes in the form `<resource>:<id|*>:<action>`, e.g. `device:*:install`,
+    `asset:asset_01h455vb4pex5vsknk084sn02q:read` or `applerelay:*:connect`.
     Resource IDs are the customer-visible IDs returned by the API.
     """
 
