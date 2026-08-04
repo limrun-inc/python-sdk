@@ -59,8 +59,14 @@ class TestAndroidInstances:
                         "urls": ["string"],
                     }
                 ],
+                "jurisdiction": "us",
                 "region": "region",
-                "sandbox": {"playwright_android": {"enabled": True}},
+                "sandbox": {
+                    "playwright_android": {
+                        "enabled": True,
+                        "version": "1.56.1-lim.1",
+                    }
+                },
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])
@@ -259,8 +265,14 @@ class TestAsyncAndroidInstances:
                         "urls": ["string"],
                     }
                 ],
+                "jurisdiction": "us",
                 "region": "region",
-                "sandbox": {"playwright_android": {"enabled": True}},
+                "sandbox": {
+                    "playwright_android": {
+                        "enabled": True,
+                        "version": "1.56.1-lim.1",
+                    }
+                },
             },
         )
         assert_matches_type(AndroidInstance, android_instance, path=["response"])

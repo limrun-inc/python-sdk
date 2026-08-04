@@ -7,10 +7,10 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["XcodeInstanceCreateParams", "Metadata", "Spec", "SpecClue"]
+__all__ = ["GradleInstanceCreateParams", "Metadata", "Spec", "SpecClue"]
 
 
-class XcodeInstanceCreateParams(TypedDict, total=False):
+class GradleInstanceCreateParams(TypedDict, total=False):
     reuse_if_exists: Annotated[bool, PropertyInfo(alias="reuseIfExists")]
     """
     If there is another instance with given labels and region, return that one
@@ -50,7 +50,7 @@ class Spec(TypedDict, total=False):
     """
     After how many minutes of inactivity should the instance be terminated. The
     timer starts once the instance becomes ready. Example values 1m, 10m, 3h.
-    Default is 5m. Providing "0" uses the organization's default inactivity timeout.
+    Default is 5m; a non-positive value falls back to the default.
     """
 
     jurisdiction: Literal["us", "eu", "as"]

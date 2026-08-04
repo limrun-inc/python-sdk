@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["IosInstance", "Metadata", "Spec", "Status", "StatusSandbox", "StatusSandboxXcode"]
+__all__ = ["GradleInstance", "Metadata", "Spec", "Status"]
 
 
 class Metadata(BaseModel):
@@ -27,31 +27,10 @@ class Metadata(BaseModel):
 
 class Spec(BaseModel):
     inactivity_timeout: str = FieldInfo(alias="inactivityTimeout")
-    """
-    After how many minutes of inactivity should the instance be terminated. The
-    timer starts once the instance becomes ready. Example values 1m, 10m, 3h.
-    Default is 3m. Providing "0" uses the organization's default inactivity timeout.
-    """
 
     region: str
-    """The region where the instance will be created.
-
-    If not given, will be decided based on scheduling clues and availability.
-    """
 
     hard_timeout: Optional[str] = FieldInfo(alias="hardTimeout", default=None)
-    """
-    After how many minutes should the instance be terminated. Example values 1m,
-    10m, 3h. Default is "0" which means no hard timeout.
-    """
-
-
-class StatusSandboxXcode(BaseModel):
-    url: Optional[str] = None
-
-
-class StatusSandbox(BaseModel):
-    xcode: Optional[StatusSandboxXcode] = None
 
 
 class Status(BaseModel):
@@ -61,17 +40,7 @@ class Status(BaseModel):
 
     api_url: Optional[str] = FieldInfo(alias="apiUrl", default=None)
 
-    endpoint_web_socket_url: Optional[str] = FieldInfo(alias="endpointWebSocketUrl", default=None)
-
     error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
-
-    mcp_url: Optional[str] = FieldInfo(alias="mcpUrl", default=None)
-
-    sandbox: Optional[StatusSandbox] = None
-
-    signed_stream_url: Optional[str] = FieldInfo(alias="signedStreamUrl", default=None)
-
-    target_http_port_url_prefix: Optional[str] = FieldInfo(alias="targetHttpPortUrlPrefix", default=None)
 
     termination_reason: Optional[str] = FieldInfo(alias="terminationReason", default=None)
     """Machine-readable reason the instance was terminated.
@@ -89,7 +58,7 @@ class Status(BaseModel):
     """
 
 
-class IosInstance(BaseModel):
+class GradleInstance(BaseModel):
     metadata: Metadata
 
     spec: Spec

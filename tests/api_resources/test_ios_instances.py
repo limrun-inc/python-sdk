@@ -41,6 +41,7 @@ class TestIosInstances:
                         "client_ip": "clientIp",
                     }
                 ],
+                "force_bundle_id": "x",
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
                 "initial_assets": [
@@ -49,10 +50,12 @@ class TestIosInstances:
                         "source": "URL",
                         "asset_id": "assetId",
                         "asset_name": "assetName",
+                        "encryption_key": "encryptionKey",
                         "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }
                 ],
+                "jurisdiction": "us",
                 "model": "iphone",
                 "region": "region",
                 "sandbox": {"xcode": {"enabled": True}},
@@ -236,6 +239,7 @@ class TestAsyncIosInstances:
                         "client_ip": "clientIp",
                     }
                 ],
+                "force_bundle_id": "x",
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
                 "initial_assets": [
@@ -244,10 +248,12 @@ class TestAsyncIosInstances:
                         "source": "URL",
                         "asset_id": "assetId",
                         "asset_name": "assetName",
+                        "encryption_key": "encryptionKey",
                         "launch_mode": "ForegroundIfRunning",
                         "url": "url",
                     }
                 ],
+                "jurisdiction": "us",
                 "model": "iphone",
                 "region": "region",
                 "sandbox": {"xcode": {"enabled": True}},

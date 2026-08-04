@@ -46,7 +46,7 @@ class SpecClue(TypedDict, total=False):
 
 
 class SpecInitialAsset(TypedDict, total=False):
-    kind: Required[Literal["App"]]
+    kind: Required[Literal["App", "Keychain"]]
 
     source: Required[Literal["URL", "AssetName", "AssetID"]]
 
@@ -54,13 +54,16 @@ class SpecInitialAsset(TypedDict, total=False):
 
     asset_name: Annotated[str, PropertyInfo(alias="assetName")]
 
+    encryption_key: Annotated[str, PropertyInfo(alias="encryptionKey")]
+    """
+    Base64/base64url-encoded 32-byte key used to decrypt Keychain assets. Required
+    when kind is Keychain.
+    """
+
     launch_mode: Annotated[
         Literal["ForegroundIfRunning", "RelaunchIfRunning", "FailIfRunning"], PropertyInfo(alias="launchMode")
     ]
-    """Launch mode specifies how to launch the app after installation.
-
-    If not given, the app won't be launched.
-    """
+    """Launch mode specifies how to launch the app after installation."""
 
     url: str
 
@@ -76,6 +79,13 @@ class SpecSandbox(TypedDict, total=False):
 class Spec(TypedDict, total=False):
     clues: Iterable[SpecClue]
 
+    force_bundle_id: Annotated[str, PropertyInfo(alias="forceBundleId")]
+    """
+    Keeps this app in the foreground after it is first observed there. This does not
+    launch the app when the simulator starts. Once armed, closing or backgrounding
+    the app causes it to be brought back to the foreground.
+    """
+
     hard_timeout: Annotated[str, PropertyInfo(alias="hardTimeout")]
     """
     After how many minutes should the instance be terminated. Example values 1m,
@@ -84,20 +94,46 @@ class Spec(TypedDict, total=False):
 
     inactivity_timeout: Annotated[str, PropertyInfo(alias="inactivityTimeout")]
     """
-    After how many minutes of inactivity should the instance be terminated. Example
-    values 1m, 10m, 3h. Default is 3m. Providing "0" uses the organization's default
-    inactivity timeout.
+    After how many minutes of inactivity should the instance be terminated. The
+    timer starts once the instance becomes ready. Example values 1m, 10m, 3h.
+    Default is 3m. Providing "0" uses the organization's default inactivity timeout.
     """
 
     initial_assets: Annotated[Iterable[SpecInitialAsset], PropertyInfo(alias="initialAssets")]
+
+    jurisdiction: Literal["us", "eu", "as"]
+    """Restricts scheduling to regions in the given jurisdiction.
+
+    Unlike region, this is a hard constraint: the request never overflows to a
+    region outside the jurisdiction and fails when no region in the jurisdiction has
+    capacity. A region belongs to a jurisdiction when its name starts with the
+    jurisdiction prefix, e.g. "eu-north1" is in "eu". A region preference pointing
+    outside the jurisdiction is ignored.
+    """
 
     model: Literal["iphone", "ipad", "watch"]
     """The model for the Apple Simulator. Default is iphone."""
 
     region: str
-    """The region where the instance will be created.
+    """Where the instance will be created.
 
-    If not given, will be decided based on scheduling clues and availability.
+    If not given, the region is decided based on scheduling clues (client IP) and
+    availability.
+
+    A region is a preference, not a hard pin: the request always overflows to every
+    other available region, ordered by proximity, when the preferred ones are full.
+
+    Accepted values:
+
+    - A specific region name (e.g. "us-west1"). It is tried first, then the
+      remaining regions in order of proximity to it. Scheduling clues (client IP)
+      are ignored when a region is given.
+    - A region group name (e.g. "us", "eu"). Its member regions are tried first in
+      their listed order, then the remaining regions by proximity to the first
+      member.
+    - A pipe-separated, ordered list of regions (e.g. "us-east1|us-west1"). Those
+      are tried first in the given order, then the remaining regions by proximity to
+      the first.
     """
 
     sandbox: SpecSandbox

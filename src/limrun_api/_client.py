@@ -20,7 +20,11 @@ from ._types import (
     RequestOptions,
     not_given,
 )
-from ._utils import is_given, get_async_library
+from ._utils import (
+    is_given,
+    is_mapping_t,
+    get_async_library,
+)
 from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
@@ -32,10 +36,21 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import assets, ios_instances, xcode_instances, android_instances
+    from .resources import (
+        assets,
+        analytics,
+        ios_instances,
+        scoped_tokens,
+        xcode_instances,
+        gradle_instances,
+        android_instances,
+    )
     from .resources.assets import AssetsResource, AsyncAssetsResource
+    from .resources.analytics import AnalyticsResource, AsyncAnalyticsResource
     from .resources.ios_instances import IosInstancesResource, AsyncIosInstancesResource
+    from .resources.scoped_tokens import ScopedTokensResource, AsyncScopedTokensResource
     from .resources.xcode_instances import XcodeInstancesResource, AsyncXcodeInstancesResource
+    from .resources.gradle_instances import GradleInstancesResource, AsyncGradleInstancesResource
     from .resources.android_instances import AndroidInstancesResource, AsyncAndroidInstancesResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Limrun", "AsyncLimrun", "Client", "AsyncClient"]
@@ -81,6 +96,15 @@ class Limrun(SyncAPIClient):
         if base_url is None:
             base_url = f"https://api.limrun.com"
 
+        custom_headers_env = os.environ.get("LIMRUN_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
+
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -115,6 +139,24 @@ class Limrun(SyncAPIClient):
         from .resources.xcode_instances import XcodeInstancesResource
 
         return XcodeInstancesResource(self)
+
+    @cached_property
+    def gradle_instances(self) -> GradleInstancesResource:
+        from .resources.gradle_instances import GradleInstancesResource
+
+        return GradleInstancesResource(self)
+
+    @cached_property
+    def analytics(self) -> AnalyticsResource:
+        from .resources.analytics import AnalyticsResource
+
+        return AnalyticsResource(self)
+
+    @cached_property
+    def scoped_tokens(self) -> ScopedTokensResource:
+        from .resources.scoped_tokens import ScopedTokensResource
+
+        return ScopedTokensResource(self)
 
     @cached_property
     def with_raw_response(self) -> LimrunWithRawResponse:
@@ -280,6 +322,15 @@ class AsyncLimrun(AsyncAPIClient):
         if base_url is None:
             base_url = f"https://api.limrun.com"
 
+        custom_headers_env = os.environ.get("LIMRUN_CUSTOM_HEADERS")
+        if custom_headers_env is not None:
+            parsed: dict[str, str] = {}
+            for line in custom_headers_env.split("\n"):
+                colon = line.find(":")
+                if colon >= 0:
+                    parsed[line[:colon].strip()] = line[colon + 1 :].strip()
+            default_headers = {**parsed, **(default_headers if is_mapping_t(default_headers) else {})}
+
         super().__init__(
             version=__version__,
             base_url=base_url,
@@ -314,6 +365,24 @@ class AsyncLimrun(AsyncAPIClient):
         from .resources.xcode_instances import AsyncXcodeInstancesResource
 
         return AsyncXcodeInstancesResource(self)
+
+    @cached_property
+    def gradle_instances(self) -> AsyncGradleInstancesResource:
+        from .resources.gradle_instances import AsyncGradleInstancesResource
+
+        return AsyncGradleInstancesResource(self)
+
+    @cached_property
+    def analytics(self) -> AsyncAnalyticsResource:
+        from .resources.analytics import AsyncAnalyticsResource
+
+        return AsyncAnalyticsResource(self)
+
+    @cached_property
+    def scoped_tokens(self) -> AsyncScopedTokensResource:
+        from .resources.scoped_tokens import AsyncScopedTokensResource
+
+        return AsyncScopedTokensResource(self)
 
     @cached_property
     def with_raw_response(self) -> AsyncLimrunWithRawResponse:
@@ -469,6 +538,24 @@ class LimrunWithRawResponse:
 
         return XcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
 
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.GradleInstancesResourceWithRawResponse:
+        from .resources.gradle_instances import GradleInstancesResourceWithRawResponse
+
+        return GradleInstancesResourceWithRawResponse(self._client.gradle_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AnalyticsResourceWithRawResponse:
+        from .resources.analytics import AnalyticsResourceWithRawResponse
+
+        return AnalyticsResourceWithRawResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.ScopedTokensResourceWithRawResponse:
+        from .resources.scoped_tokens import ScopedTokensResourceWithRawResponse
+
+        return ScopedTokensResourceWithRawResponse(self._client.scoped_tokens)
+
 
 class AsyncLimrunWithRawResponse:
     _client: AsyncLimrun
@@ -499,6 +586,24 @@ class AsyncLimrunWithRawResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithRawResponse
 
         return AsyncXcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
+
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.AsyncGradleInstancesResourceWithRawResponse:
+        from .resources.gradle_instances import AsyncGradleInstancesResourceWithRawResponse
+
+        return AsyncGradleInstancesResourceWithRawResponse(self._client.gradle_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AsyncAnalyticsResourceWithRawResponse:
+        from .resources.analytics import AsyncAnalyticsResourceWithRawResponse
+
+        return AsyncAnalyticsResourceWithRawResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.AsyncScopedTokensResourceWithRawResponse:
+        from .resources.scoped_tokens import AsyncScopedTokensResourceWithRawResponse
+
+        return AsyncScopedTokensResourceWithRawResponse(self._client.scoped_tokens)
 
 
 class LimrunWithStreamedResponse:
@@ -531,6 +636,24 @@ class LimrunWithStreamedResponse:
 
         return XcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
 
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.GradleInstancesResourceWithStreamingResponse:
+        from .resources.gradle_instances import GradleInstancesResourceWithStreamingResponse
+
+        return GradleInstancesResourceWithStreamingResponse(self._client.gradle_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AnalyticsResourceWithStreamingResponse:
+        from .resources.analytics import AnalyticsResourceWithStreamingResponse
+
+        return AnalyticsResourceWithStreamingResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.ScopedTokensResourceWithStreamingResponse:
+        from .resources.scoped_tokens import ScopedTokensResourceWithStreamingResponse
+
+        return ScopedTokensResourceWithStreamingResponse(self._client.scoped_tokens)
+
 
 class AsyncLimrunWithStreamedResponse:
     _client: AsyncLimrun
@@ -561,6 +684,24 @@ class AsyncLimrunWithStreamedResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithStreamingResponse
 
         return AsyncXcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
+
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.AsyncGradleInstancesResourceWithStreamingResponse:
+        from .resources.gradle_instances import AsyncGradleInstancesResourceWithStreamingResponse
+
+        return AsyncGradleInstancesResourceWithStreamingResponse(self._client.gradle_instances)
+
+    @cached_property
+    def analytics(self) -> analytics.AsyncAnalyticsResourceWithStreamingResponse:
+        from .resources.analytics import AsyncAnalyticsResourceWithStreamingResponse
+
+        return AsyncAnalyticsResourceWithStreamingResponse(self._client.analytics)
+
+    @cached_property
+    def scoped_tokens(self) -> scoped_tokens.AsyncScopedTokensResourceWithStreamingResponse:
+        from .resources.scoped_tokens import AsyncScopedTokensResourceWithStreamingResponse
+
+        return AsyncScopedTokensResourceWithStreamingResponse(self._client.scoped_tokens)
 
 
 Client = Limrun

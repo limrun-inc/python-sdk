@@ -57,3 +57,43 @@ Methods:
 - <code title="get /v1/xcode_instances">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">list</a>(\*\*<a href="src/limrun_api/types/xcode_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/xcode_instance.py">SyncItems[XcodeInstance]</a></code>
 - <code title="delete /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instance.py">XcodeInstance</a></code>
+
+# GradleInstances
+
+Types:
+
+```python
+from limrun_api.types import GradleInstance
+```
+
+Methods:
+
+- <code title="post /v1/gradle_instances">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">create</a>(\*\*<a href="src/limrun_api/types/gradle_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/gradle_instance.py">GradleInstance</a></code>
+- <code title="get /v1/gradle_instances">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">list</a>(\*\*<a href="src/limrun_api/types/gradle_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/gradle_instance.py">SyncItems[GradleInstance]</a></code>
+- <code title="delete /v1/gradle_instances/{id}">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">delete</a>(id) -> None</code>
+- <code title="get /v1/gradle_instances/{id}">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/gradle_instance.py">GradleInstance</a></code>
+
+# Analytics
+
+Types:
+
+```python
+from limrun_api.types import AnalyticsInstancesResponse, AnalyticsResponse
+```
+
+Methods:
+
+- <code title="get /v1/analytics">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get</a>(\*\*<a href="src/limrun_api/types/analytics_get_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_response.py">AnalyticsResponse</a></code>
+- <code title="get /v1/analytics/instances">client.analytics.<a href="./src/limrun_api/resources/analytics.py">get_instances</a>(\*\*<a href="src/limrun_api/types/analytics_get_instances_params.py">params</a>) -> <a href="./src/limrun_api/types/analytics_instances_response.py">AnalyticsInstancesResponse</a></code>
+
+# ScopedTokens
+
+Types:
+
+```python
+from limrun_api.types import ScopedToken
+```
+
+Methods:
+
+- <code title="post /v1/scoped_tokens">client.scoped_tokens.<a href="./src/limrun_api/resources/scoped_tokens.py">create</a>(\*\*<a href="src/limrun_api/types/scoped_token_create_params.py">params</a>) -> <a href="./src/limrun_api/types/scoped_token.py">ScopedToken</a></code>
