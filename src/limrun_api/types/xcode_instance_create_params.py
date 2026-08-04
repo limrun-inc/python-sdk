@@ -53,6 +53,16 @@ class Spec(TypedDict, total=False):
     Default is 5m. Providing "0" uses the organization's default inactivity timeout.
     """
 
+    jurisdiction: Literal["us", "eu", "as"]
+    """Restricts scheduling to regions in the given jurisdiction.
+
+    Unlike region, this is a hard constraint: the request never overflows to a
+    region outside the jurisdiction and fails when no region in the jurisdiction has
+    capacity. A region belongs to a jurisdiction when its name starts with the
+    jurisdiction prefix, e.g. "eu-north1" is in "eu". A region preference pointing
+    outside the jurisdiction is ignored.
+    """
+
     region: str
     """Where the instance will be created.
 

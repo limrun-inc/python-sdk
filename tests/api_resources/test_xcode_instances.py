@@ -43,6 +43,7 @@ class TestXcodeInstances:
                 ],
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
+                "jurisdiction": "us",
                 "region": "region",
             },
         )
@@ -225,6 +226,7 @@ class TestAsyncXcodeInstances:
                 ],
                 "hard_timeout": "hardTimeout",
                 "inactivity_timeout": "inactivityTimeout",
+                "jurisdiction": "us",
                 "region": "region",
             },
         )
