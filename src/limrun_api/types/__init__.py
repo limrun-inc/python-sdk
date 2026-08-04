@@ -6,6 +6,7 @@ from .asset import Asset as Asset
 from .ios_instance import IosInstance as IosInstance
 from .scoped_token import ScopedToken as ScopedToken
 from .xcode_instance import XcodeInstance as XcodeInstance
+from .gradle_instance import GradleInstance as GradleInstance
 from .android_instance import AndroidInstance as AndroidInstance
 from .asset_get_params import AssetGetParams as AssetGetParams
 from .asset_list_params import AssetListParams as AssetListParams
@@ -17,9 +18,11 @@ from .asset_get_or_create_params import AssetGetOrCreateParams as AssetGetOrCrea
 from .ios_instance_create_params import IosInstanceCreateParams as IosInstanceCreateParams
 from .scoped_token_create_params import ScopedTokenCreateParams as ScopedTokenCreateParams
 from .xcode_instance_list_params import XcodeInstanceListParams as XcodeInstanceListParams
+from .gradle_instance_list_params import GradleInstanceListParams as GradleInstanceListParams
 from .analytics_instances_response import AnalyticsInstancesResponse as AnalyticsInstancesResponse
 from .android_instance_list_params import AndroidInstanceListParams as AndroidInstanceListParams
 from .asset_get_or_create_response import AssetGetOrCreateResponse as AssetGetOrCreateResponse
 from .xcode_instance_create_params import XcodeInstanceCreateParams as XcodeInstanceCreateParams
+from .gradle_instance_create_params import GradleInstanceCreateParams as GradleInstanceCreateParams
 from .analytics_get_instances_params import AnalyticsGetInstancesParams as AnalyticsGetInstancesParams
 from .android_instance_create_params import AndroidInstanceCreateParams as AndroidInstanceCreateParams

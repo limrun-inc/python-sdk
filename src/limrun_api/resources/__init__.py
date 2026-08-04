@@ -40,6 +40,14 @@ from .xcode_instances import (
     XcodeInstancesResourceWithStreamingResponse,
     AsyncXcodeInstancesResourceWithStreamingResponse,
 )
+from .gradle_instances import (
+    GradleInstancesResource,
+    AsyncGradleInstancesResource,
+    GradleInstancesResourceWithRawResponse,
+    AsyncGradleInstancesResourceWithRawResponse,
+    GradleInstancesResourceWithStreamingResponse,
+    AsyncGradleInstancesResourceWithStreamingResponse,
+)
 from .android_instances import (
     AndroidInstancesResource,
     AsyncAndroidInstancesResource,
@@ -74,6 +82,12 @@ __all__ = [
     "AsyncXcodeInstancesResourceWithRawResponse",
     "XcodeInstancesResourceWithStreamingResponse",
     "AsyncXcodeInstancesResourceWithStreamingResponse",
+    "GradleInstancesResource",
+    "AsyncGradleInstancesResource",
+    "GradleInstancesResourceWithRawResponse",
+    "AsyncGradleInstancesResourceWithRawResponse",
+    "GradleInstancesResourceWithStreamingResponse",
+    "AsyncGradleInstancesResourceWithStreamingResponse",
     "AnalyticsResource",
     "AsyncAnalyticsResource",
     "AnalyticsResourceWithRawResponse",

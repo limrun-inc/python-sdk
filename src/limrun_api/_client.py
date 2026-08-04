@@ -36,12 +36,21 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import assets, analytics, ios_instances, scoped_tokens, xcode_instances, android_instances
+    from .resources import (
+        assets,
+        analytics,
+        ios_instances,
+        scoped_tokens,
+        xcode_instances,
+        gradle_instances,
+        android_instances,
+    )
     from .resources.assets import AssetsResource, AsyncAssetsResource
     from .resources.analytics import AnalyticsResource, AsyncAnalyticsResource
     from .resources.ios_instances import IosInstancesResource, AsyncIosInstancesResource
     from .resources.scoped_tokens import ScopedTokensResource, AsyncScopedTokensResource
     from .resources.xcode_instances import XcodeInstancesResource, AsyncXcodeInstancesResource
+    from .resources.gradle_instances import GradleInstancesResource, AsyncGradleInstancesResource
     from .resources.android_instances import AndroidInstancesResource, AsyncAndroidInstancesResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Limrun", "AsyncLimrun", "Client", "AsyncClient"]
@@ -130,6 +139,12 @@ class Limrun(SyncAPIClient):
         from .resources.xcode_instances import XcodeInstancesResource
 
         return XcodeInstancesResource(self)
+
+    @cached_property
+    def gradle_instances(self) -> GradleInstancesResource:
+        from .resources.gradle_instances import GradleInstancesResource
+
+        return GradleInstancesResource(self)
 
     @cached_property
     def analytics(self) -> AnalyticsResource:
@@ -352,6 +367,12 @@ class AsyncLimrun(AsyncAPIClient):
         return AsyncXcodeInstancesResource(self)
 
     @cached_property
+    def gradle_instances(self) -> AsyncGradleInstancesResource:
+        from .resources.gradle_instances import AsyncGradleInstancesResource
+
+        return AsyncGradleInstancesResource(self)
+
+    @cached_property
     def analytics(self) -> AsyncAnalyticsResource:
         from .resources.analytics import AsyncAnalyticsResource
 
@@ -518,6 +539,12 @@ class LimrunWithRawResponse:
         return XcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
 
     @cached_property
+    def gradle_instances(self) -> gradle_instances.GradleInstancesResourceWithRawResponse:
+        from .resources.gradle_instances import GradleInstancesResourceWithRawResponse
+
+        return GradleInstancesResourceWithRawResponse(self._client.gradle_instances)
+
+    @cached_property
     def analytics(self) -> analytics.AnalyticsResourceWithRawResponse:
         from .resources.analytics import AnalyticsResourceWithRawResponse
 
@@ -559,6 +586,12 @@ class AsyncLimrunWithRawResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithRawResponse
 
         return AsyncXcodeInstancesResourceWithRawResponse(self._client.xcode_instances)
+
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.AsyncGradleInstancesResourceWithRawResponse:
+        from .resources.gradle_instances import AsyncGradleInstancesResourceWithRawResponse
+
+        return AsyncGradleInstancesResourceWithRawResponse(self._client.gradle_instances)
 
     @cached_property
     def analytics(self) -> analytics.AsyncAnalyticsResourceWithRawResponse:
@@ -604,6 +637,12 @@ class LimrunWithStreamedResponse:
         return XcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
 
     @cached_property
+    def gradle_instances(self) -> gradle_instances.GradleInstancesResourceWithStreamingResponse:
+        from .resources.gradle_instances import GradleInstancesResourceWithStreamingResponse
+
+        return GradleInstancesResourceWithStreamingResponse(self._client.gradle_instances)
+
+    @cached_property
     def analytics(self) -> analytics.AnalyticsResourceWithStreamingResponse:
         from .resources.analytics import AnalyticsResourceWithStreamingResponse
 
@@ -645,6 +684,12 @@ class AsyncLimrunWithStreamedResponse:
         from .resources.xcode_instances import AsyncXcodeInstancesResourceWithStreamingResponse
 
         return AsyncXcodeInstancesResourceWithStreamingResponse(self._client.xcode_instances)
+
+    @cached_property
+    def gradle_instances(self) -> gradle_instances.AsyncGradleInstancesResourceWithStreamingResponse:
+        from .resources.gradle_instances import AsyncGradleInstancesResourceWithStreamingResponse
+
+        return AsyncGradleInstancesResourceWithStreamingResponse(self._client.gradle_instances)
 
     @cached_property
     def analytics(self) -> analytics.AsyncAnalyticsResourceWithStreamingResponse:
