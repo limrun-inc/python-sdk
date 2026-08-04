@@ -59,6 +59,7 @@ class TestAndroidInstances:
                         "urls": ["string"],
                     }
                 ],
+                "jurisdiction": "us",
                 "region": "region",
                 "sandbox": {
                     "playwright_android": {
@@ -264,6 +265,7 @@ class TestAsyncAndroidInstances:
                         "urls": ["string"],
                     }
                 ],
+                "jurisdiction": "us",
                 "region": "region",
                 "sandbox": {
                     "playwright_android": {
