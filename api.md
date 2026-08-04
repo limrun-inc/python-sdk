@@ -58,6 +58,21 @@ Methods:
 - <code title="delete /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">delete</a>(id) -> None</code>
 - <code title="get /v1/xcode_instances/{id}">client.xcode_instances.<a href="./src/limrun_api/resources/xcode_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/xcode_instance.py">XcodeInstance</a></code>
 
+# GradleInstances
+
+Types:
+
+```python
+from limrun_api.types import GradleInstance
+```
+
+Methods:
+
+- <code title="post /v1/gradle_instances">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">create</a>(\*\*<a href="src/limrun_api/types/gradle_instance_create_params.py">params</a>) -> <a href="./src/limrun_api/types/gradle_instance.py">GradleInstance</a></code>
+- <code title="get /v1/gradle_instances">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">list</a>(\*\*<a href="src/limrun_api/types/gradle_instance_list_params.py">params</a>) -> <a href="./src/limrun_api/types/gradle_instance.py">SyncItems[GradleInstance]</a></code>
+- <code title="delete /v1/gradle_instances/{id}">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">delete</a>(id) -> None</code>
+- <code title="get /v1/gradle_instances/{id}">client.gradle_instances.<a href="./src/limrun_api/resources/gradle_instances.py">get</a>(id) -> <a href="./src/limrun_api/types/gradle_instance.py">GradleInstance</a></code>
+
 # Analytics
 
 Types:
