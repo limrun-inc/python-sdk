@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.11.0 (2026-08-04)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/limrun-inc/python-sdk/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** add analytics api ([f53ecaa](https://github.com/limrun-inc/python-sdk/commit/f53ecaa0a628640dc520bf392aca70597e7a20c1))
+* **api:** add gradle to stainless config as well ([335e975](https://github.com/limrun-inc/python-sdk/commit/335e975b1564432c709f7cf55760dbe05382d61f))
+* **api:** add jurisdiction ([6921be5](https://github.com/limrun-inc/python-sdk/commit/6921be5995d0db5864b53000960c24602b1b23ab))
+* **api:** add scoped tokens to stainless config ([d399044](https://github.com/limrun-inc/python-sdk/commit/d3990440a1badd3c9c826ea83313bd33acf25b44))
+* **api:** add version to android playwright ([c01f3dc](https://github.com/limrun-inc/python-sdk/commit/c01f3dcc11a3e1b64e4007c0ae2562ba545b74bc))
+* **api:** add xcode build logs and signedStreamUrl ([47e6ac4](https://github.com/limrun-inc/python-sdk/commit/47e6ac44f3d48bb15a995f17d3e586b823c5547a))
+* **api:** analytics api, make platform enum ([6c679fb](https://github.com/limrun-inc/python-sdk/commit/6c679fb381e1db207b8831f8cea2f290e0c01394))
+* **api:** fix indentation ([0be86f5](https://github.com/limrun-inc/python-sdk/commit/0be86f5ba050b8fa1f23b778eb81226248e799e4))
+* **api:** fix stainless models for scoped tokens ([248a9d4](https://github.com/limrun-inc/python-sdk/commit/248a9d475d7b56aadac3fda9f0ff6a79bbfeddf6))
+* **api:** ios add forceBundleId ([d37a940](https://github.com/limrun-inc/python-sdk/commit/d37a940752faf9b8386d686e486c6ec5f529d512))
+* **api:** manual updates ([5cf9a85](https://github.com/limrun-inc/python-sdk/commit/5cf9a857267b343d0a9bb2e5a1673809ee319a6b))
+* **api:** manual updates ([ae30f4d](https://github.com/limrun-inc/python-sdk/commit/ae30f4df8b4a19ef4643afd49cfcd2ae1adcd643))
+* **api:** manual updates ([80939c4](https://github.com/limrun-inc/python-sdk/commit/80939c44898768cea4fe25806cf0a5d86cd9b3a0))
+* **api:** scoped tokens desc fix ([4dcb31a](https://github.com/limrun-inc/python-sdk/commit/4dcb31a1e020e20810483236deee43f87ffa94d6))
+* **api:** simplify the models for analytics endpoint ([656c11c](https://github.com/limrun-inc/python-sdk/commit/656c11cb7c9f5e3bdeddc43d53489d9e267bcea7))
+* **api:** update to latest main ([a536ff1](https://github.com/limrun-inc/python-sdk/commit/a536ff10b358b05429c836cf5babed59286d3c9b))
+* **internal/types:** support eagerly validating pydantic iterators ([d787141](https://github.com/limrun-inc/python-sdk/commit/d787141ec4d087f8f473dfe41d86f0c8c82672e5))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([cd09a15](https://github.com/limrun-inc/python-sdk/commit/cd09a15656fbc5edf53745564128092099e4346d))
+* support setting headers via env ([601135d](https://github.com/limrun-inc/python-sdk/commit/601135db9f4eb15ee575e63b50d737e3c93d1625))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([3d63f72](https://github.com/limrun-inc/python-sdk/commit/3d63f72d80c3aa8455a0c58ca8d9aeebbf0bc307))
+* use correct field name format for multipart file arrays ([c46f7f3](https://github.com/limrun-inc/python-sdk/commit/c46f7f392bf1a617a5fa372096a276ddf299f457))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([0229b73](https://github.com/limrun-inc/python-sdk/commit/0229b737adc72f602a1525f2687c89ab776e7eaf))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([12a1534](https://github.com/limrun-inc/python-sdk/commit/12a1534ba8cadb440b4430aab9223ebfc0de806d))
+* **internal:** reformat pyproject.toml ([8b67d80](https://github.com/limrun-inc/python-sdk/commit/8b67d807da768fa5292b61286da1e36d2a071046))
+
 ## 0.10.0 (2026-04-11)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/limrun-inc/python-sdk/compare/v0.9.0...v0.10.0)
