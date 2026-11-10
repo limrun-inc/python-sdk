@@ -24,6 +24,12 @@ class Metadata(BaseModel):
 
     terminated_at: Optional[datetime] = FieldInfo(alias="terminatedAt", default=None)
 
+    terminating_at: Optional[datetime] = FieldInfo(alias="terminatingAt", default=None)
+    """
+    Billing cutoff for a deletion requested while the region is unavailable. Absent
+    for normal regional deletions.
+    """
+
 
 class Spec(BaseModel):
     inactivity_timeout: str = FieldInfo(alias="inactivityTimeout")
@@ -36,7 +42,7 @@ class Spec(BaseModel):
 class Status(BaseModel):
     token: str
 
-    state: Literal["unknown", "creating", "assigned", "ready", "terminated"]
+    state: Literal["unknown", "creating", "assigned", "ready", "terminating", "terminated"]
 
     api_url: Optional[str] = FieldInfo(alias="apiUrl", default=None)
 
