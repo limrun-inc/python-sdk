@@ -22,6 +22,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._compat import cached_property
+from ._models import FinalRequestOptions
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
@@ -30,6 +31,7 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+from ._workload_identity import WorkloadIdentity, AsyncWorkloadIdentity
 
 if TYPE_CHECKING:
     from .resources import assets, ios_instances, xcode_instances, android_instances
@@ -49,6 +51,9 @@ class Limrun(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        workload_token_file: str | None = None,
+        binding_id: str | None = None,
+        sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -75,6 +80,18 @@ class Limrun(SyncAPIClient):
         if api_key is None:
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
+        self.workload_token_file = workload_token_file or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
+        self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
+        if not api_key and self.binding_id and not self.workload_token_file:
+            raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        if not api_key and self.workload_token_file and not self.binding_id:
+            raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
+        self._workload_identity = (
+            WorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
+            if not api_key and self.workload_token_file and self.binding_id
+            else None
+        )
 
         if base_url is None:
             base_url = os.environ.get("LIMRUN_BASE_URL")
@@ -91,6 +108,15 @@ class Limrun(SyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+    @override
+    def _prepare_options(self, options: FinalRequestOptions) -> FinalRequestOptions:
+        if self._workload_identity is not None:
+            headers = dict(options.headers) if not isinstance(options.headers, NotGiven) else {}
+            if not any(key.lower() == "authorization" for key in {**self._custom_headers, **headers}):
+                headers["Authorization"] = "Bearer " + self._workload_identity.get(self._client)
+            options.headers = headers
+        return options
 
     @cached_property
     def android_instances(self) -> AndroidInstancesResource:
@@ -159,6 +185,9 @@ class Limrun(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        workload_token_file: str | None = None,
+        binding_id: str | None = None,
+        sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -191,8 +220,11 @@ class Limrun(SyncAPIClient):
             params = set_default_query
 
         http_client = http_client or self._client
-        return self.__class__(
+        client = self.__class__(
             api_key=api_key or self.api_key,
+            workload_token_file=workload_token_file or self.workload_token_file,
+            binding_id=binding_id or self.binding_id,
+            sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -201,6 +233,14 @@ class Limrun(SyncAPIClient):
             default_query=params,
             **_extra_kwargs,
         )
+        if (
+            client.api_key == self.api_key
+            and client.workload_token_file == self.workload_token_file
+            and client.binding_id == self.binding_id
+            and client.sts_base_url == self.sts_base_url
+        ):
+            client._workload_identity = self._workload_identity
+        return client
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
@@ -248,6 +288,9 @@ class AsyncLimrun(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        workload_token_file: str | None = None,
+        binding_id: str | None = None,
+        sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -274,6 +317,18 @@ class AsyncLimrun(AsyncAPIClient):
         if api_key is None:
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
+        self.workload_token_file = workload_token_file or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
+        self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
+        if not api_key and self.binding_id and not self.workload_token_file:
+            raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        if not api_key and self.workload_token_file and not self.binding_id:
+            raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
+        self._workload_identity = (
+            AsyncWorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
+            if not api_key and self.workload_token_file and self.binding_id
+            else None
+        )
 
         if base_url is None:
             base_url = os.environ.get("LIMRUN_BASE_URL")
@@ -290,6 +345,15 @@ class AsyncLimrun(AsyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+    @override
+    async def _prepare_options(self, options: FinalRequestOptions) -> FinalRequestOptions:
+        if self._workload_identity is not None:
+            headers = dict(options.headers) if not isinstance(options.headers, NotGiven) else {}
+            if not any(key.lower() == "authorization" for key in {**self._custom_headers, **headers}):
+                headers["Authorization"] = "Bearer " + await self._workload_identity.get(self._client)
+            options.headers = headers
+        return options
 
     @cached_property
     def android_instances(self) -> AsyncAndroidInstancesResource:
@@ -358,6 +422,9 @@ class AsyncLimrun(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        workload_token_file: str | None = None,
+        binding_id: str | None = None,
+        sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
@@ -390,8 +457,11 @@ class AsyncLimrun(AsyncAPIClient):
             params = set_default_query
 
         http_client = http_client or self._client
-        return self.__class__(
+        client = self.__class__(
             api_key=api_key or self.api_key,
+            workload_token_file=workload_token_file or self.workload_token_file,
+            binding_id=binding_id or self.binding_id,
+            sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -400,6 +470,14 @@ class AsyncLimrun(AsyncAPIClient):
             default_query=params,
             **_extra_kwargs,
         )
+        if (
+            client.api_key == self.api_key
+            and client.workload_token_file == self.workload_token_file
+            and client.binding_id == self.binding_id
+            and client.sts_base_url == self.sts_base_url
+        ):
+            client._workload_identity = self._workload_identity
+        return client
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
