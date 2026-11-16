@@ -85,14 +85,22 @@ async def test_sdk_uses_session_and_copy_preserves_identity(
 
     if asynchronous:
         async with AsyncLimrun(http_client=httpx.AsyncClient(transport=httpx.MockTransport(handle))) as client:
-            copied = client.with_options()
-            await copied.android_instances.list()
-            await copied.android_instances.list()
+            await client.android_instances.list()
+            await client.with_options(timeout=5).android_instances.list()
+            await client.with_options(timeout=10).android_instances.list()
+            assert client.with_options(binding_id="binding_other")._workload_identity is not client._workload_identity
+            assert client.with_options(workload_token_file="other.jwt")._workload_identity is not client._workload_identity
+            assert client.with_options(sts_base_url="https://other.example")._workload_identity is not client._workload_identity
+            assert client.with_options(api_key="key")._workload_identity is None
     else:
         with Limrun(http_client=httpx.Client(transport=httpx.MockTransport(handle))) as sync_client:
-            sync_copy = sync_client.with_options()
-            sync_copy.android_instances.list()
-            sync_copy.android_instances.list()
+            sync_client.android_instances.list()
+            sync_client.with_options(timeout=5).android_instances.list()
+            sync_client.with_options(timeout=10).android_instances.list()
+            assert sync_client.with_options(binding_id="binding_other")._workload_identity is not sync_client._workload_identity
+            assert sync_client.with_options(workload_token_file="other.jwt")._workload_identity is not sync_client._workload_identity
+            assert sync_client.with_options(sts_base_url="https://other.example")._workload_identity is not sync_client._workload_identity
+            assert sync_client.with_options(api_key="key")._workload_identity is None
     assert exchanges == 1
 
 
@@ -126,3 +134,31 @@ def test_failed_exchange_never_calls_api(
             client.android_instances.list()
         assert "external.jwt" not in str(error.value)
         assert "secret" not in str(error.value)
+
+
+@pytest.mark.parametrize("client_class", [Limrun, AsyncLimrun])
+@pytest.mark.parametrize("missing", ["binding_id", "workload_token_file"])
+def test_incomplete_identity_configuration(
+    monkeypatch: pytest.MonkeyPatch, client_class: type[Limrun] | type[AsyncLimrun], missing: str
+) -> None:
+    for name in ("LIM_API_KEY", "LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE"):
+        monkeypatch.delenv(name, raising=False)
+    with pytest.raises(ValueError, match=f"Federation requires {missing}"):
+        client_class(
+            binding_id=None if missing == "binding_id" else "binding_builds",
+            workload_token_file=None if missing == "workload_token_file" else "identity.jwt",
+        )
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+async def test_api_key_bypasses_incomplete_identity_configuration(
+    monkeypatch: pytest.MonkeyPatch, asynchronous: bool
+) -> None:
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE", "missing.jwt")
+    monkeypatch.delenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", raising=False)
+    if asynchronous:
+        async with AsyncLimrun(api_key="key") as client:
+            assert client._workload_identity is None
+    else:
+        with Limrun(api_key="key") as sync_client:
+            assert sync_client._workload_identity is None

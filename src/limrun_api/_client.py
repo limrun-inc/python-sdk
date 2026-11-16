@@ -85,6 +85,8 @@ class Limrun(SyncAPIClient):
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
         if not api_key and self.binding_id and not self.workload_token_file:
             raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        if not api_key and self.workload_token_file and not self.binding_id:
+            raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self._workload_identity = (
             WorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
             if not api_key and self.workload_token_file and self.binding_id
@@ -218,7 +220,7 @@ class Limrun(SyncAPIClient):
             params = set_default_query
 
         http_client = http_client or self._client
-        return self.__class__(
+        client = self.__class__(
             api_key=api_key or self.api_key,
             workload_token_file=workload_token_file or self.workload_token_file,
             binding_id=binding_id or self.binding_id,
@@ -231,6 +233,14 @@ class Limrun(SyncAPIClient):
             default_query=params,
             **_extra_kwargs,
         )
+        if (
+            client.api_key == self.api_key
+            and client.workload_token_file == self.workload_token_file
+            and client.binding_id == self.binding_id
+            and client.sts_base_url == self.sts_base_url
+        ):
+            client._workload_identity = self._workload_identity
+        return client
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
@@ -312,6 +322,8 @@ class AsyncLimrun(AsyncAPIClient):
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
         if not api_key and self.binding_id and not self.workload_token_file:
             raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
+        if not api_key and self.workload_token_file and not self.binding_id:
+            raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self._workload_identity = (
             AsyncWorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
             if not api_key and self.workload_token_file and self.binding_id
@@ -445,7 +457,7 @@ class AsyncLimrun(AsyncAPIClient):
             params = set_default_query
 
         http_client = http_client or self._client
-        return self.__class__(
+        client = self.__class__(
             api_key=api_key or self.api_key,
             workload_token_file=workload_token_file or self.workload_token_file,
             binding_id=binding_id or self.binding_id,
@@ -458,6 +470,14 @@ class AsyncLimrun(AsyncAPIClient):
             default_query=params,
             **_extra_kwargs,
         )
+        if (
+            client.api_key == self.api_key
+            and client.workload_token_file == self.workload_token_file
+            and client.binding_id == self.binding_id
+            and client.sts_base_url == self.sts_base_url
+        ):
+            client._workload_identity = self._workload_identity
+        return client
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
