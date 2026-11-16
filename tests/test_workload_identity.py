@@ -19,12 +19,12 @@ def test_rotation_and_concurrent_exchange(tmp_path: Path) -> None:
 
     def exchange(request: httpx.Request) -> httpx.Response:
         form = parse_qs(request.content.decode())
-        assert form["audience"] == ["federation_builds"]
+        assert form["audience"] == ["binding_builds"]
         assert "authorization" not in request.headers
         identities.append(form["subject_token"][0])
         return httpx.Response(200, json={"access_token": "lim_st_session", "token_type": "Bearer", "expires_in": 300})
 
-    identity = WorkloadIdentity(str(path), "federation_builds", "https://sts.example.com")
+    identity = WorkloadIdentity(str(path), "binding_builds", "https://sts.example.com")
     with httpx.Client(transport=httpx.MockTransport(exchange)) as client:
 
         def get_session(_: int) -> str:
@@ -48,7 +48,7 @@ async def test_async_rotation_and_concurrent_exchange(tmp_path: Path) -> None:
         identities.append(parse_qs(request.content.decode())["subject_token"][0])
         return httpx.Response(200, json={"access_token": "lim_st_session", "token_type": "Bearer", "expires_in": 300})
 
-    identity = AsyncWorkloadIdentity(str(path), "federation_builds", "https://sts.example.com")
+    identity = AsyncWorkloadIdentity(str(path), "binding_builds", "https://sts.example.com")
     async with httpx.AsyncClient(transport=httpx.MockTransport(exchange)) as client:
         assert await asyncio.gather(*(identity.get(client) for _ in range(16))) == ["lim_st_session"] * 16
         assert identities == ["first.jwt"]
@@ -66,7 +66,7 @@ async def test_sdk_uses_session_and_copy_preserves_identity(
     path = tmp_path / "identity.jwt"
     path.write_text("external.jwt")
     monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE", str(path))
-    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "federation_builds")
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "binding_builds")
     monkeypatch.setenv("LIMRUN_STS_BASE_URL", "https://sts.example.com")
     exchanges = 0
 
@@ -118,7 +118,7 @@ def test_failed_exchange_never_calls_api(
 
     with Limrun(
         workload_token_file=str(path),
-        binding_id="federation_builds",
+        binding_id="binding_builds",
         sts_base_url="https://sts.example.com",
         http_client=httpx.Client(transport=httpx.MockTransport(handle)),
     ) as client:

@@ -21,7 +21,7 @@ creates a [federation binding](https://docs.limrun.com/docs/platform/workload-id
 ```python
 client = Limrun(
     workload_token_file="/var/run/identity/token",
-    binding_id="federation_REPLACE_WITH_BINDING_ID",
+    binding_id="binding_REPLACE_WITH_BINDING_ID",
 )
 ```
 
