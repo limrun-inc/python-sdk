@@ -66,7 +66,7 @@ async def test_sdk_uses_session_and_copy_preserves_identity(
     path = tmp_path / "identity.jwt"
     path.write_text("external.jwt")
     monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE", str(path))
-    monkeypatch.setenv("LIMRUN_FEDERATION_BINDING_ID", "federation_builds")
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "federation_builds")
     monkeypatch.setenv("LIMRUN_STS_BASE_URL", "https://sts.example.com")
     exchanges = 0
 
@@ -118,7 +118,7 @@ def test_failed_exchange_never_calls_api(
 
     with Limrun(
         workload_token_file=str(path),
-        federation_binding_id="federation_builds",
+        binding_id="federation_builds",
         sts_base_url="https://sts.example.com",
         http_client=httpx.Client(transport=httpx.MockTransport(handle)),
     ) as client:

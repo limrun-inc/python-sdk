@@ -52,7 +52,7 @@ class Limrun(SyncAPIClient):
         *,
         api_key: str | None = None,
         workload_token_file: str | None = None,
-        federation_binding_id: str | None = None,
+        binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
@@ -81,13 +81,13 @@ class Limrun(SyncAPIClient):
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
         self.workload_token_file = workload_token_file or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
-        self.federation_binding_id = federation_binding_id or os.environ.get("LIMRUN_FEDERATION_BINDING_ID")
+        self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
-        if not api_key and self.federation_binding_id and not self.workload_token_file:
+        if not api_key and self.binding_id and not self.workload_token_file:
             raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
         self._workload_identity = (
-            WorkloadIdentity(self.workload_token_file, self.federation_binding_id, self.sts_base_url)
-            if not api_key and self.workload_token_file and self.federation_binding_id
+            WorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
+            if not api_key and self.workload_token_file and self.binding_id
             else None
         )
 
@@ -184,7 +184,7 @@ class Limrun(SyncAPIClient):
         *,
         api_key: str | None = None,
         workload_token_file: str | None = None,
-        federation_binding_id: str | None = None,
+        binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
@@ -221,7 +221,7 @@ class Limrun(SyncAPIClient):
         return self.__class__(
             api_key=api_key or self.api_key,
             workload_token_file=workload_token_file or self.workload_token_file,
-            federation_binding_id=federation_binding_id or self.federation_binding_id,
+            binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
@@ -279,7 +279,7 @@ class AsyncLimrun(AsyncAPIClient):
         *,
         api_key: str | None = None,
         workload_token_file: str | None = None,
-        federation_binding_id: str | None = None,
+        binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
@@ -308,13 +308,13 @@ class AsyncLimrun(AsyncAPIClient):
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
         self.workload_token_file = workload_token_file or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
-        self.federation_binding_id = federation_binding_id or os.environ.get("LIMRUN_FEDERATION_BINDING_ID")
+        self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
-        if not api_key and self.federation_binding_id and not self.workload_token_file:
+        if not api_key and self.binding_id and not self.workload_token_file:
             raise ValueError("Federation requires workload_token_file or LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE")
         self._workload_identity = (
-            AsyncWorkloadIdentity(self.workload_token_file, self.federation_binding_id, self.sts_base_url)
-            if not api_key and self.workload_token_file and self.federation_binding_id
+            AsyncWorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url)
+            if not api_key and self.workload_token_file and self.binding_id
             else None
         )
 
@@ -411,7 +411,7 @@ class AsyncLimrun(AsyncAPIClient):
         *,
         api_key: str | None = None,
         workload_token_file: str | None = None,
-        federation_binding_id: str | None = None,
+        binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
@@ -448,7 +448,7 @@ class AsyncLimrun(AsyncAPIClient):
         return self.__class__(
             api_key=api_key or self.api_key,
             workload_token_file=workload_token_file or self.workload_token_file,
-            federation_binding_id=federation_binding_id or self.federation_binding_id,
+            binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
