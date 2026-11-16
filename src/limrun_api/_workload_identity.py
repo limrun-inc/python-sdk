@@ -46,7 +46,7 @@ class WorkloadIdentity:
     def __init__(self, token_file: str, binding: str, endpoint: str) -> None:
         self.token_file = token_file
         self.binding = binding
-        self.endpoint = endpoint.rstrip("/") + "/v1/token"
+        self.endpoint = endpoint.rstrip("/") + "/v1/access_tokens"
         self.token = ""
         self.refresh_at = 0.0
         self.lock = threading.Lock()
@@ -66,7 +66,7 @@ class AsyncWorkloadIdentity:
     def __init__(self, token_file: str, binding: str, endpoint: str) -> None:
         self.token_file = token_file
         self.binding = binding
-        self.endpoint = endpoint.rstrip("/") + "/v1/token"
+        self.endpoint = endpoint.rstrip("/") + "/v1/access_tokens"
         self.token = ""
         self.refresh_at = 0.0
         self.lock = anyio.Lock()

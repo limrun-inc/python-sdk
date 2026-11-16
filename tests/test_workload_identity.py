@@ -73,7 +73,7 @@ async def test_sdk_uses_session_and_copy_preserves_identity(
     def handle(request: httpx.Request) -> httpx.Response:
         nonlocal exchanges
         if request.url.host == "sts.example.com":
-            assert request.url.path == "/v1/token"
+            assert request.url.path == "/v1/access_tokens"
             assert parse_qs(request.content.decode())["subject_token"] == ["external.jwt"]
             exchanges += 1
             return httpx.Response(
