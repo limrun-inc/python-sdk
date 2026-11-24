@@ -35,21 +35,31 @@ def resolve_identity(
     return None, os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE") or None
 
 
+def resolve_injected(injected: Optional[bool]) -> bool:
+    if injected is not None:
+        return injected
+    return os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_INJECTED", "").strip().lower() in ("1", "true")
+
+
 def _read_token_file(path: str) -> str:
     with Path(path).open(encoding="utf-8") as source:
         return source.read(32769)
 
 
-def _identity_form(identity: object, binding: str) -> Dict[str, str]:
+def _identity_form(identity: object, binding: str, injected: bool = False) -> Dict[str, str]:
+    form = {
+        "grant_type": "urn:ietf:params:oauth:grant-type:token-exchange",
+        "subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
+        "audience": binding,
+    }
+    # An egress proxy adds the JWT in the X-Limrun-Subject-Token header, so the client sends none.
+    if injected:
+        return form
     token = identity.strip() if isinstance(identity, str) else ""
     if not token or len(token) > 32768:
         raise ValueError("Workload identity token must be a JWT of at most 32768 characters")
-    return {
-        "grant_type": "urn:ietf:params:oauth:grant-type:token-exchange",
-        "subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
-        "subject_token": token,
-        "audience": binding,
-    }
+    form["subject_token"] = token
+    return form
 
 
 def _session(response: httpx.Response, started: float) -> Tuple[str, float]:
@@ -73,9 +83,15 @@ def _session(response: httpx.Response, started: float) -> Tuple[str, float]:
 
 class WorkloadIdentity:
     def __init__(
-        self, token_file: Optional[str], binding: str, endpoint: str, token: Optional[WorkloadToken] = None
+        self,
+        token_file: Optional[str],
+        binding: str,
+        endpoint: str,
+        token: Optional[WorkloadToken] = None,
+        injected: bool = False,
     ) -> None:
         self.token = token
+        self.injected = injected
         self.token_file = token_file
         self.binding = binding
         self.endpoint = endpoint.rstrip("/") + "/v1/access_tokens"
@@ -94,7 +110,7 @@ class WorkloadIdentity:
         with self.lock:
             if time.monotonic() < self.refresh_at:
                 return self.session
-            form = _identity_form(self._identity(), self.binding)
+            form = _identity_form(None if self.injected else self._identity(), self.binding, self.injected)
             started = time.monotonic()
             response = client.post(self.endpoint, data=form, timeout=30, follow_redirects=False)
             self.session, self.refresh_at = _session(response, started)
@@ -103,9 +119,15 @@ class WorkloadIdentity:
 
 class AsyncWorkloadIdentity:
     def __init__(
-        self, token_file: Optional[str], binding: str, endpoint: str, token: Optional[AsyncWorkloadToken] = None
+        self,
+        token_file: Optional[str],
+        binding: str,
+        endpoint: str,
+        token: Optional[AsyncWorkloadToken] = None,
+        injected: bool = False,
     ) -> None:
         self.token = token
+        self.injected = injected
         self.token_file = token_file
         self.binding = binding
         self.endpoint = endpoint.rstrip("/") + "/v1/access_tokens"
@@ -127,7 +149,7 @@ class AsyncWorkloadIdentity:
         async with self.lock:
             if time.monotonic() < self.refresh_at:
                 return self.session
-            form = _identity_form(await self._identity(), self.binding)
+            form = _identity_form(None if self.injected else await self._identity(), self.binding, self.injected)
             started = time.monotonic()
             response = await client.post(self.endpoint, data=form, timeout=30, follow_redirects=False)
             self.session, self.refresh_at = _session(response, started)

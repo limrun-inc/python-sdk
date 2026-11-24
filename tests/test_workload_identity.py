@@ -201,7 +201,12 @@ def _subject_transport(subjects: list[str]) -> httpx.MockTransport:
 
 @pytest.fixture
 def federation_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
-    for name in ("LIM_API_KEY", "LIMRUN_WORKLOAD_IDENTITY_TOKEN", "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE"):
+    for name in (
+        "LIM_API_KEY",
+        "LIMRUN_WORKLOAD_IDENTITY_TOKEN",
+        "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE",
+        "LIMRUN_WORKLOAD_IDENTITY_TOKEN_INJECTED",
+    ):
         monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "binding_builds")
     monkeypatch.setenv("LIMRUN_STS_BASE_URL", "https://sts.example.com")
@@ -288,3 +293,57 @@ def test_blank_token_is_refused_before_the_exchange() -> None:
     with Limrun(workload_token=lambda: "  ", http_client=httpx.Client(transport=httpx.MockTransport(refuse))) as client:
         with pytest.raises(ValueError, match="Workload identity token must be a JWT"):
             client.android_instances.list()
+
+
+def _injected_transport(forms: list[dict[str, list[str]]]) -> httpx.MockTransport:
+    def handle(request: httpx.Request) -> httpx.Response:
+        if request.url.host == "sts.example.com":
+            assert "authorization" not in request.headers
+            assert "x-limrun-subject-token" not in request.headers
+            forms.append(parse_qs(request.content.decode()))
+            return httpx.Response(
+                200, json={"access_token": "lim_st_session", "token_type": "Bearer", "expires_in": 300}
+            )
+        assert request.headers["authorization"] == "Bearer lim_st_session"
+        return httpx.Response(200, json={"items": []})
+
+    return httpx.MockTransport(handle)
+
+
+@pytest.mark.parametrize("source", ["option", "environment"])
+@pytest.mark.usefixtures("federation_env")
+async def test_injected_token_sends_no_subject(monkeypatch: pytest.MonkeyPatch, source: str) -> None:
+    if source == "environment":
+        monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_INJECTED", "true")
+    injected = True if source == "option" else None
+    forms: list[dict[str, list[str]]] = []
+    with Limrun(
+        workload_token_injected=injected, http_client=httpx.Client(transport=_injected_transport(forms))
+    ) as client:
+        client.android_instances.list()
+    async with AsyncLimrun(
+        workload_token_injected=injected, http_client=httpx.AsyncClient(transport=_injected_transport(forms))
+    ) as async_client:
+        await async_client.android_instances.list()
+    assert len(forms) == 2
+    for form in forms:
+        assert "subject_token" not in form
+        assert form["audience"] == ["binding_builds"]
+
+
+@pytest.mark.parametrize("client_class", [Limrun, AsyncLimrun])
+@pytest.mark.parametrize("source", [{"workload_token": "jwt"}, {"workload_token_file": "identity.jwt"}])
+@pytest.mark.usefixtures("federation_env")
+def test_injected_token_refuses_another_source(
+    client_class: type[Limrun] | type[AsyncLimrun], source: dict[str, str]
+) -> None:
+    with pytest.raises(ValueError, match="workload_token_injected cannot be combined"):
+        client_class(workload_token_injected=True, **source)  # type: ignore[arg-type]
+
+
+@pytest.mark.usefixtures("federation_env")
+def test_api_key_wins_over_conflicting_injected_configuration(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_INJECTED", "true")
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN", "jwt")
+    with Limrun(api_key="key") as client:
+        assert client._workload_identity is None

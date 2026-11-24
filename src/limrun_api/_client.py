@@ -37,6 +37,7 @@ from ._workload_identity import (
     AsyncWorkloadToken,
     AsyncWorkloadIdentity,
     resolve_identity,
+    resolve_injected,
 )
 
 if TYPE_CHECKING:
@@ -60,6 +61,7 @@ class Limrun(SyncAPIClient):
         api_key: str | None = None,
         workload_token: WorkloadToken | None = None,
         workload_token_file: str | None = None,
+        workload_token_injected: bool | None = None,
         binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
@@ -89,7 +91,14 @@ class Limrun(SyncAPIClient):
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
         self.workload_token, self.workload_token_file = resolve_identity(workload_token, workload_token_file)
-        has_identity = bool(self.workload_token or self.workload_token_file)
+        self.workload_token_injected = resolve_injected(workload_token_injected)
+        if not api_key and self.workload_token_injected and (self.workload_token or self.workload_token_file):
+            # The proxy decides which JWT the exchange carries, so a second source would be ignored.
+            raise ValueError(
+                "workload_token_injected cannot be combined with workload_token, workload_token_file, "
+                "or their environment variables"
+            )
+        has_identity = bool(self.workload_token or self.workload_token_file or self.workload_token_injected)
         self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
         if not api_key and self.binding_id and not has_identity:
@@ -100,7 +109,13 @@ class Limrun(SyncAPIClient):
         if not api_key and has_identity and not self.binding_id:
             raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self._workload_identity = (
-            WorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url, self.workload_token)
+            WorkloadIdentity(
+                self.workload_token_file,
+                self.binding_id,
+                self.sts_base_url,
+                self.workload_token,
+                self.workload_token_injected,
+            )
             if not api_key and has_identity and self.binding_id
             else None
         )
@@ -199,6 +214,7 @@ class Limrun(SyncAPIClient):
         api_key: str | None = None,
         workload_token: WorkloadToken | None = None,
         workload_token_file: str | None = None,
+        workload_token_injected: bool | None = None,
         binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
@@ -238,6 +254,9 @@ class Limrun(SyncAPIClient):
             # A new file replaces the current token, so it is not overridden by it.
             workload_token=workload_token or (None if workload_token_file else self.workload_token),
             workload_token_file=workload_token_file or self.workload_token_file,
+            workload_token_injected=(
+                workload_token_injected if workload_token_injected is not None else self.workload_token_injected
+            ),
             binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
@@ -252,6 +271,7 @@ class Limrun(SyncAPIClient):
             client.api_key == self.api_key
             and client.workload_token is self.workload_token
             and client.workload_token_file == self.workload_token_file
+            and client.workload_token_injected == self.workload_token_injected
             and client.binding_id == self.binding_id
             and client.sts_base_url == self.sts_base_url
         ):
@@ -307,6 +327,7 @@ class AsyncLimrun(AsyncAPIClient):
         api_key: str | None = None,
         workload_token: AsyncWorkloadToken | None = None,
         workload_token_file: str | None = None,
+        workload_token_injected: bool | None = None,
         binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
@@ -336,7 +357,14 @@ class AsyncLimrun(AsyncAPIClient):
             api_key = os.environ.get("LIM_API_KEY")
         self.api_key = api_key
         self.workload_token, self.workload_token_file = resolve_identity(workload_token, workload_token_file)
-        has_identity = bool(self.workload_token or self.workload_token_file)
+        self.workload_token_injected = resolve_injected(workload_token_injected)
+        if not api_key and self.workload_token_injected and (self.workload_token or self.workload_token_file):
+            # The proxy decides which JWT the exchange carries, so a second source would be ignored.
+            raise ValueError(
+                "workload_token_injected cannot be combined with workload_token, workload_token_file, "
+                "or their environment variables"
+            )
+        has_identity = bool(self.workload_token or self.workload_token_file or self.workload_token_injected)
         self.binding_id = binding_id or os.environ.get("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self.sts_base_url = sts_base_url or os.environ.get("LIMRUN_STS_BASE_URL") or "https://sts.limrun.com"
         if not api_key and self.binding_id and not has_identity:
@@ -347,7 +375,13 @@ class AsyncLimrun(AsyncAPIClient):
         if not api_key and has_identity and not self.binding_id:
             raise ValueError("Federation requires binding_id or LIMRUN_WORKLOAD_IDENTITY_BINDING_ID")
         self._workload_identity = (
-            AsyncWorkloadIdentity(self.workload_token_file, self.binding_id, self.sts_base_url, self.workload_token)
+            AsyncWorkloadIdentity(
+                self.workload_token_file,
+                self.binding_id,
+                self.sts_base_url,
+                self.workload_token,
+                self.workload_token_injected,
+            )
             if not api_key and has_identity and self.binding_id
             else None
         )
@@ -446,6 +480,7 @@ class AsyncLimrun(AsyncAPIClient):
         api_key: str | None = None,
         workload_token: AsyncWorkloadToken | None = None,
         workload_token_file: str | None = None,
+        workload_token_injected: bool | None = None,
         binding_id: str | None = None,
         sts_base_url: str | None = None,
         base_url: str | httpx.URL | None = None,
@@ -485,6 +520,9 @@ class AsyncLimrun(AsyncAPIClient):
             # A new file replaces the current token, so it is not overridden by it.
             workload_token=workload_token or (None if workload_token_file else self.workload_token),
             workload_token_file=workload_token_file or self.workload_token_file,
+            workload_token_injected=(
+                workload_token_injected if workload_token_injected is not None else self.workload_token_injected
+            ),
             binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
@@ -499,6 +537,7 @@ class AsyncLimrun(AsyncAPIClient):
             client.api_key == self.api_key
             and client.workload_token is self.workload_token
             and client.workload_token_file == self.workload_token_file
+            and client.workload_token_injected == self.workload_token_injected
             and client.binding_id == self.binding_id
             and client.sts_base_url == self.sts_base_url
         ):
