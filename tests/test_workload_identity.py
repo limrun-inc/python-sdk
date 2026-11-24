@@ -89,17 +89,31 @@ async def test_sdk_uses_session_and_copy_preserves_identity(
             await client.with_options(timeout=5).android_instances.list()
             await client.with_options(timeout=10).android_instances.list()
             assert client.with_options(binding_id="binding_other")._workload_identity is not client._workload_identity
-            assert client.with_options(workload_token_file="other.jwt")._workload_identity is not client._workload_identity
-            assert client.with_options(sts_base_url="https://other.example")._workload_identity is not client._workload_identity
+            assert (
+                client.with_options(workload_token_file="other.jwt")._workload_identity is not client._workload_identity
+            )
+            assert (
+                client.with_options(sts_base_url="https://other.example")._workload_identity
+                is not client._workload_identity
+            )
             assert client.with_options(api_key="key")._workload_identity is None
     else:
         with Limrun(http_client=httpx.Client(transport=httpx.MockTransport(handle))) as sync_client:
             sync_client.android_instances.list()
             sync_client.with_options(timeout=5).android_instances.list()
             sync_client.with_options(timeout=10).android_instances.list()
-            assert sync_client.with_options(binding_id="binding_other")._workload_identity is not sync_client._workload_identity
-            assert sync_client.with_options(workload_token_file="other.jwt")._workload_identity is not sync_client._workload_identity
-            assert sync_client.with_options(sts_base_url="https://other.example")._workload_identity is not sync_client._workload_identity
+            assert (
+                sync_client.with_options(binding_id="binding_other")._workload_identity
+                is not sync_client._workload_identity
+            )
+            assert (
+                sync_client.with_options(workload_token_file="other.jwt")._workload_identity
+                is not sync_client._workload_identity
+            )
+            assert (
+                sync_client.with_options(sts_base_url="https://other.example")._workload_identity
+                is not sync_client._workload_identity
+            )
             assert sync_client.with_options(api_key="key")._workload_identity is None
     assert exchanges == 1
 
@@ -141,9 +155,15 @@ def test_failed_exchange_never_calls_api(
 def test_incomplete_identity_configuration(
     monkeypatch: pytest.MonkeyPatch, client_class: type[Limrun] | type[AsyncLimrun], missing: str
 ) -> None:
-    for name in ("LIM_API_KEY", "LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE"):
+    for name in (
+        "LIM_API_KEY",
+        "LIMRUN_WORKLOAD_IDENTITY_BINDING_ID",
+        "LIMRUN_WORKLOAD_IDENTITY_TOKEN",
+        "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE",
+    ):
         monkeypatch.delenv(name, raising=False)
-    with pytest.raises(ValueError, match=f"Federation requires {missing}"):
+    message = "binding_id" if missing == "binding_id" else "workload_token, workload_token_file"
+    with pytest.raises(ValueError, match=f"Federation requires {message}"):
         client_class(
             binding_id=None if missing == "binding_id" else "binding_builds",
             workload_token_file=None if missing == "workload_token_file" else "identity.jwt",
@@ -162,3 +182,109 @@ async def test_api_key_bypasses_incomplete_identity_configuration(
     else:
         with Limrun(api_key="key") as sync_client:
             assert sync_client._workload_identity is None
+
+
+def _subject_transport(subjects: list[str]) -> httpx.MockTransport:
+    """Records exchanged subject tokens and answers API calls with an empty list."""
+
+    def handle(request: httpx.Request) -> httpx.Response:
+        if request.url.host == "sts.example.com":
+            subjects.append(parse_qs(request.content.decode())["subject_token"][0])
+            return httpx.Response(
+                200, json={"access_token": "lim_st_session", "token_type": "Bearer", "expires_in": 300}
+            )
+        assert request.headers["authorization"] == "Bearer lim_st_session"
+        return httpx.Response(200, json={"items": []})
+
+    return httpx.MockTransport(handle)
+
+
+@pytest.fixture
+def federation_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
+    for name in ("LIM_API_KEY", "LIMRUN_WORKLOAD_IDENTITY_TOKEN", "LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_BINDING_ID", "binding_builds")
+    monkeypatch.setenv("LIMRUN_STS_BASE_URL", "https://sts.example.com")
+    path = tmp_path / "identity.jwt"
+    path.write_text("from-file")
+    return path
+
+
+@pytest.mark.usefixtures("federation_env")
+def test_sync_client_accepts_token_string_and_callable() -> None:
+    subjects: list[str] = []
+    with Limrun(
+        workload_token=" from-string\n", http_client=httpx.Client(transport=_subject_transport(subjects))
+    ) as client:
+        client.android_instances.list()
+    issued = iter(["jwt-1", "jwt-2"])
+    with Limrun(
+        workload_token=lambda: next(issued), http_client=httpx.Client(transport=_subject_transport(subjects))
+    ) as client:
+        client.android_instances.list()
+        assert client._workload_identity is not None
+        client._workload_identity.refresh_at = 0
+        client.android_instances.list()
+    assert subjects == ["from-string", "jwt-1", "jwt-2"]
+
+
+@pytest.mark.usefixtures("federation_env")
+async def test_async_client_accepts_sync_and_async_callables() -> None:
+    subjects: list[str] = []
+
+    async def fetch_token() -> str:
+        return "async-jwt"
+
+    for token in (fetch_token, lambda: "sync-jwt", "plain-jwt"):
+        async with AsyncLimrun(
+            workload_token=token, http_client=httpx.AsyncClient(transport=_subject_transport(subjects))
+        ) as client:
+            await client.android_instances.list()
+    assert subjects == ["async-jwt", "sync-jwt", "plain-jwt"]
+
+
+@pytest.mark.parametrize(
+    "explicit,env_token,env_file,expected",
+    [
+        ({}, "env-jwt", False, "env-jwt"),
+        ({}, "env-jwt", True, "env-jwt"),
+        ({"workload_token": "explicit-jwt"}, "env-jwt", True, "explicit-jwt"),
+        ({"workload_token_file": True}, "env-jwt", False, "from-file"),
+        ({}, None, True, "from-file"),
+    ],
+)
+def test_identity_source_precedence(
+    federation_env: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    explicit: dict[str, object],
+    env_token: str | None,
+    env_file: bool,
+    expected: str,
+) -> None:
+    if env_token:
+        monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN", env_token)
+    if env_file:
+        monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE", str(federation_env))
+    options = {k: (str(federation_env) if k == "workload_token_file" else v) for k, v in explicit.items()}
+    subjects: list[str] = []
+    with Limrun(http_client=httpx.Client(transport=_subject_transport(subjects)), **options) as client:  # type: ignore[arg-type]
+        client.android_instances.list()
+    assert subjects == [expected]
+
+
+def test_copy_with_a_new_file_drops_the_current_token(federation_env: Path) -> None:
+    with Limrun(workload_token="from-string") as client:
+        copied = client.with_options(workload_token_file=str(federation_env))
+        assert copied.workload_token is None
+        assert copied.workload_token_file == str(federation_env)
+        assert client.with_options(timeout=5)._workload_identity is client._workload_identity
+
+
+@pytest.mark.usefixtures("federation_env")
+def test_blank_token_is_refused_before_the_exchange() -> None:
+    def refuse(_: httpx.Request) -> httpx.Response:
+        raise AssertionError("exchange must not run")
+
+    with Limrun(workload_token=lambda: "  ", http_client=httpx.Client(transport=httpx.MockTransport(refuse))) as client:
+        with pytest.raises(ValueError, match="Workload identity token must be a JWT"):
+            client.android_instances.list()

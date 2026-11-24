@@ -15,8 +15,9 @@ The REST API documentation can be found on [lim.run](https://lim.run). The full 
 
 ## Workload identity federation
 
-Authenticate with a JWT file from your identity provider after an organization admin
+Authenticate with a JWT from your identity provider after an organization admin
 creates a [federation binding](https://docs.limrun.com/docs/platform/workload-identity-federation).
+Point the client at a file your runtime keeps current, such as a Kubernetes projected token:
 
 ```python
 client = Limrun(
@@ -25,14 +26,24 @@ client = Limrun(
 )
 ```
 
-`AsyncLimrun` accepts the same options.
+Or pass the JWT itself in `workload_token`. A string is exchanged as is on every renewal, so it
+stops working once that JWT expires. Pass a callable instead when the client outlives the JWT;
+the SDK calls it for every exchange. `AsyncLimrun` also accepts an async callable:
 
-Alternatively, set `LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE` and
-`LIMRUN_WORKLOAD_IDENTITY_BINDING_ID` and use the default client constructor.
-An API key takes precedence when configured. The SDK caches a short-lived Limrun
-access token and re-reads the identity file on renewal. Your runtime must rotate
-the external JWT. `LIMRUN_STS_BASE_URL` overrides the default token service at
-`https://sts.limrun.com`.
+```python
+client = Limrun(
+    workload_token=lambda: get_id_token_from_your_provider(),
+    binding_id="binding_REPLACE_WITH_BINDING_ID",
+)
+```
+
+Alternatively, set `LIMRUN_WORKLOAD_IDENTITY_BINDING_ID` and either
+`LIMRUN_WORKLOAD_IDENTITY_TOKEN` (the JWT) or `LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE`, and use
+the default client constructor. Explicit options take precedence over environment variables,
+and a token over a file. An API key takes precedence over workload identity when configured.
+The SDK caches a short-lived Limrun access token and reads the identity again on renewal.
+The access token never outlives the JWT it was exchanged for. `LIMRUN_STS_BASE_URL` overrides
+the default token service at `https://sts.limrun.com`.
 
 The instance's `status.token` grants `control` on that instance. It permits runtime
 operations and reading the instance record, but cannot create, update, or delete
