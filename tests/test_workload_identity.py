@@ -347,3 +347,22 @@ def test_api_key_wins_over_conflicting_injected_configuration(monkeypatch: pytes
     monkeypatch.setenv("LIMRUN_WORKLOAD_IDENTITY_TOKEN", "jwt")
     with Limrun(api_key="key") as client:
         assert client._workload_identity is None
+
+
+@pytest.mark.parametrize("client_class", [Limrun, AsyncLimrun])
+@pytest.mark.usefixtures("federation_env")
+def test_copy_switches_identity_sources(client_class: type[Limrun] | type[AsyncLimrun]) -> None:
+    injected = client_class(workload_token_injected=True)
+    to_token = injected.with_options(workload_token="jwt")
+    assert (to_token.workload_token, to_token.workload_token_injected) == ("jwt", False)
+    to_file = injected.with_options(workload_token_file="identity.jwt")
+    assert (to_file.workload_token_file, to_file.workload_token_injected) == ("identity.jwt", False)
+
+    token = client_class(workload_token="jwt")
+    to_injected = token.with_options(workload_token_injected=True)
+    assert (to_injected.workload_token, to_injected.workload_token_file) == (None, None)
+    assert to_injected.workload_token_injected is True
+
+    unchanged = injected.with_options(timeout=5)
+    assert unchanged.workload_token_injected is True
+    assert unchanged._workload_identity is injected._workload_identity

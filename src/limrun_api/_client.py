@@ -36,6 +36,7 @@ from ._workload_identity import (
     WorkloadIdentity,
     AsyncWorkloadToken,
     AsyncWorkloadIdentity,
+    replace_identity,
     resolve_identity,
     resolve_injected,
 )
@@ -248,15 +249,19 @@ class Limrun(SyncAPIClient):
         elif set_default_query is not None:
             params = set_default_query
 
+        identity = replace_identity(
+            workload_token,
+            workload_token_file,
+            workload_token_injected,
+            (self.workload_token, self.workload_token_file, self.workload_token_injected),
+        )
         http_client = http_client or self._client
         client = self.__class__(
             api_key=api_key or self.api_key,
             # A new file replaces the current token, so it is not overridden by it.
-            workload_token=workload_token or (None if workload_token_file else self.workload_token),
-            workload_token_file=workload_token_file or self.workload_token_file,
-            workload_token_injected=(
-                workload_token_injected if workload_token_injected is not None else self.workload_token_injected
-            ),
+            workload_token=identity[0],
+            workload_token_file=identity[1],
+            workload_token_injected=identity[2],
             binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,
@@ -514,15 +519,19 @@ class AsyncLimrun(AsyncAPIClient):
         elif set_default_query is not None:
             params = set_default_query
 
+        identity = replace_identity(
+            workload_token,
+            workload_token_file,
+            workload_token_injected,
+            (self.workload_token, self.workload_token_file, self.workload_token_injected),
+        )
         http_client = http_client or self._client
         client = self.__class__(
             api_key=api_key or self.api_key,
             # A new file replaces the current token, so it is not overridden by it.
-            workload_token=workload_token or (None if workload_token_file else self.workload_token),
-            workload_token_file=workload_token_file or self.workload_token_file,
-            workload_token_injected=(
-                workload_token_injected if workload_token_injected is not None else self.workload_token_injected
-            ),
+            workload_token=identity[0],
+            workload_token_file=identity[1],
+            workload_token_injected=identity[2],
             binding_id=binding_id or self.binding_id,
             sts_base_url=sts_base_url or self.sts_base_url,
             base_url=base_url or self.base_url,

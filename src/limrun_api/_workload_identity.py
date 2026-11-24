@@ -35,6 +35,19 @@ def resolve_identity(
     return None, os.environ.get("LIMRUN_WORKLOAD_IDENTITY_TOKEN_FILE") or None
 
 
+def replace_identity(
+    token: Optional[_Token],
+    token_file: Optional[str],
+    injected: Optional[bool],
+    current: Tuple[Optional[_Token], Optional[str], bool],
+) -> Tuple[Optional[_Token], Optional[str], bool]:
+    """A source passed to copy() replaces the client's current one rather than combining with it."""
+    if token or token_file or injected:
+        return token, token_file, bool(injected)
+    current_token, current_file, current_injected = current
+    return current_token, current_file, current_injected if injected is None else injected
+
+
 def resolve_injected(injected: Optional[bool]) -> bool:
     if injected is not None:
         return injected
